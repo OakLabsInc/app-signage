@@ -1,0 +1,43 @@
+---
+version: '2'
+
+volumes:
+  filesync-signage:
+  signage-store:
+
+services:
+  signage:
+    build: .
+    container_name: signage
+    image: oaklabs/app-signage
+    network_mode: host
+    privileged: true
+    devices:
+      - /dev/dri
+      - /dev/bus/usb
+      - /dev/snd
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/shm:/dev/shm
+      - /usr/share/fonts:/usr/share/fonts
+      - /run/udev:/run/udev
+      - signage-store:/data
+      - ./src:/app/src
+
+  filesync:
+    container_name: filesync
+    image: oaklabs/filesync:2.0.1
+    network_mode: host
+    environment:
+      GS_URL: gs://filefiesta/${OAK_CLIENT}
+      INTERVAL: 600
+    volumes:
+      - filesync-signage:/data/oak/filesync/files:rw
+
+  api:
+    container_name: api
+    image: oaklabs/oakos-api:1.5.1
+    network_mode: host
+    privileged: true
+    volumes_from:
+      - filesync
