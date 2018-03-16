@@ -1,11 +1,11 @@
-FROM oaklabs/oak:4.0.0
+FROM oaklabs/oak:4.2.0
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 
 RUN npm i --engine-strict=true --progress=false --loglevel="error" \
-    && npm cache clean \
+    && npm cache clean --force \
     && mkdir /data \
     && echo "{}" > /data/settings.json
 

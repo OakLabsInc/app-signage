@@ -39,6 +39,7 @@ oak.on('ready', () => {
   let window = oak.load({
     url: config.get('app:url') || 'http://static.oak.host/signage',
     sslExceptions: ['localhost'],
+    insecure: true,
     scripts: [
       // {
       //   name: 'assets',

@@ -1,6 +1,6 @@
 {
   "name": "app-signage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Signage Application on OakOS",
   "main": "src/index.js",
   "scripts": {
@@ -18,12 +18,13 @@
   },
   "homepage": "https://github.com/OakLabsInc/app-signage#readme",
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "~4.17.4",
     "nconf": "~0.10.0",
     "nconf-remote-http": "0.0.4",
     "oak-tools": "~0.5.5"
   },
   "devDependencies": {
-    "oak": "^4.0.0-rc1"
-  }
+    "oak": "~4.2.0"
+  },
+  "private": true
 }
