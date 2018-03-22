@@ -36,15 +36,15 @@ let fetchSettings = function (cb = () => {}) {
 fetchSettings()
 
 oak.on('ready', () => {
-  let window = oak.load({
-    url: config.get('app:url') || 'http://static.oak.host/signage',
-    sslExceptions: ['localhost'],
-    insecure: true,
-    scripts: [
-      // {
-      //   name: 'assets',
-      //   path: join(__dirname, 'assets')
-      // }
-    ]
-  })
+  let window = oak.load(
+    // assign whatever is in the settings.json as values to oak.load, which usually will at least have `url`
+    _.assign(
+      {
+        url: 'http://static.oak.host/signage',
+        sslExceptions: ['localhost'],
+        insecure: true
+      },
+      config.get('app')
+    )
+  )
 })

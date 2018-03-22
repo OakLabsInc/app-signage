@@ -1,6 +1,6 @@
 {
   "name": "app-signage",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Signage Application on OakOS",
   "main": "src/index.js",
   "scripts": {
