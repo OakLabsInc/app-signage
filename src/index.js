@@ -18,8 +18,10 @@ const config = nconf
     file: '/data/settings.json'
   })
 
+const remoteSettings = join(process.env.SETTINGS_FILE || 'assets/settings.json')
+
 let fetchSettings = function (cb = () => {}) {
-  request.get('https://localhost/assets/settings.json', (err, res, body) => {
+  request.get(`https://localhost/${remoteSettings}`, (err, res, body) => {
     if (_.get(res, 'statusCode') === 200) {
       fs.writeFile('/data/settings.json', body, function () {
         nconf.file({

@@ -18,4 +18,5 @@ VOLUME /data
 EXPOSE 9999
 
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0 \
-    NODE_ENV=production
+    NODE_ENV=production \
+    SETTINGS_FILE=assets/settings.json
