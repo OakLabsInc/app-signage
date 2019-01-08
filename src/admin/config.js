@@ -7,6 +7,8 @@ var config = {
     messagingSenderId: "270582494300"
   };
 firebase.initializeApp(config);
+// Initialize Cloud Firestore through Firebase
+
 
 // FirebaseUI config.
 var uiConfig = {
