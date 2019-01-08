@@ -42,19 +42,29 @@
       <md-content ng-if='isLoggedIn'>
         <md-list>
           <md-list-item>
-            <input type='text' ng-model='galleryName'  /> <md-button ng-click='addGallery(galleryName)' >Add Gallery</md-button>
+            <input type='text' ng-model='galleryName'  /> <md-button ng-click='addGallery(galleryName.replace(" ",""))' >Add Gallery</md-button>
           </md-list-item>
         </md-list>
-<md-divider></md-divider>
-          <md-list ng-repeat="(galleryName, gallery) in userId">
-            <md-subheader>{{galleryName}}</md-subheader>
-            <md-list-item>
-              <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName}}' onchange='angular.element(this).scope().addImageToGallery(angular.element(this).scope().galleryName, this.value, angular.element(this).scope().gallery)'  /> 
-              <md-list ng-repeat='url in gallery'>
-                <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName + "-display"}}' md-force-height="'100px'"/>
-              </md-list>
-            </md-list-item>
-          </md-list>
+        <md-divider></md-divider>
+          <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="(galleryName, gallery) in userId">
+            <md-card>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">{{galleryName.replace(" ","")}}</span>
+                </md-card-title-text>
+                <md-card-actions>
+                    <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName.replace(" ","")}}' onchange='angular.element(this).scope().addImageToGallery(angular.element(this).scope().galleryName.replace(" ",""), this.value, angular.element(this).scope().gallery)'  />
+                </md-card-actions>
+              </md-card-title>
+            </md-card>
+            <div>
+              <md-card ng-repeat='url in gallery'>
+                <div class="md-media-smcard-media">
+                  <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' md-force-height="'100px'"/>
+                </div>
+              </md-card>
+            </div>
+          </div>
       </md-content>
       
       <div id="firebaseui-auth-container" ></div>

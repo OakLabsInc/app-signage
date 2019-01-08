@@ -113,18 +113,14 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
     let filename = imageUrl.substring(imageUrl.lastIndexOf('\\') + 1)
     var hasFile = false
     for(i=0;i<$scope.userId[galleryName].length; i++) {
-      if($scope.userId[galleryName][i].indexOf(filename) > 0) {
+      if($scope.userId[galleryName][i].indexOf(filename) > 0 && $scope.userId[galleryName][i].indexOf(galleryName)) {
         hasFile=true 
       } 
     }
     if (typeof filename !== 'undefined' && !hasFile) {
       let displayImageId = (gallery.length) + "-" + galleryName + "-display"
       $scope.uploadFile(galleryName, displayImageId)
-      //$scope.userId[galleryName].push(imageUrl) 
-      // $scope.saveGalleries($scope.user,galleryName, $scope.userId[galleryName])
-      // $scope.galleryName = undefined
     } else {
-      // $mdToast.show($mdToast.simple().textContent('That Image URL Already Exists'));
       $mdToast.show(
         $mdToast.simple()
           .textContent('That Image URL Already Exists')
@@ -142,7 +138,7 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
     let metadata = {
       contentType: file.type
     };
-    let task = ref.child($scope.user.uid + "-" + name).put(file, metadata);
+    let task = ref.child( $scope.user.uid + "-" + galleryName + "-" + name).put(file, metadata);
     task.then(snapshot => snapshot.ref.getDownloadURL())
     .then((url) => {
       console.log(url);
