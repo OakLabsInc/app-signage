@@ -25,19 +25,14 @@
 
   </head>
   <body ng-app="signageApp"  ng-controller='appController' ng-cloak>
-   
-    
     <div layout="column" layout-fill>
       <md-toolbar>
-    
         <div class="md-toolbar-tools">
           <h2 md-truncate flex>Signage Application Admin</h2>
-          
           <md-button ng-click='logout()' ng-if='isLoggedIn' ng-cloak>
             Logout
           </md-button>
         </div>
-        
       </md-toolbar>
       <md-content ng-if='isLoggedIn'>
         <md-card>
@@ -66,22 +61,7 @@
           </div>
         </div>
       </md-content>
-      
       <div id="firebaseui-auth-container" ></div>
-
-
-      
-
-
-        <pre style='text-align:left'>{{imageUrl | json}}</div>
-
-        
-
-
-      
-
     </div>
-
-    
   </body>
 </html>
