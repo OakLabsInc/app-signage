@@ -40,12 +40,13 @@
         
       </md-toolbar>
       <md-content ng-if='isLoggedIn'>
-        <md-list>
+        <md-card>
           <md-list-item>
             <input type='text' ng-model='galleryName'  /> <md-button ng-click='addGallery(galleryName.replace(" ",""))' >Add Gallery</md-button>
           </md-list-item>
-        </md-list>
+        </md-card>
         <md-divider></md-divider>
+        <div flex layout="row">
           <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="(galleryName, gallery) in userId">
             <md-card>
               <md-card-title>
@@ -57,14 +58,13 @@
                 </md-card-actions>
               </md-card-title>
             </md-card>
-            <div>
-              <md-card ng-repeat='url in gallery'>
-                <div class="md-media-smcard-media">
-                  <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' md-force-height="'100px'"/>
-                </div>
-              </md-card>
-            </div>
+            <md-card ng-repeat='url in gallery'>
+              <div class="md-media-sm card-media">
+                <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' md-force-height="'100px'"/>
+              </div>
+            </md-card>
           </div>
+        </div>
       </md-content>
       
       <div id="firebaseui-auth-container" ></div>
