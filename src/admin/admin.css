@@ -24,3 +24,14 @@ md-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {
     background-color: #6b0404;
     color: rgb(250,250,250);
 }
+
+.hint {
+    position: absolute;
+    left: 5px;
+    right: auto;
+    bottom: -15px;
+    font-size: 14px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    color: grey; 
+  }

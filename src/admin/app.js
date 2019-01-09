@@ -24,7 +24,34 @@ app.factory('User', ['$firebaseObject',
       return $firebaseObject(userRef);
     }
   }
-]);
+])
+
+app.directive('chooseFile', function() {
+  return {
+    link: function (scope, elem, attrs) {
+      var button = elem.find('button');
+      let galleryName = attrs.galleryName;
+      let gallery = attrs.galleryObj;
+      let input = angular.element(elem[0].querySelector('input#fileInput'));
+      
+      button.bind('click', function() {
+        input[0].click();
+      });
+      input.bind('change', function(e) {
+        scope.$apply(function() {
+          var files = e.target.files;
+          if (files[0]) {
+            scope.fileName = files[0].name;
+            console.log(files[0].name)
+            scope.addImageToGallery(galleryName, scope.fileName, gallery, files)
+          } else {
+            scope.fileName = null;
+          }
+        });
+      });
+    }
+  };
+});
 
 
 app.controller('appController', function AppController($scope, $timeout, $mdToast, $firebaseObject, User) {
@@ -47,15 +74,7 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
             $scope.isLoggedIn = true
             $scope.user = user
             $scope.saveUser(user)
-            
-            db.collection("users").doc(user.uid).collection('galleries').get().then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                  $timeout(function () {
-                    $scope.userId[doc.id] = doc.data().urls
-                  })
-              });
-          });
-            
+            $scope.getFirebaseUserGalleries()
         })
     } else {
         $timeout(function () {
@@ -72,7 +91,15 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
           $scope.userId = {}
       })
   }
-
+  $scope.getFirebaseUserGalleries = function () {
+    db.collection("users").doc($scope.user.uid).collection('galleries').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          $timeout(function () {
+            $scope.userId[doc.id] = doc.data().urls
+          })
+      });
+    })
+  }
   $scope.addGallery = function(galleryName) {
     if(galleryName !== undefined  && !$scope.userId.hasOwnProperty(galleryName) ) {
       $scope.userId[galleryName] = []
@@ -108,7 +135,56 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
     });
   };
 
-  $scope.addImageToGallery = function(galleryName, imageUrl, gallery) {
+  $scope.deleteGalleryImage = function (galleryName, url, index) {
+    let galleryImagesRef = firebase.storage().ref();
+
+
+    galleryImagesRef.child( $scope.user.uid + "/" + galleryName + "/" +  $scope.getImageName(url) ).delete().then(function() {
+      console.log("Image deleted successfully", url)
+      
+      $scope.userId[galleryName].splice(index,1)
+      $scope.$apply()
+      db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).update({
+        urls: $scope.userId[galleryName]
+      })
+    }).catch(function(error) {
+      // Uh-oh, an error occurred!
+    });
+
+ 
+    
+    
+  }
+  $scope.deleteGallery = function (galleryName) {
+
+    let galleryImagesRef = firebase.storage().ref();
+    $scope.userId[galleryName].map( function (url) {
+      galleryImagesRef.child( $scope.user.uid + "/" + galleryName + "/" +  $scope.getImageName(url) ).delete().then(function() {
+        console.log("Gallery deleted successfully", url)
+        $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
+      }).catch(function(error) {
+        // Uh-oh, an error occurred!
+      });
+    })
+
+
+    
+      
+
+    db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).delete()
+    .then(function() {
+      console.log("Document successfully deleted!");
+      $timeout(function () {
+        $scope.userId = {}
+        $scope.getFirebaseUserGalleries()
+      })
+    
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+  }
+  
+  $scope.addImageToGallery = function(galleryName, imageUrl, gallery, files) {
   
     let filename = imageUrl.substring(imageUrl.lastIndexOf('\\') + 1)
     var hasFile = false
@@ -119,7 +195,7 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
     }
     if (typeof filename !== 'undefined' && !hasFile) {
       let displayImageId = (gallery.length) + "-" + galleryName + "-display"
-      $scope.uploadFile(galleryName, displayImageId)
+      $scope.uploadFile(galleryName, displayImageId, files)
     } else {
       $mdToast.show(
         $mdToast.simple()
@@ -130,27 +206,31 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
     }
   }
 
-  $scope.uploadFile = function (galleryName, displayImageId) {
+  $scope.uploadFile = function (galleryName, displayImageId, files) {
 
     let ref = firebase.storage().ref();
-    const file = document.querySelector('#' + galleryName).files[0]
+    const file = files[0]
     let name = file.name;
     let metadata = {
       contentType: file.type
     };
-    let task = ref.child( $scope.user.uid + "-" + galleryName + "-" + name).put(file, metadata);
+    let task = ref.child( $scope.user.uid + "/" + galleryName + "/" + name).put(file, metadata);
     task.then(snapshot => snapshot.ref.getDownloadURL())
     .then((url) => {
       console.log(url);
       $timeout( function() {
         $scope.userId[galleryName].push(url) 
         $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
-        document.querySelector('#' + displayImageId).src = url;
+        //document.querySelector('#' + displayImageId).src = url;
       })
       // $scope.galleryName = undefined
       return url
     })
     .catch(console.error);
+  }
+
+  $scope.getImageName = function (fullUrl) {
+    return fullUrl.slice((fullUrl.lastIndexOf('%2F') + 3), fullUrl.lastIndexOf('?'))
   }
 
 })
