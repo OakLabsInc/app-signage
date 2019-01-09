@@ -75,6 +75,5 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     }
   }
 
-
   oak.ready()
 })

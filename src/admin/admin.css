@@ -35,3 +35,7 @@ md-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {
     transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
     color: grey; 
   }
+.margined-button {
+    margin-right: 12px !important;
+    margin-bottom: 14px !important;
+}

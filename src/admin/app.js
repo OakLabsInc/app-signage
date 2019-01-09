@@ -14,53 +14,51 @@ var app = angular.module('signageApp', ['ngMaterial', 'ngMessages', 'firebase'])
 // });
 
 app.factory('User', ['$firebaseObject',
-  function($firebaseObject) {
-    return function(uid) {
+  function ($firebaseObject) {
+    return function (uid) {
       // create a reference to the database node where we will store our data
-      var ref = firebase.database().ref('users').push();
-      var userRef = ref.child(uid);
+      var ref = firebase.database().ref('users').push()
+      var userRef = ref.child(uid)
 
       // return it as a synchronized object
-      return $firebaseObject(userRef);
+      return $firebaseObject(userRef)
     }
   }
 ])
 
-app.directive('chooseFile', function() {
+app.directive('chooseFile', function () {
   return {
     link: function (scope, elem, attrs) {
-      var button = elem.find('button');
-      let galleryName = attrs.galleryName;
-      let gallery = attrs.galleryObj;
-      let input = angular.element(elem[0].querySelector('input#fileInput'));
-      
-      button.bind('click', function() {
-        input[0].click();
-      });
-      input.bind('change', function(e) {
-        scope.$apply(function() {
-          var files = e.target.files;
+      var button = elem.find('button')
+      let galleryName = attrs.galleryName
+      let gallery = attrs.galleryObj
+      let input = angular.element(elem[0].querySelector('input#fileInput'))
+
+      button.bind('click', function () {
+        input[0].click()
+      })
+      input.bind('change', function (e) {
+        scope.$apply(function () {
+          var files = e.target.files
           if (files[0]) {
-            scope.fileName = files[0].name;
+            scope.fileName = files[0].name
             console.log(files[0].name)
             scope.addImageToGallery(galleryName, scope.fileName, gallery, files)
           } else {
-            scope.fileName = null;
+            scope.fileName = null
           }
-        });
-      });
+        })
+      })
     }
-  };
-});
+  }
+})
 
-
-app.controller('appController', function AppController($scope, $timeout, $mdToast, $firebaseObject, User) {
-
-  var db = firebase.firestore();
+app.controller('appController', function AppController ($scope, $timeout, $mdToast, $firebaseObject, User) {
+  var db = firebase.firestore()
 
   db.settings({
     timestampsInSnapshots: true
-  });
+  })
 
   $scope.galleries = []
   $scope.user = {}
@@ -68,133 +66,121 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
 
   $scope.isLoggedIn = false
 
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        $timeout(function () {
-            $scope.isLoggedIn = true
-            $scope.user = user
-            $scope.saveUser(user)
-            $scope.getFirebaseUserGalleries()
-        })
-    } else {
-        $timeout(function () {
-            $scope.isLoggedIn = false
-            ui.start('#firebaseui-auth-container', uiConfig);
-        })
-    }
-  });
-
-  $scope.logout = function() {
-      firebase.auth().signOut().then( function () {
-          $scope.isLoggedIn = false
-          $scope.user = {}
-          $scope.userId = {}
+      $timeout(function () {
+        $scope.isLoggedIn = true
+        $scope.user = user
+        $scope.saveUser(user)
+        $scope.getFirebaseUserGalleries()
       })
-  }
-  $scope.getFirebaseUserGalleries = function () {
-    db.collection("users").doc($scope.user.uid).collection('galleries').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          $timeout(function () {
-            $scope.userId[doc.id] = doc.data().urls
-          })
-      });
+    } else {
+      $timeout(function () {
+        $scope.isLoggedIn = false
+        ui.start('#firebaseui-auth-container', uiConfig)
+      })
+    }
+  })
+
+  $scope.logout = function () {
+    firebase.auth().signOut().then(function () {
+      $scope.isLoggedIn = false
+      $scope.user = {}
+      $scope.userId = {}
     })
   }
-  $scope.addGallery = function(galleryName) {
-    if(galleryName !== undefined  && !$scope.userId.hasOwnProperty(galleryName) ) {
+  $scope.getFirebaseUserGalleries = function () {
+    db.collection('users').doc($scope.user.uid).collection('galleries').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        $timeout(function () {
+          $scope.userId[doc.id] = doc.data().urls
+        })
+      })
+    })
+  }
+  $scope.addGallery = function (galleryName) {
+    if (galleryName !== undefined && !$scope.userId.hasOwnProperty(galleryName)) {
       $scope.userId[galleryName] = []
     } else {
-      $mdToast.show($mdToast.simple().textContent('That Gallery Name Already Exists'));
+      $mdToast.show($mdToast.simple().textContent('That Gallery Name Already Exists'))
     }
   }
 
-  $scope.saveUser = function(user) {
+  $scope.saveUser = function (user) {
     db.collection('users').doc(user.uid).set({
       'uid': user.uid,
       'displayName': user.displayName,
       'photoURL': user.photoURL,
-      'email': user.email,
+      'email': user.email
     })
-    .then(function() {
-      console.log('User written ');
-    })
-    .catch(function(error) {
-      console.error('Error adding User: ', error);
-    });
-  };
+      .then(function () {
+        console.log('User written ')
+      })
+      .catch(function (error) {
+        console.error('Error adding User: ', error)
+      })
+  }
 
-  $scope.saveGalleries = function(user, galleryName, images) {
+  $scope.saveGalleries = function (user, galleryName, images) {
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      urls : images
+      urls: images
     })
-    .then(function() {
-      console.log('Gallery written ');
-    })
-    .catch(function(error) {
-      console.error('Error adding Gallery: ', error);
-    });
-  };
+      .then(function () {
+        console.log('Gallery written ')
+      })
+      .catch(function (error) {
+        console.error('Error adding Gallery: ', error)
+      })
+  }
 
   $scope.deleteGalleryImage = function (galleryName, url, index) {
-    let galleryImagesRef = firebase.storage().ref();
+    let galleryImagesRef = firebase.storage().ref()
 
+    galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(url)).delete().then(function () {
+      console.log('Image deleted successfully', url)
 
-    galleryImagesRef.child( $scope.user.uid + "/" + galleryName + "/" +  $scope.getImageName(url) ).delete().then(function() {
-      console.log("Image deleted successfully", url)
-      
-      $scope.userId[galleryName].splice(index,1)
+      $scope.userId[galleryName].splice(index, 1)
       $scope.$apply()
       db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).update({
         urls: $scope.userId[galleryName]
       })
-    }).catch(function(error) {
+    }).catch(function (error) {
       // Uh-oh, an error occurred!
-    });
-
- 
-    
-    
+    })
   }
   $scope.deleteGallery = function (galleryName) {
-
-    let galleryImagesRef = firebase.storage().ref();
-    $scope.userId[galleryName].map( function (url) {
-      galleryImagesRef.child( $scope.user.uid + "/" + galleryName + "/" +  $scope.getImageName(url) ).delete().then(function() {
-        console.log("Gallery deleted successfully", url)
+    let galleryImagesRef = firebase.storage().ref()
+    $scope.userId[galleryName].map(function (url) {
+      galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(url)).delete().then(function () {
+        console.log('Gallery deleted successfully', url)
         $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
-      }).catch(function(error) {
+      }).catch(function (error) {
         // Uh-oh, an error occurred!
-      });
+      })
     })
 
-
-    
-      
-
     db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).delete()
-    .then(function() {
-      console.log("Document successfully deleted!");
-      $timeout(function () {
-        $scope.userId = {}
-        $scope.getFirebaseUserGalleries()
+      .then(function () {
+        console.log('Document successfully deleted!')
+        $timeout(function () {
+          $scope.userId = {}
+          $scope.getFirebaseUserGalleries()
+        })
+      }).catch(function (error) {
+        console.error('Error removing document: ', error)
       })
-    
-    }).catch(function(error) {
-        console.error("Error removing document: ", error);
-    });
   }
-  
-  $scope.addImageToGallery = function(galleryName, imageUrl, gallery, files) {
-  
+
+  $scope.addImageToGallery = function (galleryName, imageUrl, gallery, files) {
     let filename = imageUrl.substring(imageUrl.lastIndexOf('\\') + 1)
     var hasFile = false
-    for(i=0;i<$scope.userId[galleryName].length; i++) {
-      if($scope.userId[galleryName][i].indexOf(filename) > 0 && $scope.userId[galleryName][i].indexOf(galleryName)) {
-        hasFile=true 
-      } 
+    for (i = 0; i < $scope.userId[galleryName].length; i++) {
+      if ($scope.userId[galleryName][i].indexOf(filename) > 0 && $scope.userId[galleryName][i].indexOf(galleryName)) {
+        hasFile = true
+      }
     }
     if (typeof filename !== 'undefined' && !hasFile) {
-      let displayImageId = (gallery.length) + "-" + galleryName + "-display"
+      let displayImageId = (gallery.length) + '-' + galleryName + '-display'
       $scope.uploadFile(galleryName, displayImageId, files)
     } else {
       $mdToast.show(
@@ -202,35 +188,31 @@ app.controller('appController', function AppController($scope, $timeout, $mdToas
           .textContent('That Image URL Already Exists')
           .position('top left')
           .hideDelay(1500)
-      );
+      )
     }
   }
 
   $scope.uploadFile = function (galleryName, displayImageId, files) {
-
-    let ref = firebase.storage().ref();
+    let ref = firebase.storage().ref()
     const file = files[0]
-    let name = file.name;
+    let name = file.name
     let metadata = {
       contentType: file.type
-    };
-    let task = ref.child( $scope.user.uid + "/" + galleryName + "/" + name).put(file, metadata);
+    }
+    let task = ref.child($scope.user.uid + '/' + galleryName + '/' + name).put(file, metadata)
     task.then(snapshot => snapshot.ref.getDownloadURL())
-    .then((url) => {
-      console.log(url);
-      $timeout( function() {
-        $scope.userId[galleryName].push(url) 
-        $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
-        //document.querySelector('#' + displayImageId).src = url;
+      .then((url) => {
+        console.log(url)
+        $timeout(function () {
+          $scope.userId[galleryName].push(url)
+          $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
+        })
+        return url
       })
-      // $scope.galleryName = undefined
-      return url
-    })
-    .catch(console.error);
+      .catch(console.error)
   }
 
   $scope.getImageName = function (fullUrl) {
     return fullUrl.slice((fullUrl.lastIndexOf('%2F') + 3), fullUrl.lastIndexOf('?'))
   }
-
 })
