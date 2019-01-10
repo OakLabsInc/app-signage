@@ -43,7 +43,7 @@
         </md-card>
         <md-divider></md-divider>
         <div layout-wrap layout="row">
-          <div layout="column" ng-repeat="(galleryName, gallery) in userId">
+          <div layout="column" ng-repeat="(galleryName, gallery) in userId" style="flex: 2;">
             <md-card md-colors="{background: 'default-primary-100'}" class="primary line">
               <md-card-title  layout="column">
                 <md-card-title-text>
@@ -73,8 +73,7 @@
             <md-card  ng-repeat='url in gallery'>
                 <md-card-title>
                   <md-card-title-text>
-                    <span class="md-headline" ng-bind="getImageName(url)"></span >
-                    <span class="md-subhead">Small</span>
+                    <md-truncate class="md-headline" ng-bind="getImageName(url)"></md-truncate >
                   </md-card-title-text>
                   <md-card-title-media>
                     <div class="md-media-sm card-media">
@@ -82,7 +81,7 @@
                     </div>
                   </md-card-title-media>
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
+                <md-card-actions layout="row" layout-align="start center">
                   <md-button  class="margined-button md-fab md-mini" ng-click="deleteGalleryImage(galleryName, url, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
