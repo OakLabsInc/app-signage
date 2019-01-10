@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name = "viewport" content = "user-scalable=no, width=device-width">
     <title>Sample FirebaseUI App</title>
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
@@ -47,7 +48,7 @@
             <md-card md-colors="{background: 'default-primary-100'}" class="primary line">
               <md-card-title  layout="column">
                 <md-card-title-text>
-                  <span class="md-headline">Gallery: {{galleryName.replace(" ","")}}</span>
+                  <span class="md-headline">{{galleryName.replace(" ","")}}</span>
                 </md-card-title-text>
                 <md-card-actions  layout="column" layout-align="start end">
                     <!-- <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName.replace(" ","")}}' onchange='angular.element(this).scope().addImageToGallery(angular.element(this).scope().galleryName.replace(" ",""), this.value, angular.element(this).scope().gallery)'  /> -->
@@ -72,16 +73,17 @@
             
             <md-card  ng-repeat='url in gallery'>
                 <md-card-title>
-                  <md-card-title-text>
-                    <md-truncate class="md-headline" ng-bind="getImageName(url)"></md-truncate >
-                  </md-card-title-text>
+                  
                   <md-card-title-media>
                     <div class="md-media-sm card-media">
                         <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
                     </div>
                   </md-card-title-media>
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="start center">
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-card-title-text>
+                        <md-truncate class="md-subhead" ng-bind="getImageName(url)"></md-truncate >
+                      </md-card-title-text>
                   <md-button  class="margined-button md-fab md-mini" ng-click="deleteGalleryImage(galleryName, url, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
