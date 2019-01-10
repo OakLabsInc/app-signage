@@ -215,4 +215,26 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
   $scope.getImageName = function (fullUrl) {
     return fullUrl.slice((fullUrl.lastIndexOf('%2F') + 3), fullUrl.lastIndexOf('?'))
   }
+
+  $scope.returnImageArray = function (gallery) {
+    let resultArray = []
+    for(i in gallery){
+      resultArray.push(i)
+    }
+    return resultArray
+  }
+
+  $scope.reorderUrls = function (url, index, galleryName) {
+    let tempUrls = $scope.userId[galleryName]
+    console.log(tempUrls)
+    let currentIndex = tempUrls.indexOf(url)
+    tempUrls.splice(currentIndex, 1)
+    console.log(tempUrls)
+    tempUrls.splice(index,0,url)
+    
+    console.log(tempUrls)
+
+    $scope.saveGalleries($scope.user, galleryName, tempUrls)
+  }
+
 })

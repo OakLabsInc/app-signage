@@ -80,10 +80,18 @@
                     </div>
                   </md-card-title-media>
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="start center">
+                <md-card-actions layout="row" layout-align="space-between">
                   <md-button  class="margined-button md-fab md-mini" ng-click="deleteGalleryImage(galleryName, url, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
+                  <md-input-container>
+                    <label>Order</label>
+                    <md-select ng-model="$index" ng-change="reorderUrls(url, $index, galleryName)">
+                      <md-option ng-repeat="order in returnImageArray(gallery)" ng-value="$index" >
+                        {{order}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
                 </md-card-actions>
               </md-card>
           </div>
