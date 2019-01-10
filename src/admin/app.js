@@ -226,14 +226,9 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
 
   $scope.reorderUrls = function (url, index, galleryName) {
     let tempUrls = $scope.userId[galleryName]
-    console.log(tempUrls)
     let currentIndex = tempUrls.indexOf(url)
     tempUrls.splice(currentIndex, 1)
-    console.log(tempUrls)
     tempUrls.splice(index,0,url)
-    
-    console.log(tempUrls)
-
     $scope.saveGalleries($scope.user, galleryName, tempUrls)
   }
 
