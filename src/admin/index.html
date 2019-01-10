@@ -72,18 +72,15 @@
             </md-card>
             
             <md-card  ng-repeat='url in gallery'>
-                <md-card-title>
-                  
+                <md-card-title >
+                  <md-truncate flex class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(url)"></md-truncate>
                   <md-card-title-media>
                     <div class="md-media-sm card-media">
                         <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
                     </div>
                   </md-card-title-media>
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-card-title-text>
-                        <md-truncate class="md-subhead" ng-bind="getImageName(url)"></md-truncate >
-                      </md-card-title-text>
+                <md-card-actions layout="row" layout-align="start center">
                   <md-button  class="margined-button md-fab md-mini" ng-click="deleteGalleryImage(galleryName, url, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
