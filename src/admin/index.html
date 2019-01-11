@@ -30,7 +30,7 @@
     <div layout="column" layout-fill>
       <md-toolbar>
         <div class="md-toolbar-tools">
-          <h2 md-truncate flex>Signage Application Admin - API Key: {{user.uid}}</h2>
+          <h2 md-truncate flex>Signage Application Admin</h2>
           <md-button ng-click='logout()' ng-if='isLoggedIn' ng-cloak>
             Logout
           </md-button>
@@ -38,6 +38,9 @@
       </md-toolbar>
       <md-content ng-if='isLoggedIn'>
         <md-card>
+          <md-list-item>  
+              API Key: {{user.uid}}
+          </md-list-item>
           <md-list-item>
             <md-input-container>
               <input type='text' ng-model='galleryName'  /> 
