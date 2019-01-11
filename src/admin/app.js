@@ -129,10 +129,16 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
     let newSlides = angular.toJson( slides )
     
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      'slides': newSlides
+      'slides': JSON.parse(newSlides)
     })
       .then(function () {
         console.log('Gallery written ')
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Gallery ' + galleryName + ' saved!')
+            .position('bottom left')
+            .hideDelay(1000)
+        )
       })
       .catch(function (error) {
         console.error('Error adding Gallery: ', error)
@@ -146,10 +152,15 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       console.log('Image deleted successfully', slide.image)
 
       $scope.userId[galleryName].splice(index, 1)
+      if ($scope.userId[galleryName] === undefined || $scope.userId[galleryName].length == 0) {
+        $scope.deleteGallery(galleryName)
+      } else {
+        db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).update({
+          slides: $scope.userId[galleryName]
+        })
+      }
       $scope.$apply()
-      db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).update({
-        slides: $scope.userId[galleryName]
-      })
+      
     }).catch(function (error) {
       // Uh-oh, an error occurred!
     })
