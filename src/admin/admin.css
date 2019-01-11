@@ -56,9 +56,11 @@ md-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {
 }
 
 md-card {
-    flex: 2
+    flex: 2;
 }
-
+md-card.gallery {
+    max-height: 450px
+}
 md-card md-card-title {
     padding: 24px 16px 16px;
     display: -webkit-box;
