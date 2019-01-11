@@ -72,11 +72,11 @@
             </md-card>
             
             <md-card  ng-repeat='slide in gallery' >
-                <md-card-title>
+                <md-card-title layout="row" layout-align="space-between">
                   <md-truncate class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(slide.image)"></md-truncate>
                   
                   <md-card-title-media >
-                    <div md-colors="{background: 'default-primary-100'}" class="md-media-md card-media primary line">
+                    <div md-colors="{background: 'default-grey-200'}" class="md-media-md card-media primary line">
                         <img style="object-fit: contain" src='{{slide.image}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
                     </div>
                   </md-card-title-media>
