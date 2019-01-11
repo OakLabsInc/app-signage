@@ -187,6 +187,7 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       let displayImageId = (gallery.length) + '-' + galleryName + '-display'
       $scope.uploadFile(galleryName, displayImageId, files)
     } else {
+      $scope.imageIsUploading = false
       $mdToast.show(
         $mdToast.simple()
           .textContent('That Image URL Already Exists')

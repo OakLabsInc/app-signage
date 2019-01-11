@@ -5,7 +5,7 @@
     <meta name = "viewport" content = "user-scalable=no, width=device-width">
     <title>Sample FirebaseUI App</title>
 
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.1/firebaseui.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="admin.css" />
@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
 
     
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
@@ -72,18 +72,32 @@
             </md-card>
             
             <md-card  ng-repeat='slide in gallery'>
-                <md-card-title >
-                  <md-truncate flex class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(slide.image)"></md-truncate>
+                <md-card-title>
+                  <!-- <md-truncate class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(slide.image)"></md-truncate> -->
+                  
                   <md-card-title-media>
-                    <div class="md-media-sm card-media">
-                        <img src='{{slide.image}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
+                    <div class="md-media-md card-media">
+                        <img style="object-fit: contain" src='{{slide.image}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
                     </div>
                   </md-card-title-media>
                 </md-card-title>
+                <div layout="column" layout-padding>
+                  <md-input-container>
+                    <label>Slide Title</label>
+                    <input ng-model="slide.title">
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Slide Overlay Text</label>
+                    <input ng-model="slide.overlay">
+                  </md-input-container>
+                </div>
                 <md-card-actions layout="row" layout-align="space-between">
                   <md-button  class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(galleryName, slide, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
+                  <md-button  class="margined-button md-fab md-mini" ng-click="saveSlideMetaData(galleryName, slide, $index)">
+                      <md-icon class="material-icons">save</md-icon>
+                    </md-button>
                   <md-input-container>
                     <label>Order</label>
                     <md-select ng-model="$index" ng-change="reorderSlides(slide, $index, galleryName)">

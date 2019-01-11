@@ -74,9 +74,8 @@ md-card md-card-title {
 
 }
 
-md-card md-card-title md-card-title-media .md-media-sm {
-    /* height: 80px; */
-    height: 100%;
-    width: 80px;
-    overflow: hidden;
+md-card md-card-title md-card-title-media .md-media-md img {
+    object-fit: contain;
+    width: 112px;
+    height: 112px;
 }
