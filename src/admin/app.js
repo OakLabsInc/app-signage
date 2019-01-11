@@ -125,8 +125,11 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
 
   $scope.saveGalleries = function (user, galleryName, slides) {
     $scope.imageIsUploading = false
+    // do this to strip $$hashKey before saving to fireStore
+    let newSlides = angular.toJson( slides )
+    
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      'slides': slides
+      'slides': newSlides
     })
       .then(function () {
         console.log('Gallery written ')
