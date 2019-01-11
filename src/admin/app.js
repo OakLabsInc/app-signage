@@ -36,6 +36,7 @@ app.directive('chooseFile', function () {
 
       button.bind('click', function () {
         input[0].click()
+        
       })
       input.bind('change', function (e) {
         scope.$apply(function () {
@@ -44,6 +45,7 @@ app.directive('chooseFile', function () {
             scope.fileName = files[0].name
             console.log(files[0].name)
             scope.addSlideToGallery(galleryName, scope.fileName, gallery, files)
+            
           } else {
             scope.fileName = null
           }
@@ -122,6 +124,7 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
   }
 
   $scope.saveGalleries = function (user, galleryName, slides) {
+    $scope.imageIsUploading = false
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
       'slides': slides
     })
@@ -172,6 +175,7 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
   }
 
   $scope.addSlideToGallery = function (galleryName, imageName, gallery, files) {
+    $scope.imageIsUploading = true
     let filename = imageName.substring(imageName.lastIndexOf('\\') + 1)
     var hasFile = false
     for (i = 0; i < $scope.userId[galleryName].length; i++) {

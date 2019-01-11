@@ -1,3 +1,6 @@
+body {
+    position: relative;
+}
 .mdl-shadow--2dp {
     box-shadow: none;
     background: transparent;
@@ -39,6 +42,19 @@ md-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {
     margin-left: 10px !important;
 
 }
+#loadingPanel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.30);
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 md-card {
     flex: 2
 }

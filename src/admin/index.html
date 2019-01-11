@@ -99,5 +99,10 @@
       </md-content>
       <div id="firebaseui-auth-container" ></div>
     </div>
+    <div id="loadingPanel" ng-show="imageIsUploading">
+        <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
+    </div>
   </body>
 </html>
