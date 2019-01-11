@@ -43,7 +43,7 @@ app.directive('chooseFile', function () {
           if (files[0]) {
             scope.fileName = files[0].name
             console.log(files[0].name)
-            scope.addImageToGallery(galleryName, scope.fileName, gallery, files)
+            scope.addSlideToGallery(galleryName, scope.fileName, gallery, files)
           } else {
             scope.fileName = null
           }
@@ -93,7 +93,7 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
     db.collection('users').doc($scope.user.uid).collection('galleries').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         $timeout(function () {
-          $scope.userId[doc.id] = doc.data().urls
+          $scope.userId[doc.id] = doc.data().slides
         })
       })
     })
@@ -121,9 +121,9 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       })
   }
 
-  $scope.saveGalleries = function (user, galleryName, images) {
+  $scope.saveGalleries = function (user, galleryName, slides) {
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      urls: images
+      'slides': slides
     })
       .then(function () {
         console.log('Gallery written ')
@@ -133,16 +133,16 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       })
   }
 
-  $scope.deleteGalleryImage = function (galleryName, url, index) {
+  $scope.deleteGallerySlide = function (galleryName, slide, index) {
     let galleryImagesRef = firebase.storage().ref()
 
-    galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(url)).delete().then(function () {
-      console.log('Image deleted successfully', url)
+    galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(slide.image)).delete().then(function () {
+      console.log('Image deleted successfully', slide.image)
 
       $scope.userId[galleryName].splice(index, 1)
       $scope.$apply()
       db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).update({
-        urls: $scope.userId[galleryName]
+        slides: $scope.userId[galleryName]
       })
     }).catch(function (error) {
       // Uh-oh, an error occurred!
@@ -150,8 +150,8 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
   }
   $scope.deleteGallery = function (galleryName) {
     let galleryImagesRef = firebase.storage().ref()
-    $scope.userId[galleryName].map(function (url) {
-      galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(url)).delete().then(function () {
+    $scope.userId[galleryName].map(function (slide) {
+      galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(slide.image)).delete().then(function () {
         console.log('Gallery deleted successfully', url)
         $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
       }).catch(function (error) {
@@ -171,11 +171,11 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       })
   }
 
-  $scope.addImageToGallery = function (galleryName, imageUrl, gallery, files) {
-    let filename = imageUrl.substring(imageUrl.lastIndexOf('\\') + 1)
+  $scope.addSlideToGallery = function (galleryName, imageName, gallery, files) {
+    let filename = imageName.substring(imageName.lastIndexOf('\\') + 1)
     var hasFile = false
     for (i = 0; i < $scope.userId[galleryName].length; i++) {
-      if ($scope.userId[galleryName][i].indexOf(filename) > 0 && $scope.userId[galleryName][i].indexOf(galleryName)) {
+      if ($scope.userId[galleryName][i].image.indexOf(filename) > 0 && $scope.userId[galleryName][i].image.indexOf(galleryName) > 0) {
         hasFile = true
       }
     }
@@ -204,7 +204,9 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       .then((url) => {
         console.log(url)
         $timeout(function () {
-          $scope.userId[galleryName].push(url)
+          $scope.userId[galleryName].push({ 
+            'image': url 
+          })
           $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
         })
         return url
@@ -224,12 +226,12 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
     return resultArray
   }
 
-  $scope.reorderUrls = function (url, index, galleryName) {
-    let tempUrls = $scope.userId[galleryName]
-    let currentIndex = tempUrls.indexOf(url)
-    tempUrls.splice(currentIndex, 1)
-    tempUrls.splice(index,0,url)
-    $scope.saveGalleries($scope.user, galleryName, tempUrls)
+  $scope.reorderSlides = function (slide, index, galleryName) {
+    let tempSlides = $scope.userId[galleryName]
+    let currentIndex = tempSlides.indexOf(slide)
+    tempSlides.splice(currentIndex, 1)
+    tempSlides.splice(index,0,slide)
+    $scope.saveGalleries($scope.user, galleryName, tempSlides)
   }
 
 })

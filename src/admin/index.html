@@ -51,7 +51,7 @@
                   <span class="md-headline">{{galleryName.replace(" ","")}}</span>
                 </md-card-title-text>
                 <md-card-actions  layout="column" layout-align="start end">
-                    <!-- <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName.replace(" ","")}}' onchange='angular.element(this).scope().addImageToGallery(angular.element(this).scope().galleryName.replace(" ",""), this.value, angular.element(this).scope().gallery)'  /> -->
+                    <!-- <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName.replace(" ","")}}' onchange='angular.element(this).scope().addSlideToGallery(angular.element(this).scope().galleryName.replace(" ",""), this.value, angular.element(this).scope().gallery)'  /> -->
                     <choose-file layout="row" flex="100" gallery-name='{{galleryName.replace(" ","")}}' gallery-obj='{{gallery}}'>
                         <input id="fileInput" type="file" class="ng-hide">
                         <md-input-container flex class="md-block">
@@ -71,22 +71,22 @@
               </md-card-title>
             </md-card>
             
-            <md-card  ng-repeat='url in gallery'>
+            <md-card  ng-repeat='slide in gallery'>
                 <md-card-title >
-                  <md-truncate flex class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(url)"></md-truncate>
+                  <md-truncate flex class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(slide.image)"></md-truncate>
                   <md-card-title-media>
                     <div class="md-media-sm card-media">
-                        <img src='{{url}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
+                        <img src='{{slide.image}}' ng-attr-id='{{$index + "-" + galleryName.replace(" ","") + "-display"}}' />
                     </div>
                   </md-card-title-media>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="space-between">
-                  <md-button  class="margined-button md-fab md-mini" ng-click="deleteGalleryImage(galleryName, url, $index)">
+                  <md-button  class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(galleryName, slide, $index)">
                     <md-icon class="material-icons">clear</md-icon>
                   </md-button>
                   <md-input-container>
                     <label>Order</label>
-                    <md-select ng-model="$index" ng-change="reorderUrls(url, $index, galleryName)">
+                    <md-select ng-model="$index" ng-change="reorderSlides(slide, $index, galleryName)">
                       <md-option ng-repeat="order in returnImageArray(gallery)" ng-value="$index" >
                         {{order}}
                       </md-option>
