@@ -210,7 +210,9 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
         console.log(url)
         $timeout(function () {
           $scope.userId[galleryName].push({ 
-            'image': url 
+            'image': url,
+            'title': '',
+            'overlay':  ''
           })
           $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
         })
