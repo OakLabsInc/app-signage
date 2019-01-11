@@ -59,7 +59,8 @@ md-card {
     flex: 2;
 }
 md-card.gallery {
-    max-height: 450px
+    min-height: 460px;
+    max-height: 460px;
 }
 md-card md-card-title {
     padding: 24px 16px 16px;
