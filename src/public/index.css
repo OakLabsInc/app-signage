@@ -16,6 +16,9 @@
 style {
   display: none;
 }
+script {
+  display: none;
+}
 html,
 body {
   height: 100%;

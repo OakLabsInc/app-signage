@@ -34,6 +34,39 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   // main window touches. this will log all tapped items, and also add the UI ripple of the tapped area
   $scope.ripples = []
 
+  $http({
+    method: 'GET',
+    url: '/env'
+  }).then(function successCallback(response) {
+      $scope.environment = response.data
+      db.collection("users").doc($scope.environment.apiKey).collection("galleries").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            if (doc.id === $scope.environment.galleryName) {
+              
+              $scope.initApp(doc.data())
+            }
+        });
+    });
+    
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
+
+  $scope.initApp = function (data) {
+
+    $scope.gallery = data
+
+    db.collection("users").doc($scope.environment.apiKey).collection("galleries").doc($scope.environment.galleryName)
+    .onSnapshot(function(doc) {
+        var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+        console.log(source, " data: ", doc.data());
+        $scope.initApp(doc.data())
+    });
+    
+  }
+
+
   $scope.mouseMoved = function ({ pageX: x, pageY: y }) {
     // dont show cursor if the settings has `false` or 0 as the cursorTimeout
     if ($scope.cursorTimeout) {
@@ -76,4 +109,5 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   }
 
   oak.ready()
+  
 })

@@ -8,11 +8,34 @@ html(ng-app='signageApp')
     link(href='/index.css', rel='stylesheet', type='text/css')
     link(href='/vendor/demo.css', rel='stylesheet', type='text/css')
 
+    script(src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js")
+ 
+    script.
+      var app = firebase.initializeApp({
+        apiKey: 'AIzaSyCNpkPav8JyQq7kZwlHVT78MxsRaYLnQMo',
+        authDomain: 'oak-signage.firebaseapp.com',
+        databaseURL: 'https://oak-signage.firebaseio.com',
+        projectId: 'oak-signage',
+        storageBucket: 'oak-signage.appspot.com',
+        messagingSenderId: '270582494300'
+      });
+      // Initialize Cloud Firestore through Firebase
+      var db = firebase.firestore();
+
+      // Disable deprecated features
+      db.settings({
+        timestampsInSnapshots: true
+      });
+
+
+    script(src='/index.js')
+
   body(ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
     ripples
       .ripple(ng-repeat="r in ripples", ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
     md-content(layout-padding='')
-      .content Hello World
+
+      pre(style='text-align: left') {{gallery | json}}
       
 
-    script(src='/index.js')
+    

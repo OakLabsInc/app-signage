@@ -1,5 +1,7 @@
 
 const debug = process.env.NODE_ENV !== 'production'
+const apiKey = process.env.API_KEY
+const galleryName = process.env.GALLERY_NAME
 
 const oak = require('oak')
 const { join } = require('path')
@@ -39,7 +41,12 @@ app.listen(port, function () {
 app.get('/', function (req, res) {
   res.render('index')
 })
-
+app.get('/env', function (req, res) {
+  res.json({
+    apiKey: apiKey || 'not available',
+    galleryName: galleryName || 'not available'
+  })
+})
 async function loadWindow () {
   logger.info({
     message: `Started on port ${port}`
