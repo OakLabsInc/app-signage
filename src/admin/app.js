@@ -96,6 +96,8 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       querySnapshot.forEach((doc) => {
         $timeout(function () {
           $scope.userId[doc.id] = doc.data().slides
+          $scope.userId[doc.id].slidesInterval = doc.data().interval
+          $scope.userId[doc.id].slidesToShow = doc.data().show
         })
       })
     })
@@ -129,7 +131,9 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
     let newSlides = angular.toJson( slides )
     
     db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      'slides': JSON.parse(newSlides)
+      'slides': JSON.parse(newSlides),
+      'interval': $scope.userId[galleryName].slidesInterval || 1000,
+      'show': $scope.userId[galleryName].slidesToShow || 1
     })
       .then(function () {
         console.log('Gallery written ')
