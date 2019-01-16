@@ -5,11 +5,7 @@ window.reload = function () {
 }
 
 window.app = window.angular
-  .module('signageApp', [
-    'ngAnimate',
-    'ngMessages',
-    'ngMaterial'
-  ])
+  .module('signageApp', [])
   .constant('os', window.os)
   .constant('oak', window.oak)
   .constant('_', window.lodash)
@@ -23,10 +19,12 @@ window.app = window.angular
 window.app.controller('appController', function ($log, $timeout, $scope, $http, $window, oak, _) {
   // ripples
   $scope.untapped = true
+  $scope.swiper = false
   $scope.cursor = {
     x: 0, y: 0
   }
   $scope.showCursor = false
+  $scope.shouldReload = false
   $scope.cursorTimeout = 10000
   var cursorPromises = []
   var timer
@@ -39,14 +37,16 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     url: '/env'
   }).then(function successCallback(response) {
       $scope.environment = response.data
-      db.collection("users").doc($scope.environment.apiKey).collection("galleries").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            if (doc.id === $scope.environment.galleryName) {
-              
+
+        db.collection("users").doc($scope.environment.apiKey).collection("galleries").doc($scope.environment.galleryName)
+        .onSnapshot(function(doc) {
+            var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+            console.log(source, " data: ", doc.data());
+            $timeout(function(){
               $scope.initApp(doc.data())
-            }
+            })
+            
         });
-    });
     
     }, function errorCallback(response) {
       // called asynchronously if an error occurs
@@ -54,15 +54,48 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
     });
 
   $scope.initApp = function (data) {
-
+    if (typeof $scope.gallery !== 'undefined' &&  data.show !== $scope.gallery.show) {
+      $scope.shouldReload = true
+    }
     $scope.gallery = data
+    let config = {
+      autoplay: {
+        disableOnInteraction: false,
+        delay: parseInt($scope.gallery.interval)
+      },
+      slidesPerView: parseInt($scope.gallery.show),
+      spaceBetween: 10,
+      slidesPerGroup: parseInt($scope.gallery.show),
+      observer: true,
+      // effect: "coverflow",
+      // coverflowEffect: {
+      //   rotate: 30,
+      //   slideShadows: false,
+      // },
 
-    db.collection("users").doc($scope.environment.apiKey).collection("galleries").doc($scope.environment.galleryName)
-    .onSnapshot(function(doc) {
-        var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-        console.log(source, " data: ", doc.data());
-        $scope.initApp(doc.data())
-    });
+      // effect: "fade",
+      // fadeEffect: {
+      //   crossFade: true
+      // },
+      loop: true,
+      
+      
+    }
+    if (!$scope.swiper) {
+
+      $timeout( function () {
+        $scope.swiper = new Swiper('.swiper-container', config);
+      })
+
+    }else {
+      if($scope.shouldReload) oak.reload()
+      
+      $timeout( function () {
+        $scope.swiper.update()
+        // $scope.swiper.destroy(true, true)
+        // $scope.swiper = new Swiper('.swiper-container', config);
+      })
+    }
     
   }
 

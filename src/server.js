@@ -66,12 +66,7 @@ async function loadWindow () {
       {
         name: 'uuid',
         path: 'uuid'
-      },
-      join(__dirname, '..', 'node_modules', 'angular'),
-      join(__dirname, '..', 'node_modules', 'angular-animate'),
-      join(__dirname, '..', 'node_modules', 'angular-aria'),
-      join(__dirname, '..', 'node_modules', 'angular-messages'),
-      join(__dirname, '..', 'node_modules', 'angular-material')
+      }
     ]
   })
     .on('log.*', function (props) {
