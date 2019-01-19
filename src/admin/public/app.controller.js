@@ -1,61 +1,4 @@
-var app = angular.module('signageApp', ['ngMaterial', 'ngMessages', 'firebase'])
-// .config(function($mdThemingProvider) {
-//   // Extend the red theme with a different color and make the contrast color black instead of white.
-//   // For example: raised button text will be black instead of white.
-//   var neonRedMap = $mdThemingProvider.extendPalette('red', {
-//     '500': '#ff0000',
-//     'contrastDefaultColor': 'dark'
-//   });
-//   // Register the new color palette map with the name <code>neonRed</code>
-//   $mdThemingProvider.definePalette('neonRed', neonRedMap);
-//   // Use that theme for the primary intentions
-//   $mdThemingProvider.theme('default')
-//     .primaryPalette('neonRed');
-// });
-
-app.factory('User', ['$firebaseObject',
-  function ($firebaseObject) {
-    return function (uid) {
-      // create a reference to the database node where we will store our data
-      var ref = firebase.database().ref('users').push()
-      var userRef = ref.child(uid)
-
-      // return it as a synchronized object
-      return $firebaseObject(userRef)
-    }
-  }
-])
-
-app.directive('chooseFile', function () {
-  return {
-    link: function (scope, elem, attrs) {
-      var button = elem.find('button')
-      let galleryName = attrs.galleryName
-      let gallery = attrs.galleryObj
-      let input = angular.element(elem[0].querySelector('input#fileInput'))
-
-      button.bind('click', function () {
-        input[0].click()
-        
-      })
-      input.bind('change', function (e) {
-        scope.$apply(function () {
-          var files = e.target.files
-          if (files[0]) {
-            scope.fileName = files[0].name
-            console.log(files[0].name)
-            scope.addSlideToGallery(galleryName, scope.fileName, gallery, files)
-            
-          } else {
-            scope.fileName = null
-          }
-        })
-      })
-    }
-  }
-})
-
-app.controller('appController', function AppController ($scope, $timeout, $mdToast, $firebaseObject, User) {
+app.controller('appController', function AppController ($log, $scope, $rootScope, $timeout, $mdToast, $firebaseObject, User, $mdSidenav, $mdPanel, $mdDialog) {
   var db = firebase.firestore()
 
   db.settings({
@@ -67,6 +10,44 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
   $scope.userId = {}
 
   $scope.isLoggedIn = false
+
+  // sidebar toggle functions
+  $scope.toggleLeft = buildDelayedToggler('left')
+  function debounce (func, wait, context) {
+    var timer
+
+    return function debounced () {
+      var context = $scope,
+        args = Array.prototype.slice.call(arguments)
+      $timeout.cancel(timer)
+      timer = $timeout(function () {
+        timer = undefined
+        func.apply(context, args)
+      }, wait || 10)
+    }
+  }
+
+  function buildDelayedToggler (navID) {
+    return debounce(function () {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav(navID)
+        .toggle()
+        .then(function () {
+          $log.debug('toggle ' + navID + ' is done')
+        })
+    }, 200)
+  }
+
+  function buildToggler (navID) {
+    return function () {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav(navID)
+        .toggle()
+        .then(function () {
+          $log.debug('toggle ' + navID + ' is done')
+        })
+    }
+  }
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -89,25 +70,78 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       $scope.isLoggedIn = false
       $scope.user = {}
       $scope.userId = {}
+      $scope.galleries = []
     })
   }
   $scope.getFirebaseUserGalleries = function () {
     db.collection('users').doc($scope.user.uid).collection('galleries').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         $timeout(function () {
-          $scope.userId[doc.id] = doc.data().slides
-          $scope.userId[doc.id].slidesInterval = doc.data().interval
-          $scope.userId[doc.id].slidesToShow = doc.data().show
+          $scope.galleries.push(doc.data())
         })
       })
+      console.log('galleries', $scope.galleries)
     })
   }
-  $scope.addGallery = function (galleryName) {
-    if (galleryName !== undefined && !$scope.userId.hasOwnProperty(galleryName)) {
-      $scope.userId[galleryName] = []
-    } else {
-      $mdToast.show($mdToast.simple().textContent('That Gallery Name Already Exists'))
+  $scope.editGallery = function (i) {
+    if (i > -1) {
+      $scope.gallery = $scope.galleries[i]
     }
+
+    $scope.galleryFormOpen = true
+  }
+  $scope.addGallery = function (galleryForm, gallery) {
+    $scope.galleryFormOpen = false
+    $scope.gallery = {}
+    if (galleryForm.$valid) {
+      var results = _.find($scope.galleries, ['name', gallery.name])
+      if (!results) {
+        let newGallery = {
+          'name': gallery.name,
+          'config': {},
+          'slides': []
+        }
+        $scope.galleries.push(newGallery)
+        $scope.saveGallery(newGallery)
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Gallery name exists')
+            .position('top left')
+            .hideDelay(1500)
+        )
+      }
+    } else {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Form invalid')
+          .position('top left')
+          .hideDelay(1500)
+      )
+    }
+  }
+
+  $scope.saveGallery = function (newGallery) {
+    $scope.imageIsUploading = false
+
+    db.collection('users').doc($scope.user.uid).collection('galleries').doc(newGallery.name).set(newGallery)
+      .then(function () {
+        console.log('Gallery written ')
+        $timeout(function () {
+          
+          console.log('Galleries: ', $scope.galleries)
+        })
+
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Gallery ' + newGallery.name + ' saved!')
+            .position('bottom left')
+            .hideDelay(1000)
+        )
+      })
+      .catch(function (error) {
+        console.error('Error adding Gallery: ', error)
+      })
   }
 
   $scope.saveUser = function (user) {
@@ -122,30 +156,6 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       })
       .catch(function (error) {
         console.error('Error adding User: ', error)
-      })
-  }
-
-  $scope.saveGalleries = function (user, galleryName, slides) {
-    $scope.imageIsUploading = false
-    // do this to strip $$hashKey before saving to fireStore
-    let newSlides = angular.toJson( slides )
-    
-    db.collection('users').doc(user.uid).collection('galleries').doc(galleryName).set({
-      'slides': JSON.parse(newSlides),
-      'interval': $scope.userId[galleryName].slidesInterval || 1000,
-      'show': $scope.userId[galleryName].slidesToShow || 1
-    })
-      .then(function () {
-        console.log('Gallery written ')
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Gallery ' + galleryName + ' saved!')
-            .position('bottom left')
-            .hideDelay(1000)
-        )
-      })
-      .catch(function (error) {
-        console.error('Error adding Gallery: ', error)
       })
   }
 
@@ -164,32 +174,36 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
         })
       }
       $scope.$apply()
-      
     }).catch(function (error) {
       // Uh-oh, an error occurred!
     })
   }
   $scope.deleteGallery = function (galleryName) {
     let galleryImagesRef = firebase.storage().ref()
-    $scope.userId[galleryName].map(function (slide) {
-      galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(slide.image)).delete().then(function () {
-        console.log('Gallery deleted successfully', url)
-        $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
-      }).catch(function (error) {
-        // Uh-oh, an error occurred!
+    let gallery = _.find($scope.galleries, 'name', galleryName)
+    gallery.slides.map(function (slide) {
+      $timeout( function () {
+        galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(slide.image)).delete().then(function () {
+          console.log('Gallery deleted successfully', url)
+          $scope.saveGalleries($scope.user, galleryName, gallery)
+        }).catch(function (error) {
+          // Uh-oh, an error occurred!
+        })
       })
     })
 
     db.collection('users').doc($scope.user.uid).collection('galleries').doc(galleryName).delete()
       .then(function () {
         console.log('Document successfully deleted!')
-        $timeout(function () {
-          $scope.userId = {}
-          $scope.getFirebaseUserGalleries()
+        $timeout( function () {
+          _.remove($scope.galleries, function (e) {
+            return e.name === galleryName;
+          });
         })
       }).catch(function (error) {
         console.error('Error removing document: ', error)
       })
+    
   }
 
   $scope.addSlideToGallery = function (galleryName, imageName, gallery, files) {
@@ -227,10 +241,10 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
       .then((url) => {
         console.log(url)
         $timeout(function () {
-          $scope.userId[galleryName].push({ 
+          $scope.userId[galleryName].push({
             'image': url,
             'title': '',
-            'overlay':  ''
+            'overlay': ''
           })
           $scope.saveGalleries($scope.user, galleryName, $scope.userId[galleryName])
         })
@@ -245,7 +259,7 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
 
   $scope.returnImageArray = function (gallery) {
     let resultArray = []
-    for(i in gallery){
+    for (i in gallery) {
       resultArray.push(i)
     }
     return resultArray
@@ -255,8 +269,36 @@ app.controller('appController', function AppController ($scope, $timeout, $mdToa
     let tempSlides = $scope.userId[galleryName]
     let currentIndex = tempSlides.indexOf(slide)
     tempSlides.splice(currentIndex, 1)
-    tempSlides.splice(index,0,slide)
+    tempSlides.splice(index, 0, slide)
     $scope.saveGalleries($scope.user, galleryName, tempSlides)
   }
+
+  $scope.showGalleryConfirm = function(ev, name) {
+    $scope.currentGalleryName = name
+
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this entire gallery?')
+          .textContent('All of the images and associated data will be lost permentently')
+          .ariaLabel('Are you sure?')
+          .targetEvent(ev)
+          .ok('Delete')
+          .cancel('Cancel');
+
+    $mdDialog.show(confirm).then(function() {
+      //$scope.status = 'You decided to get rid of your debt.';
+      //addGallery(galleryForm, gallery)
+
+      $log.info($scope.currentGalleryName)
+      $scope.deleteGallery($scope.currentGalleryName)
+
+ 
+    }, function() {
+      $scope.status = 'You decided to keep your debt.';
+    });
+  };
+
+
+
 
 })

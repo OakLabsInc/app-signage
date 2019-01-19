@@ -4,7 +4,7 @@ window.reload = function () {
   window.oak.reload()
 }
 
-window.app = window.angular
+var app = window.angular
   .module('signageApp', [])
   .constant('os', window.os)
   .constant('oak', window.oak)
@@ -16,7 +16,7 @@ window.app = window.angular
     $sceDelegateProvider.resourceUrlWhitelist(['self'])
   })
 
-window.app.controller('appController', function ($log, $timeout, $scope, $http, $window, oak, _) {
+app.controller('appController', function ($log, $timeout, $scope, $http, $window, oak, _) {
   // ripples
   $scope.untapped = true
   $scope.swiper = false
@@ -35,38 +35,36 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   $http({
     method: 'GET',
     url: '/env'
-  }).then(function successCallback(response) {
-      $scope.environment = response.data
+  }).then(function successCallback (response) {
+    $scope.environment = response.data
 
-        db.collection("users").doc($scope.environment.apiKey).collection("galleries").doc($scope.environment.galleryName)
-        .onSnapshot(function(doc) {
-            var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-            console.log(source, " data: ", doc.data());
-            $timeout(function(){
-              $scope.initApp(doc.data())
-            })
-            
-        });
-    
-    }, function errorCallback(response) {
-      // called asynchronously if an error occurs
-      // or server returns response with an error status.
-    });
+    db.collection('users').doc($scope.environment.apiKey).collection('galleries').doc($scope.environment.galleryName)
+      .onSnapshot(function (doc) {
+        var source = doc.metadata.hasPendingWrites ? 'Local' : 'Server'
+        console.log(source, ' data: ', doc.data())
+        $timeout(function () {
+          $scope.initApp(doc.data())
+        })
+      })
+  }, function errorCallback (response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  })
 
   $scope.initApp = function (data) {
-    if (typeof $scope.gallery !== 'undefined' &&  data.show !== $scope.gallery.show) {
+    if (typeof $scope.gallery !== 'undefined' && data.show !== $scope.gallery.show) {
       $scope.shouldReload = true
     }
     $scope.gallery = data
     let config = {
       autoplay: {
-        disableOnInteraction: false,
         delay: parseInt($scope.gallery.interval)
       },
       slidesPerView: parseInt($scope.gallery.show),
       spaceBetween: 10,
       slidesPerGroup: parseInt($scope.gallery.show),
       observer: true,
+      loop: true
       // effect: "coverflow",
       // coverflowEffect: {
       //   rotate: 30,
@@ -77,28 +75,22 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
       // fadeEffect: {
       //   crossFade: true
       // },
-      loop: true,
-      
-      
+
     }
     if (!$scope.swiper) {
-
-      $timeout( function () {
-        $scope.swiper = new Swiper('.swiper-container', config);
+      $timeout(function () {
+        $scope.swiper = new Swiper('.swiper-container', config)
       })
+    } else {
+      if ($scope.shouldReload) oak.reload()
 
-    }else {
-      if($scope.shouldReload) oak.reload()
-      
-      $timeout( function () {
+      $timeout(function () {
         $scope.swiper.update()
         // $scope.swiper.destroy(true, true)
         // $scope.swiper = new Swiper('.swiper-container', config);
       })
     }
-    
   }
-
 
   $scope.mouseMoved = function ({ pageX: x, pageY: y }) {
     // dont show cursor if the settings has `false` or 0 as the cursorTimeout
@@ -142,5 +134,4 @@ window.app.controller('appController', function ($log, $timeout, $scope, $http, 
   }
 
   oak.ready()
-  
 })

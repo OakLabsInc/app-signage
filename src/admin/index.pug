@@ -1,0 +1,63 @@
+doctype html
+html
+  include includes/head.pug
+  body(ng-app="signageApp" ng-controller="appController" ng-cloak="")
+    div(layout="column" layout-fill="")
+      md-toolbar
+        .md-toolbar-tools
+          md-button#galleryMenu.md-fab.md-mini(ng-click="toggleLeft()" hide-gt-md="")
+            md-icon.material-icons menu
+          h2(md-truncate="" flex="") Signage Application Admin
+          md-button(ng-click="logout()" ng-if="isLoggedIn" ng-cloak="")
+            | Logout 
+      md-content(ng-if="isLoggedIn" layout-fill="" layout="column")
+        section(layout="row" flex="")
+          md-sidenav.md-sidenav-left(md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4")
+            md-toolbar(md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between")
+              .md-toolbar-tools
+                md-input-container
+                  md-button#addGallery.md-fab.md-mini(ng-click="editGallery()")
+                    md-icon.material-icons add
+                span.md-display-1 Galleries
+            .gallery-panel(aria-label="Eat me!" layout="column" layout-align="center center" ng-show="galleryFormOpen")
+              md-toolbar
+                .md-toolbar-tools
+                  h2 Add a gallery
+              md-content.gallery-panel-content
+                form(name="galleryForm")
+                  md-card.primary.line
+                    md-card-title(layout="column")
+                      md-card-content(layout="column" layout-fill="" style="padding:0")
+                        md-input-container
+                          label Gallery Name
+                          input(ng-model="gallery.name" ng-pattern="/^[a-zA-Z0-9_]*$/" required="")
+                          span(ng-show="galleryForm.gallery.name.$error.pattern") No spaces allowed. Use _ instead
+                      md-card-actions(layout="row" layout-align="space-between")
+                        md-button.md-primary(flex="" ng-click="closeGalleryPanel()")
+                          | Cancel
+                        md-button.md-primary(md-autofocus="" flex="" ng-click="addGallery(galleryForm, gallery)")
+                          | Add
+                  md-content
+                    pre(style="text-align:left").
+                      {{galleryForm.$error.pattern| json}}                      
+            md-content(layout-padding="" ng-show="!galleryFormOpen")
+              div(layout="row" ng-repeat="gallery in galleries | orderBy: 'name'")
+                md-card.gallery.primary.line(layout="column" layout-fill="")
+                  md-card-title(layout="column" layout-fill="")
+                    md-card-title-text
+                      span.md-headline {{gallery.name}}
+                    md-card-content(layout="column" layout-fill="" style="padding:0")
+                    md-card-actions(layout="row" layout-align="end end")
+                      md-button#uploadButton.md-fab.md-mini(ng-click="showGalleryConfirm($event, gallery.name)")
+                        md-icon.material-icons clear
+          md-content(flex="" layout-padding="")
+            div(layout="column" layout-align="top left")
+              p
+                | Gallery Detail for {{currentGallery}}
+              div
+                | [Slide List]
+            div(flex="")
+      #firebaseui-auth-container
+    #loadingPanel(ng-show="imageIsUploading")
+      div(layout="row" layout-sm="column" layout-align="space-around")
+        md-progress-circular(md-mode="indeterminate")

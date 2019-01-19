@@ -27,7 +27,7 @@
 
   </head>
   <body ng-app="signageApp"  ng-controller='appController' ng-cloak>
-    <div layout="column" layout-fill>
+    <div layout="column">
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2 md-truncate flex>Signage Application Admin</h2>
@@ -49,11 +49,11 @@
           </md-list-item>
         </md-card>
         <md-divider></md-divider>
-        <div layout-wrap layout="row">
-          <div layout="column" ng-repeat="(galleryName, gallery) in userId" style="flex: 2;">
+        <div flex-gt-sm="50" flex>
+          <div layout="row" ng-repeat="(galleryName, gallery) in userId" >
 
             <md-card md-colors="{background: 'default-primary-100'}" class="gallery primary line">
-              <md-card-title  layout="column">
+              <md-card-title  layout="row">
                 <md-card-title-text>
                   <span class="md-headline">{{galleryName.replace(" ","")}}</span>
                 </md-card-title-text>
@@ -67,15 +67,15 @@
                         <input ng-model="userId[galleryName].slidesToShow">
                       </md-input-container>
                     <choose-file layout="row" flex="100" gallery-name='{{galleryName.replace(" ","")}}' gallery-obj='{{gallery}}'>
-                        <md-button id="uploadButton" class="md-fab md-mini">
-                          <md-icon class="material-icons">cloud_upload</md-icon>
-                        </md-button>
-                        <md-input-container flex class="md-block">
-                          <input type="text" ng-model="fileName" disabled>
-                          <div class="hint">Select a file to upload</div>
-                        </md-input-container>
-                        <input id="fileInput" type="file" accept="image/*" class="ng-hide">
-                      </choose-file>
+                      <md-button id="uploadButton" class="md-fab md-mini">
+                        <md-icon class="material-icons">cloud_upload</md-icon>
+                      </md-button>
+                      <md-input-container flex class="md-block">
+                        <input type="text" ng-model="fileName" disabled>
+                        <div class="hint">Select a file to upload</div>
+                      </md-input-container>
+                      <input id="fileInput" type="file" accept="image/*" class="ng-hide">
+                    </choose-file>
                 </md-card-content>
                 <md-card-actions  layout="row" layout-align="end end">
                   <!-- <input type='file' ng-model='imageUrl' ng-attr-id='{{galleryName.replace(" ","")}}' onchange='angular.element(this).scope().addSlideToGallery(angular.element(this).scope().galleryName.replace(" ",""), this.value, angular.element(this).scope().gallery)'  /> -->
@@ -88,8 +88,8 @@
                 </md-card-actions>
               </md-card-title>
             </md-card>
-            
-            <md-card  ng-repeat='slide in gallery' class="gallery primary line">
+            <md-content style="width:75%">
+              <md-card  ng-repeat='slide in gallery' class="gallery primary line">
                 <md-card-title layout="row" layout-align="space-between">
                   <md-card-title-text>
                     <md-headline md-truncate class="md-subhead md-ellipsis" style="width: 200px;margin-bottom: 5px" ng-bind="getImageName(slide.image)"></md-headline>
@@ -129,6 +129,7 @@
                   </md-input-container>
                 </md-card-actions>
               </md-card>
+            </md-content>
 
           </div>
         </div>
