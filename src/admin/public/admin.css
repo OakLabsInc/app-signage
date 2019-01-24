@@ -18,11 +18,6 @@ div.mdl-progress::after {
 .mdl-progress {
   height: 5px;
 }
-md-toast.md-default-theme .md-toast-content,
-md-toast .md-toast-content {
-  background-color: #6b0404;
-  color: #fafafa;
-}
 .hint {
   position: absolute;
   left: 5px;
@@ -53,6 +48,23 @@ md-toast .md-toast-content {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,0.2), 0 13px 19px 2px rgba(0,0,0,0.14), 0 5px 24px 4px rgba(0,0,0,0.12);
+}
+.galleryList .md-checked {
+  background-color: #dedede;
+  border-radius: 2px;
+}
+md-radio-button {
+  margin-bottom: 0;
+}
+md-tabs-wrapper {
+  border-bottom-color: #dedede;
+}
+md-toast.error-toast .md-toast-content {
+  background-color: #f00;
+  color: #000;
+}
+md-toast.success-toast .md-toast-content {
+  background-color: #008000;
 }
 md-card md-card-title {
   padding: 24px 16px 16px;

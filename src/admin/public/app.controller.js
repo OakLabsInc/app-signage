@@ -12,6 +12,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.isLoggedIn = false
 
   // sidebar toggle functions
+  
   $scope.toggleLeft = buildDelayedToggler('left')
   function debounce (func, wait, context) {
     var timer
@@ -64,7 +65,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       })
     }
   })
-
+  
   $scope.logout = function () {
     firebase.auth().signOut().then(function () {
       $scope.isLoggedIn = false
@@ -90,14 +91,12 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
 
     $scope.galleryFormOpen = true
   }
-  $scope.addGallery = function (galleryForm, gallery) {
-    $scope.galleryFormOpen = false
-    $scope.gallery = {}
-    if (galleryForm.$valid) {
-      var results = _.find($scope.galleries, ['name', gallery.name])
+  $scope.addGallery = function (name) {
+
+      var results = _.find($scope.galleries, ['name', name])
       if (!results) {
         let newGallery = {
-          'name': gallery.name,
+          'name': _.snakeCase(name),
           'config': {},
           'slides': []
         }
@@ -107,20 +106,17 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         $mdToast.show(
           $mdToast.simple()
             .textContent('Gallery name exists')
-            .position('top left')
-            .hideDelay(1500)
+            .position('bottom left')
+            .hideDelay(1000)
+            .toastClass("error-toast")
+
         )
       }
-    } else {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Form invalid')
-          .position('top left')
-          .hideDelay(1500)
-      )
-    }
+    
   }
-
+  $scope.formatGalleryName = function(name) {
+    return _.startCase(name)
+  }
   $scope.saveGallery = function (newGallery) {
     $scope.imageIsUploading = false
 
@@ -137,6 +133,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
             .textContent('Gallery ' + newGallery.name + ' saved!')
             .position('bottom left')
             .hideDelay(1000)
+            .toastClass("success-toast")
         )
       })
       .catch(function (error) {
@@ -272,7 +269,24 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     tempSlides.splice(index, 0, slide)
     $scope.saveGalleries($scope.user, galleryName, tempSlides)
   }
-
+  $scope.showAddGalleryPrompt = function(ev) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.prompt()
+        .title('Gallery name?')
+        .textContent('Spaces will be converted to underscores.')
+        .placeholder('Gallery name')
+        .ariaLabel('Gallery name')
+        .targetEvent(ev)
+        .required(true)
+        .ok('Add')
+        .cancel('Cancel');
+  
+      $mdDialog.show(confirm).then(function(result) {
+        $scope.addGallery(result)
+      }, function() {
+        $scope.status = 'You didn\'t name your dog.';
+      });
+  }
   $scope.showGalleryConfirm = function(ev, name) {
     $scope.currentGalleryName = name
 

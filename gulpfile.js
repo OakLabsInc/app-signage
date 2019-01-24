@@ -12,12 +12,15 @@ const DIST_PATH = join(__dirname, 'src', 'admin', 'public')
 gulp.task('stylus', function () {
   return watch(
     join(join(SRC_PATH, '**', '*.styl')),
-    { ignoreInitial: false }
+    { 
+      ignoreInitial: false
+    }
   )
     .pipe(
       stylus({
         use: nib(),
-        compress: false
+        compress: false,
+        translate_tabs_to_spaces: false 
       })
     )
     .pipe(gulp.dest(DIST_PATH))

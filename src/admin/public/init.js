@@ -1,4 +1,5 @@
 var app = angular.module('signageApp', ['ngMaterial', 'ngMessages', 'firebase'])
+.constant('_', window.lodash)
 // .config(function($mdThemingProvider) {
 //   // Extend the red theme with a different color and make the contrast color black instead of white.
 //   // For example: raised button text will be black instead of white.
