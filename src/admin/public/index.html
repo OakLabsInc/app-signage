@@ -35,89 +35,139 @@
           <md-button ng-click="logout()" ng-if="isLoggedIn" ng-cloak="">Logout</md-button>
         </div>
       </md-toolbar>
-      <md-content ng-if="isLoggedIn" layout-fill="" layout="column">
-        <section layout="row" flex="">
-          <md-sidenav class="md-sidenav-left" md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
-            <md-toolbar md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between">
-              <div class="md-toolbar-tools">
-                <md-input-container>
-                  <md-button class="md-fab md-mini" id="addGallery" ng-click="showAddGalleryPrompt($event)">
-                    <md-icon class="material-icons">add</md-icon>
-                  </md-button>
-                </md-input-container><span class="md-display-1">Galleries</span>
-              </div>
-            </md-toolbar>
-            <md-content layout-padding="" ng-show="!galleryFormOpen">
-              <md-radio-group class="galleryList" ng-model="selectedGallery">
-                <div class="row" ng-repeat="gallery in galleries | orderBy: 'name'">
-                  <div flex="" layout="row" layout-padding layout-align="space-between center">
-                    <md-radio-button class="md-primary" flex="" ng-value="gallery">{{formatGalleryName(gallery.name)}}</md-radio-button>
-                    <md-button class="md-fab md-mini" id="uploadButton" ng-click="showGalleryConfirm($event, gallery.name)">
-                      <md-icon class="material-icons">clear</md-icon>
-                    </md-button>
-                  </div>
-                  <md-divider></md-divider>
-                </div>
-              </md-radio-group>
-            </md-content>
-          </md-sidenav>
-          <md-content flex="" layout-padding="" layout-fill="" layout="row">
-            <div layout="column" layout-fill="" layout-align="top left">
-              <md-tabs md-selected="selectedTabIndex" md-align-tabs="top" ng-if="selectedGallery">
-                <md-tab id="tab1" md-tab-class="selector-tab1">
-                  <md-tab-label>Settings</md-tab-label>
-                  <md-tab-body>
-                    <md-content layout-padding layout="column" flex=""> 
-                      <h1> 
-                        <md-button class="md-fab md-mini" id="uploadButton" ng-click="s">
-                          <md-icon class="material-icons">save</md-icon>
-                        </md-button>
-                      </h1>
-                      <md-content layout="column" layout-wrap>
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <label>Gallery Name</label>
-                          <input ng-model="selectedGallery.name" ng-pattern="/^[a-zA-Z0-9_]*$/">
-                        </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <label>Sides per view</label>
-                          <input ng-model="selectedGallery.config.slidesPerView" ng-pattern="/^[1-4]{1}/">
-                        </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <label>Sides per group</label>
-                          <input ng-model="selectedGallery.config.slidesPerGroup">
-                        </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <md-checkbox ng-model="selectedGallery.config.loop">Loop slide show</md-checkbox>
-                        </md-input-container>
-                      </md-content>
-                      <md-divider></md-divider>
-                    </md-content>
-                  </md-tab-body>
-                </md-tab>
-                <md-tab id="tab2" md-tab-class="selector-tab2">
-                  <md-tab-label>Slides</md-tab-label>
-                  <md-tab-body> 
-                    <md-content layout-padding> 
-                      <div>[slide list]</div>
-                      <md-divider></md-divider>
-                    </md-content>
-                  </md-tab-body>
-                </md-tab>
-                <md-tab id="tab3" md-tab-class="selector-tab3">
-                  <md-tab-label>Preview</md-tab-label>
-                  <md-tab-body>
-                    <md-content layout-padding> 
-                      <div>[gallery preview]</div>
-                      <md-divider></md-divider>
-                    </md-content>
-                  </md-tab-body>
-                </md-tab>
-                <pre style="text-align:left">{{selectedGallery | json}}</pre>
-              </md-tabs>
+      <div ng-if="isLoggedIn" style="height:100%;overflow:hidden" layout="row">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+          <md-toolbar md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between">
+            <div class="md-toolbar-tools">
+              <md-input-container>
+                <md-button class="md-fab md-mini" id="addGallery" ng-click="showAddGalleryPrompt($event)">
+                  <md-icon class="material-icons">add</md-icon>
+                </md-button>
+              </md-input-container><span class="md-display-1">Galleries</span>
             </div>
+          </md-toolbar>
+          <md-content layout-padding="" ng-show="!galleryFormOpen">
+            <md-radio-group class="galleryList" ng-model="selectedGallery">
+              <div class="row" ng-repeat="gallery in galleries | orderBy: 'name'">
+                <div flex="" layout="row" layout-padding layout-align="space-between center">
+                  <md-radio-button class="md-primary" flex="" ng-value="gallery" ng-click="checkSideBar()">{{formatGalleryName(gallery.name)}}</md-radio-button>
+                  <md-button class="md-fab md-mini" id="clearGalleryButton" ng-click="showGalleryConfirm($event, gallery.name)">
+                    <md-icon class="material-icons">clear</md-icon>
+                  </md-button>
+                </div>
+                <md-divider> </md-divider>
+              </div>
+            </md-radio-group>
           </md-content>
-        </section>
-      </md-content>
+        </md-sidenav>
+        <div layout="column" layout-fill="" flex="" layout-padding="">
+          <div layout="column" layout-fill="" ng-if="selectedGallery">
+            <div layout="row" layout-align="space-between center" style="min-height: 50px">
+              <h1>{{formatGalleryName(selectedGallery.name)}}</h1>
+            </div>
+            <md-tabs layout="column" layout-fill="" md-selected="selectedTabIndex" md-align-tabs="top">
+              <md-tab layout="column" layout-fill="" id="tab1" md-tab-class="selector-tab1">
+                <md-tab-label>Settings</md-tab-label>
+                <md-tab-body>
+                  <div layout-padding layout="column" flex=""> 
+                    <div layout="column" layout-fill="" layout-wrap>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Gallery Name</label>
+                        <input ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Sides per view</label>
+                        <input ng-model="selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Sides per group</label>
+                        <input ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <md-checkbox ng-model="selectedGallery.config.loop">Loop slide show</md-checkbox>
+                      </md-input-container>
+                      <md-radio-group class="md-block" ng-model="selectedGallery.config.direction" ng-required layout="row" flex-gt-sm>
+                        <div class="button-wrapper" layout="row" layout-padding>
+                          <md-radio-button class="md-primary" flex="" value="horizontal">Horizontal Display</md-radio-button>
+                          <md-radio-button class="md-primary" flex="" value="vertical">Vertical Display</md-radio-button>
+                        </div>
+                      </md-radio-group>
+                    </div>
+                    <pre style="text-align:left">{{selectedGallery | json}}</pre>
+                    <md-divider></md-divider>
+                  </div>
+                </md-tab-body>
+              </md-tab>
+              <md-tab id="tab2" md-tab-class="selector-tab2">
+                <md-tab-label>Slides</md-tab-label>
+                <md-tab-body> 
+                  <md-content layout-padding> 
+                    <div> 
+                      <md-button id="uploadButton" ng-click="addSlideToGallery(selectedGallery)">
+                        <md-icon class="material-icons">add</md-icon><span>Add Slide</span>
+                      </md-button>
+                    </div>
+                    <div class="image-list" flex layout="column" layout-fill>
+                      <md-divider></md-divider>
+                      <div class="image-list-item" layout-fill ng-repeat="slide in selectedGallery.slides" ng-click="null">
+                        <div class="image-card-top" layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill>
+                          <div class="image-card-text md-list-item-text" flex="100" layout="column">
+                            <choose-file layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}">
+                              <md-button class="md-fab md-mini" id="uploadButton">
+                                <md-icon class="material-icons">image</md-icon>
+                              </md-button>
+                              <input class="ng-hide" ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*"><span>Upload Background image</span>
+                            </choose-file>
+                            <md-input-container class="md-block" flex="100">
+                              <label>Title</label>
+                              <input ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100">
+                              <label>Text Overlay</label>
+                              <textarea name="" cols="60" rows="5" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text"></textarea>
+                            </md-input-container>
+                          </div>
+                          <div class="image-wrapper {{selectedGallery.config.direction}}">
+                            <div class="image-thumbnail" style="background-image:url({{slide.image}})" alt="{{slide.title}}"></div>
+                          </div>
+                        </div>
+                        <div class="image-card-actions" layout="row" layout-align="space-between center">
+                          <md-input-container>
+                            <label>Order</label>
+                            <md-select ng-model="$index" ng-change="reorderSlides(slide, $index, selectedGallery)">
+                              <md-option ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index">{{order}}</md-option>
+                            </md-select>
+                          </md-input-container>
+                          <md-button class="md-fab md-mini" id="uploadButton" ng-click="saveGallery(selectedGallery)">
+                            <md-icon class="material-icons">save</md-icon>
+                          </md-button>
+                          <md-button class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(selectedGallery, slide, $index)">
+                            <md-icon class="material-icons">clear</md-icon>
+                          </md-button>
+                        </div>
+                        <md-divider></md-divider>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                      </div>
+                    </div>
+                  </md-content>
+                </md-tab-body>
+              </md-tab>
+              <md-tab id="tab3" md-tab-class="selector-tab3">
+                <md-tab-label>Preview</md-tab-label>
+                <md-tab-body>
+                  <md-content layout-padding> 
+                    <div>[gallery preview]</div>
+                    <md-divider></md-divider>
+                  </md-content>
+                </md-tab-body>
+              </md-tab>
+            </md-tabs>
+          </div>
+          <div layout="column" layout-fill="" ng-if="!selectedGallery">[intro and help]</div>
+        </div>
+      </div>
       <div id="firebaseui-auth-container"></div>
     </div>
     <div id="loadingPanel" ng-show="imageIsUploading">

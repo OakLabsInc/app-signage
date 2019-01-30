@@ -10,9 +10,9 @@ html
           h2(md-truncate="" flex="") Signage Application Admin
           md-button(ng-click="logout()" ng-if="isLoggedIn" ng-cloak="")
             | Logout
-      md-content(ng-if="isLoggedIn" layout-fill="" layout="column")
-        section(layout="column" layout-fill="" flex="")
-          md-sidenav.md-sidenav-left(md-component-id="left" layout="column" layout-fill="" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4")
+      div(ng-if="isLoggedIn" style="height:100%;overflow:hidden" layout="row")
+       
+          md-sidenav.md-sidenav-left(md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4")
             md-toolbar(md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between")
               .md-toolbar-tools
                 md-input-container
@@ -25,57 +25,94 @@ html
               md-radio-group.galleryList(ng-model="selectedGallery")
                 .row(ng-repeat="gallery in galleries | orderBy: 'name'")
                   div(flex="" layout="row" layout-padding layout-align="space-between center")
-                    md-radio-button.md-primary(flex="" ng-value="gallery")
+                    md-radio-button.md-primary(flex="" ng-value="gallery" ng-click="checkSideBar()")
                       | {{formatGalleryName(gallery.name)}}
 
-                    md-button#uploadButton.md-fab.md-mini(ng-click="showGalleryConfirm($event, gallery.name)")
+                    md-button#clearGalleryButton.md-fab.md-mini(ng-click="showGalleryConfirm($event, gallery.name)")
                       md-icon.material-icons clear
-                  md-divider
+                  md-divider 
+          div(layout="column" layout-fill="" flex="" layout-padding="")
+            div(layout="column" layout-fill="" ng-if="selectedGallery")
+              div(layout="row" layout-align="space-between center" style="min-height: 50px")
+                  h1 {{formatGalleryName(selectedGallery.name)}}
                   
-                        
-          md-content(layout="column" layout-fill="" flex="" layout-padding="" layout="row")
-            div(layout="column" layout-fill="" layout-align="top left")
-              md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex" md-align-tabs="top" ng-if="selectedGallery")
+              md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex" md-align-tabs="top" )
                 md-tab(layout="column" layout-fill=""  id="tab1" md-tab-class="selector-tab1")
                   md-tab-label Settings
                   md-tab-body
                     div(layout-padding layout="column" flex="") 
-                      h1 
-                        md-button#uploadButton.md-fab.md-mini(ng-click="s")
-                          md-icon.material-icons save
                       div(layout="column" layout-fill=""  layout-wrap)
                         md-input-container(class="md-block" flex-gt-sm)
                           label Gallery Name
-                          input(ng-model="selectedGallery.name" ng-pattern="/^[a-zA-Z0-9_]*$/")
+                          input(ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
                         md-input-container(class="md-block" flex-gt-sm)
                           label Sides per view
-                          input(ng-model="selectedGallery.config.slidesPerView" ng-pattern="/^[1-4]{1}/" )
+                          input(ng-model="selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/" )
                         md-input-container(class="md-block" flex-gt-sm)
                           label Sides per group
-                          input(ng-model="selectedGallery.config.slidesPerGroup")
+                          input(ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
                         md-input-container(class="md-block" flex-gt-sm)
                           md-checkbox(ng-model="selectedGallery.config.loop")
                             | Loop slide show
+                        md-radio-group(ng-model="selectedGallery.config.direction"  ng-required layout="row" class="md-block" flex-gt-sm)
+                          .button-wrapper(layout="row" layout-padding )
+                            md-radio-button.md-primary(flex="" value="horizontal")
+                              | Horizontal Display
+                            md-radio-button.md-primary(flex="" value="vertical")
+                              | Vertical Display
+                      pre(style="text-align:left") {{selectedGallery | json}}
                       md-divider
                 md-tab(id="tab2" md-tab-class="selector-tab2")
                   md-tab-label Slides
                   md-tab-body 
                     md-content(layout-padding) 
-                      div [slide list]
-                      md-divider
+                      div 
+                        md-button(id="uploadButton" class="" ng-click="addSlideToGallery(selectedGallery)")
+                          md-icon(class="material-icons") add
+                          span Add Slide
+                      .image-list(flex layout="column" layout-fill)
+                        md-divider
+                        .image-list-item( layout-fill ng-repeat="slide in selectedGallery.slides" ng-click="null")
+                          .image-card-top(layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill)
+                            
+                            .image-card-text(class="md-list-item-text" flex="100" layout="column")
+                              choose-file(layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}")
+                                md-button.md-fab.md-mini(id="uploadButton" class="")
+                                  md-icon(class="material-icons") image
+                                //- md-input-container(flex class="md-block")
+                                  //- input(type="text" ng-model="fileName" disabled)
+                                input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
+                                span Upload Background image
+                              md-input-container(class="md-block" flex="100")
+                                label Title
+                                input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
+                              md-input-container(class="md-block" flex="100")
+                                label Text Overlay
+                                textarea(name="", cols="60", rows="5" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
+                            .image-wrapper(class="{{selectedGallery.config.direction}}")
+                              div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")
+                          .image-card-actions(layout="row" layout-align="space-between center")
+                            md-input-container
+                              label Order
+                              md-select(ng-model="$index" ng-change="reorderSlides(slide, $index, selectedGallery)")
+                                md-option(ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index") {{order}}
+                            
+                            md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(selectedGallery)")
+                              md-icon.material-icons save
+                            md-button(class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(selectedGallery, slide, $index)")
+                              md-icon(class="material-icons") clear
+                          md-divider
+                          p
+                          p
+                          p
                 md-tab(id="tab3" md-tab-class="selector-tab3")
                   md-tab-label Preview
                   md-tab-body
                     md-content(layout-padding) 
                       div [gallery preview]
                       md-divider
-        
-
-
-
-
-                pre(style="text-align:left") {{selectedGallery | json}}
-             
+            div(layout="column" layout-fill="" ng-if="!selectedGallery")
+              | [intro and help]
       #firebaseui-auth-container
     #loadingPanel(ng-show="imageIsUploading")
       div(layout="row" layout-sm="column" layout-align="space-around")

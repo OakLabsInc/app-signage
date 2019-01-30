@@ -33,7 +33,7 @@ html(ng-app='signageApp')
 
   body(ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
     ripples
-      .ripple(ng-repeat="r in ripples", ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
+      .ripple(ng-repeat="r in ripples" ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
     .swiper-container
       .swiper-wrapper
         .swiper-slide(ng-repeat="slide in gallery.slides track by $index" style="background: url({{slide.image}})")

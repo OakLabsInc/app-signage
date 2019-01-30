@@ -1,6 +1,13 @@
 body {
   position: relative;
 }
+input:focus,
+textarea:focus,
+select:focus,
+md-radio-button:focus,
+[role="button"] {
+  outline: none;
+}
 .mdl-shadow--2dp {
   box-shadow: none;
   background: transparent;
@@ -38,7 +45,7 @@ div.mdl-progress::after {
   left: 0;
   right: 0;
   background-color: rgba(0,0,0,0.3);
-  z-index: 30;
+  z-index: 300;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,6 +60,9 @@ div.mdl-progress::after {
   background-color: #dedede;
   border-radius: 2px;
 }
+md-input-container {
+  margin: 0 0 15 0;
+}
 md-radio-button {
   margin-bottom: 0;
 }
@@ -65,6 +75,21 @@ md-toast.error-toast .md-toast-content {
 }
 md-toast.success-toast .md-toast-content {
   background-color: #008000;
+}
+.image-list-item {
+  padding-top: 40px;
+}
+.image-wrapper {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #dedede;
+}
+.image-wrapper .image-thumbnail {
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 md-card md-card-title {
   padding: 24px 16px 16px;
