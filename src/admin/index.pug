@@ -35,7 +35,8 @@ html
             div(layout="column" layout-fill="" ng-if="selectedGallery")
               div(layout="row" layout-align="space-between center" style="min-height: 50px")
                   h1 {{formatGalleryName(selectedGallery.name)}}
-                  
+                  md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(selectedGallery)")
+                    md-icon.material-icons save
               md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex" md-align-tabs="top" )
                 md-tab(layout="column" layout-fill=""  id="tab1" md-tab-class="selector-tab1")
                   md-tab-label Settings
@@ -82,7 +83,7 @@ html
                                 //- md-input-container(flex class="md-block")
                                   //- input(type="text" ng-model="fileName" disabled)
                                 input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
-                                span Upload Background image
+                                span Upload Background Image
                               md-input-container(class="md-block" flex="100")
                                 label Title
                                 input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )

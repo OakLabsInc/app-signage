@@ -64,6 +64,9 @@
           <div layout="column" layout-fill="" ng-if="selectedGallery">
             <div layout="row" layout-align="space-between center" style="min-height: 50px">
               <h1>{{formatGalleryName(selectedGallery.name)}}</h1>
+              <md-button class="md-fab md-mini" id="uploadButton" ng-click="saveGallery(selectedGallery)">
+                <md-icon class="material-icons">save</md-icon>
+              </md-button>
             </div>
             <md-tabs layout="column" layout-fill="" md-selected="selectedTabIndex" md-align-tabs="top">
               <md-tab layout="column" layout-fill="" id="tab1" md-tab-class="selector-tab1">
@@ -116,7 +119,7 @@
                               <md-button class="md-fab md-mini" id="uploadButton">
                                 <md-icon class="material-icons">image</md-icon>
                               </md-button>
-                              <input class="ng-hide" ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*"><span>Upload Background image</span>
+                              <input class="ng-hide" ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*"><span>Upload Background Image</span>
                             </choose-file>
                             <md-input-container class="md-block" flex="100">
                               <label>Title</label>
