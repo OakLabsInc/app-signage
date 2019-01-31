@@ -351,7 +351,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.initPreview = function(gallery) {
     
     $timeout(function(){
-      if($scope.swiper) $scope.swiper.destroy()
+      if($scope.swiper) $scope.swiper.update()
 
       let baseConfig = {
           autoplay: {
