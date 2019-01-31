@@ -25,7 +25,7 @@ html
               md-radio-group.galleryList(ng-model="selectedGallery")
                 .row(ng-repeat="gallery in galleries | orderBy: 'name'")
                   div(flex="" layout="row" layout-padding layout-align="space-between center")
-                    md-radio-button.md-primary(flex="" ng-value="gallery" ng-click="checkSideBar()")
+                    md-radio-button.md-primary(flex="" ng-value="gallery" ng-click="checkSideBar();")
                       | {{formatGalleryName(gallery.name)}}
 
                     md-button#clearGalleryButton.md-fab.md-mini(ng-click="showGalleryConfirm($event, gallery.name)")
@@ -37,7 +37,7 @@ html
                   h1 {{formatGalleryName(selectedGallery.name)}}
                   md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(selectedGallery)")
                     md-icon.material-icons save
-              md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex" md-align-tabs="top" )
+              md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex.tabIndex" md-align-tabs="top" )
                 md-tab(layout="column" layout-fill=""  id="tab1" md-tab-class="selector-tab1")
                   md-tab-label Settings
                   md-tab-body
@@ -52,6 +52,9 @@ html
                         md-input-container(class="md-block" flex-gt-sm)
                           label Sides per group
                           input(ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
+                        md-input-container(class="md-block" flex-gt-sm)
+                          label Delay between slides
+                          input(ng-model="selectedGallery.config.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
                         div(md-color-picker="colorPicker.options" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
                         md-input-container(class="md-block" flex-gt-sm)
                           md-checkbox(ng-model="selectedGallery.config.loop")
@@ -84,12 +87,15 @@ html
                                   //- input(type="text" ng-model="fileName" disabled)
                                 input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
                                 span Upload Background Image
+                              md-input-container(class="md-block" flex-gt-sm)
+                                label Slide Delay
+                                input(ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
                               md-input-container(class="md-block" flex="100")
                                 label Overlay Title
                                 input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
                               md-input-container(class="md-block" flex="100")
                                 label Overlay Text
-                                textarea(name="", cols="60", rows="5" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
+                                textarea(name="", cols="60", rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
                             .image-wrapper(class="{{selectedGallery.config.direction}}")
                               div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")
                           .image-card-actions(layout="row" layout-align="space-between center")
@@ -106,10 +112,10 @@ html
                   md-tab-label Preview
                   md-tab-body
                     md-content(layout-padding) 
-                      md-card
+                      md-card.preview-container
                         .swiper-container
                           .swiper-wrapper
-                            .swiper-slide(ng-repeat="slide in selectedGallery.slides track by $index" style="background: url({{slide.image}})")      
+                            .swiper-slide(ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})")      
                           .swiper-pagination
                           .swiper-button-prev
                           .swiper-button-next

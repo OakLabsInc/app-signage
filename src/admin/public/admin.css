@@ -92,27 +92,27 @@ md-toast.success-toast .md-toast-content {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.swiper-container {
-  width: 600px;
-  height: 338px;
-  color: #fff !important;
+.preview-container {
+  width: 100% !important;
+  padding-bottom: 56% !important;
+  position: relative;
+  -ms-transform: scale(0.75, 0.75); /* IE 9 */
+  -webkit-transform: scale(0.75, 0.75); /* Safari */
+  transform: scale(0.75, 0.75);
+  transform-origin: top left;
 }
-.swiper-slide {
+.preview-container .swiper-container {
+  color: #fff !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.preview-container .swiper-container .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #000;
-/* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
   background-repeat: no-repeat !important;
   background-size: cover !important;
