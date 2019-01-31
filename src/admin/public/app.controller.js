@@ -351,12 +351,12 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.initPreview = function(gallery) {
     
     $timeout(function(){
-      if($scope.swiper) $scope.swiper.update()
+      if($scope.swiper) $scope.swiper.destroy()
 
       let baseConfig = {
           autoplay: {
           disableOnInteraction: true,
-          delay: 2000
+          delay: 4000
         },
         observer: true,
         pagination: {
