@@ -348,6 +348,33 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     hsl: false
   };
 
+  $scope.initPreview = function(gallery) {
+    
+    $timeout(function(){
+      if($scope.swiper) $scope.swiper.update()
+
+      let baseConfig = {
+          autoplay: {
+          disableOnInteraction: true,
+          delay: 2000
+        },
+        observer: true,
+        pagination: {
+          el: '.swiper-pagination',
+          color: '#ffffff'
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+    
+      }
+      let newConfig = { ...baseConfig, ...gallery.config }
+
+      $scope.swiper = new Swiper ('.swiper-container', newConfig)
+    })
+  }
+
 
 
 })
