@@ -336,7 +336,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   // Controller
   $scope.colorPicker.options = {
     type: 0,
-    label: "Choose aaaa background color",
+    label: "Choose a background color",
     icon: "brush",
     default: "#000000",
     genericPalette: false,
