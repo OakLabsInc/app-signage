@@ -60,7 +60,7 @@
                 <md-tab-label>Settings</md-tab-label>
                 <md-tab-body>
                   <div layout-padding layout="column" flex=""> 
-                    <div layout="column" layout-fill="" layout-wrap>
+                    <md-card layout="column" layout-fill="" layout-wrap>
                       <md-input-container class="md-block" flex-gt-sm>
                         <label>Gallery Name</label>
                         <input ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/">
@@ -83,7 +83,7 @@
                           <md-radio-button class="md-primary" flex="" value="vertical">Vertical Display</md-radio-button>
                         </div>
                       </md-radio-group>
-                    </div>
+                    </md-card>
                     <pre style="text-align:left">{{selectedGallery | json}}</pre>
                     <md-divider></md-divider>
                   </div>
@@ -145,14 +145,16 @@
                 <md-tab-label>Preview</md-tab-label>
                 <md-tab-body>
                   <md-content layout-padding> 
-                    <div class="swiper-container">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide" ng-repeat="slide in selectedGallery.slides track by $index" style="background: url({{slide.image}})">     </div>
+                    <md-card>
+                      <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide" ng-repeat="slide in selectedGallery.slides track by $index" style="background: url({{slide.image}})">     </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                       </div>
-                      <div class="swiper-pagination"></div>
-                      <div class="swiper-button-prev"></div>
-                      <div class="swiper-button-next"></div>
-                    </div>
+                    </md-card>
                   </md-content>
                 </md-tab-body>
               </md-tab>

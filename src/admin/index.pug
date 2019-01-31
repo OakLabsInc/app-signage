@@ -42,7 +42,7 @@ html
                   md-tab-label Settings
                   md-tab-body
                     div(layout-padding layout="column" flex="") 
-                      div(layout="column" layout-fill=""  layout-wrap)
+                      md-card(layout="column" layout-fill=""  layout-wrap)
                         md-input-container(class="md-block" flex-gt-sm)
                           label Gallery Name
                           input(ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
@@ -106,12 +106,13 @@ html
                   md-tab-label Preview
                   md-tab-body
                     md-content(layout-padding) 
-                      .swiper-container
-                        .swiper-wrapper
-                          .swiper-slide(ng-repeat="slide in selectedGallery.slides track by $index" style="background: url({{slide.image}})")      
-                        .swiper-pagination
-                        .swiper-button-prev
-                        .swiper-button-next
+                      md-card
+                        .swiper-container
+                          .swiper-wrapper
+                            .swiper-slide(ng-repeat="slide in selectedGallery.slides track by $index" style="background: url({{slide.image}})")      
+                          .swiper-pagination
+                          .swiper-button-prev
+                          .swiper-button-next
             div(layout="column" layout-fill="" ng-if="!selectedGallery")
               | [intro and help]
 
