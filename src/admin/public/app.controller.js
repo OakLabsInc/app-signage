@@ -11,6 +11,9 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.colorPicker = {}
 
   $scope.isLoggedIn = false
+  $scope.selectedTabIndex = {
+    tabIndex: 1
+  }
 
   // sidebar toggle functions
   
@@ -51,6 +54,9 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     }
   }
   $scope.checkSideBar = function(){
+    $scope.selectedTabIndex.tabIndex = 0
+   
+    $log.info("selectedTabIndex: ", $scope.selectedTabIndex)
     if ($mdSidenav('left') && $mdSidenav('left').isOpen()) {
       $scope.toggleLeft()
     }
@@ -351,14 +357,15 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.initPreview = function(gallery) {
     
     $timeout(function(){
-      if($scope.swiper) $scope.swiper.update()
+      if($scope.swiper) {
+        $scope.swiper.slideTo(0)
+        $scope.swiper.update()
+      }
 
       let baseConfig = {
-          autoplay: {
-          disableOnInteraction: true,
-          delay: 4000
-        },
         observer: true,
+        updateOnImagesReady: true,
+        preloadImages: true,
         pagination: {
           el: '.swiper-pagination',
           color: '#ffffff'
@@ -371,6 +378,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       }
       let newConfig = { ...baseConfig, ...gallery.config }
 
+      //$scope.swiper.update()
       $scope.swiper = new Swiper ('.swiper-container', newConfig)
     })
   }
