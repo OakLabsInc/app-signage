@@ -76,11 +76,12 @@ md-toast.error-toast .md-toast-content {
 md-toast.success-toast .md-toast-content {
   background-color: #008000;
 }
-.image-list-item {
-  padding-top: 40px;
+.image-list-item .image-wrapper {
+  margin-top: 20px;
 }
 .image-wrapper {
   width: 150px;
+  min-width: 150px;
   height: 150px;
   border: 1px solid #dedede;
 }
@@ -91,17 +92,11 @@ md-toast.success-toast .md-toast-content {
   background-size: contain;
   background-repeat: no-repeat;
 }
-md-card md-card-title {
+md-card {
   padding: 24px 16px 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
+  margin: 0 0 20px 0;
+}
+md-card md-card-title {
   flex-direction: row;
 }
 md-card md-card-title md-card-title-media .md-media-md img {

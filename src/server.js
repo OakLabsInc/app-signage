@@ -74,26 +74,4 @@ async function loadWindow () {
     })
 }
 
-{
-	"services": [
-		{
-			"image": "index.docker.io/oaklabs/app-lights:latest",
-			"username": "{{dockerUsername}}",
-			"password": "{{dockerPassword}}",
-			"environment": {
-                "LIGHTS_HOST": "localhost:9100",
-                "PLATFORM_HOST": "localhost:443",
-                "NODE_ENV": "production"
-            }
-			
-		},
-		{
-			"image": "index.docker.io/oaklabs/component-oak-lights:0.0.1",
-			"username": "{{dockerUsername}}",
-			"password": "{{dockerPassword}}",
-			"environment": {
-				"PORT": "9100"
-			}
-		}
-	]
-}
+

@@ -8,6 +8,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.galleries = []
   $scope.user = {}
   $scope.userId = {}
+  $scope.colorPicker = {}
 
   $scope.isLoggedIn = false
 
@@ -332,7 +333,20 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       $scope.status = 'You decided to keep your debt.';
     });
   };
-
+  // Controller
+  $scope.colorPicker.options = {
+    type: 0,
+    label: "Choose aaaa background color",
+    icon: "brush",
+    default: "#000000",
+    genericPalette: false,
+    history: true,
+    sliders: false,
+    alphaChannel: false,
+    spectrum: false,
+    rgb: false,
+    hsl: false
+  };
 
 
 

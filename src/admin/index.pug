@@ -52,6 +52,7 @@ html
                         md-input-container(class="md-block" flex-gt-sm)
                           label Sides per group
                           input(ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
+                        div(md-color-picker="colorPicker.options" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
                         md-input-container(class="md-block" flex-gt-sm)
                           md-checkbox(ng-model="selectedGallery.config.loop")
                             | Loop slide show
@@ -72,11 +73,10 @@ html
                           md-icon(class="material-icons") add
                           span Add Slide
                       .image-list(flex layout="column" layout-fill)
-                        md-divider
-                        .image-list-item( layout-fill ng-repeat="slide in selectedGallery.slides" ng-click="null")
+                        md-card.image-list-item(ng-repeat="slide in selectedGallery.slides" ng-click="null")
                           .image-card-top(layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill)
-                            
                             .image-card-text(class="md-list-item-text" flex="100" layout="column")
+                              h2 Position {{$index}}
                               choose-file(layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}")
                                 md-button.md-fab.md-mini(id="uploadButton" class="")
                                   md-icon(class="material-icons") image
@@ -85,16 +85,16 @@ html
                                 input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
                                 span Upload Background Image
                               md-input-container(class="md-block" flex="100")
-                                label Title
+                                label Overlay Title
                                 input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
                               md-input-container(class="md-block" flex="100")
-                                label Text Overlay
+                                label Overlay Text
                                 textarea(name="", cols="60", rows="5" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
                             .image-wrapper(class="{{selectedGallery.config.direction}}")
                               div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")
                           .image-card-actions(layout="row" layout-align="space-between center")
                             md-input-container
-                              label Order
+                              label Position
                               md-select(ng-model="$index" ng-change="reorderSlides(slide, $index, selectedGallery)")
                                 md-option(ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index") {{order}}
                             
@@ -102,10 +102,6 @@ html
                               md-icon.material-icons save
                             md-button(class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(selectedGallery, slide, $index)")
                               md-icon(class="material-icons") clear
-                          md-divider
-                          p
-                          p
-                          p
                 md-tab(id="tab3" md-tab-class="selector-tab3")
                   md-tab-label Preview
                   md-tab-body
@@ -118,3 +114,4 @@ html
     #loadingPanel(ng-show="imageIsUploading")
       div(layout="row" layout-sm="column" layout-align="space-around")
         md-progress-circular(md-mode="indeterminate")
+    include includes/foot.pug

@@ -8,21 +8,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.1/firebaseui.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="admin.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.1/firebaseui.js"></script>
-    <script src="config.js" type="text/javascript"></script>
-    <script src="crypto.js" type="text/javascript"></script>
-    <script src="init.js"></script>
-    <script src="directives/chooseFile.directive.js"></script>
-    <script src="factories/firestore.user.directive.js"></script>
-    <script src="app.controller.js" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="vendor/mdColorPicker.css">
   </head>
   <body ng-app="signageApp" ng-controller="appController" ng-cloak="">
     <div layout="column" layout-fill="">
@@ -86,6 +72,7 @@
                         <label>Sides per group</label>
                         <input ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/">
                       </md-input-container>
+                      <div md-color-picker="colorPicker.options" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor"></div>
                       <md-input-container class="md-block" flex-gt-sm>
                         <md-checkbox ng-model="selectedGallery.config.loop">Loop slide show</md-checkbox>
                       </md-input-container>
@@ -111,10 +98,10 @@
                       </md-button>
                     </div>
                     <div class="image-list" flex layout="column" layout-fill>
-                      <md-divider></md-divider>
-                      <div class="image-list-item" layout-fill ng-repeat="slide in selectedGallery.slides" ng-click="null">
+                      <md-card class="image-list-item" ng-repeat="slide in selectedGallery.slides" ng-click="null">
                         <div class="image-card-top" layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill>
                           <div class="image-card-text md-list-item-text" flex="100" layout="column">
+                            <h2>Position {{$index}}</h2>
                             <choose-file layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}">
                               <md-button class="md-fab md-mini" id="uploadButton">
                                 <md-icon class="material-icons">image</md-icon>
@@ -122,11 +109,11 @@
                               <input class="ng-hide" ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*"><span>Upload Background Image</span>
                             </choose-file>
                             <md-input-container class="md-block" flex="100">
-                              <label>Title</label>
+                              <label>Overlay Title</label>
                               <input ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text">
                             </md-input-container>
                             <md-input-container class="md-block" flex="100">
-                              <label>Text Overlay</label>
+                              <label>Overlay Text</label>
                               <textarea name="" cols="60" rows="5" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text"></textarea>
                             </md-input-container>
                           </div>
@@ -136,7 +123,7 @@
                         </div>
                         <div class="image-card-actions" layout="row" layout-align="space-between center">
                           <md-input-container>
-                            <label>Order</label>
+                            <label>Position</label>
                             <md-select ng-model="$index" ng-change="reorderSlides(slide, $index, selectedGallery)">
                               <md-option ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index">{{order}}</md-option>
                             </md-select>
@@ -148,11 +135,7 @@
                             <md-icon class="material-icons">clear</md-icon>
                           </md-button>
                         </div>
-                        <md-divider></md-divider>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                      </div>
+                      </md-card>
                     </div>
                   </md-content>
                 </md-tab-body>
@@ -178,5 +161,22 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.1/firebaseui.js"></script>
+    <script src="config.js" type="text/javascript"></script>
+    <script src="crypto.js" type="text/javascript"></script>
+    <script src="vendor/tinycolor.js"></script>
+    <script src="vendor/mdColorPicker.js"></script>
+    <script src="init.js" defer></script>
+    <script src="directives/chooseFile.directive.js" defer></script>
+    <script src="factories/firestore.user.directive.js" defer></script>
+    <script src="app.controller.js" type="text/javascript" defer></script>
   </body>
 </html>
