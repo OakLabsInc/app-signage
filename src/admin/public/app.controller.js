@@ -180,19 +180,22 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     var galleryIndex = _.findIndex($scope.galleries, gallery);
 
     let galleryImagesRef = firebase.storage().ref()
-
-    galleryImagesRef.child($scope.user.uid + '/' + gallery.name + '/' + $scope.getImageName(slide.image)).delete().then(function () {
-      console.log('Image deleted successfully', slide.image)
-
-      $scope.galleries[galleryIndex].slides.splice(index, 1)
-      db.collection('users').doc($scope.user.uid).collection('galleries').doc(gallery.name).update({
-        slides: $scope.galleries[galleryIndex].slides
+    if (slide.image !== ''){
+      galleryImagesRef.child($scope.user.uid + '/' + gallery.name + '/' + $scope.getImageName(slide.image)).delete().then(function () {
+        console.log('Image deleted successfully', slide.image)
+  
+        $scope.galleries[galleryIndex].slides.splice(index, 1)
+        db.collection('users').doc($scope.user.uid).collection('galleries').doc(gallery.name).update({
+          slides: $scope.galleries[galleryIndex].slides
+        })
+        $scope.$apply()
+  
+      }).catch(function (error) {
+        // Uh-oh, an error occurred!
       })
-      $scope.$apply()
-
-    }).catch(function (error) {
-      // Uh-oh, an error occurred!
-    })
+    } else {
+      $scope.galleries[galleryIndex].slides.splice(index, 1)
+    }
   }
   $scope.deleteGallery = function (galleryName) {
     let galleryImagesRef = firebase.storage().ref()
@@ -202,6 +205,13 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         galleryImagesRef.child($scope.user.uid + '/' + galleryName + '/' + $scope.getImageName(slide.image)).delete().then(function () {
           console.log('Gallery deleted successfully', url)
           $scope.saveGallery(gallery)
+          if ($scope.gallery.length){
+            let buttons = angular.element(document.querySelector('.galleryList')).find("md-radio-button")
+            $log.info("buttons: ", buttons)
+            buttons[0].click()
+          } else {
+
+          }
         }).catch(function (error) {
           // Uh-oh, an error occurred!
         })

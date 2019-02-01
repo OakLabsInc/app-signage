@@ -1,3 +1,7 @@
+html,
+body {
+  overflow: hidden;
+}
 body {
   position: relative;
 }
@@ -99,10 +103,6 @@ md-toast.success-toast .md-toast-content {
   width: 100% !important;
   padding-bottom: 56% !important;
   position: relative;
-  -ms-transform: scale(0.75, 0.75); /* IE 9 */
-  -webkit-transform: scale(0.75, 0.75); /* Safari */
-  transform: scale(0.75, 0.75);
-  transform-origin: top left;
 }
 .preview-container .swiper-container {
   color: #fff !important;
