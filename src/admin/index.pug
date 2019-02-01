@@ -139,9 +139,9 @@ html
                                 .text-wrapper(ng-style="{'color':slide.textColor}")
                                   h2.overlay-title {{slide.title}}
                                   div.overlay-text {{slide.overlay}}    
-                          .swiper-pagination
-                          .swiper-button-prev
-                          .swiper-button-next
+                          .swiper-pagination(ng-if="selectedGallery.slides.length > 1")
+                          .swiper-button-prev(ng-if="selectedGallery.slides.length > 1")
+                          .swiper-button-next(ng-if="selectedGallery.slides.length > 1")
             div(layout="column" layout-fill="" ng-if="!selectedGallery")
               | [intro and help]
 
