@@ -315,6 +315,10 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         $scope.status = 'You didn\'t name your dog.';
       });
   }
+  $scope.removeImageFromSlide = function(gallery, index) {
+    gallery.slides[index].image = ""
+    $scope.saveGallery(gallery)
+  }
   $scope.showGalleryConfirm = function(ev, name) {
     $scope.currentGalleryName = name
 
@@ -342,7 +346,6 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   // Controller
   $scope.colorPicker.options = {
     type: 0,
-    label: "Choose a background color",
     icon: "brush",
     default: "#000000",
     genericPalette: false,

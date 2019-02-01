@@ -52,6 +52,8 @@ div
   .md-checked
     background-color #dedede
     border-radius 2px
+choose-file
+  margin-bottom 40px
 md-input-container
   margin 0 0 15 0
 md-radio-button
@@ -109,9 +111,60 @@ md-toast
 .swiper-pagination-bullet-active
   background #dedede!important
 
-.swiper-button-next {
+.swiper-button-next 
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;
-}
+.swiper-slide
+  position relative
+  display flex
+  justify-content: center
+  align-items: center
+  
+  .overlay-container
+    width 85%
+    height 85%
+    display flex
+    &.left-top
+      justify-content: flex-start
+      align-items: flex-start
+      text-align left
+    &.left-center
+      justify-content: flex-start
+      align-items: center
+      text-align left
+    &.left-bottom
+      justify-content: flex-start
+      align-items: flex-end
+      text-align left
+    &.center-top
+      justify-content: center
+      align-items: flex-start
+      text-align center
+    &.center-center
+      justify-content: center
+      align-items: center
+      text-align center
+    &.center-bottom
+      justify-content: center
+      align-items: flex-end
+      text-align center
+    &.right-top
+      justify-content: flex-end
+      align-items: flex-start
+      text-align right
+    &.right-center
+      justify-content: flex-end
+      align-items: center
+      text-align right
+    &.right-bottom
+      justify-content: flex-end
+      align-items: flex-end
+      text-align right
+    .text-wrapper
+      height 50%
+      width 50%
+      overflow hidden
+    
+
 md-card
   padding 24px 16px 16px
   margin 0 0 20px 0

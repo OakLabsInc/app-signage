@@ -59,12 +59,12 @@ html
                         md-input-container(class="md-block" flex-gt-sm)
                           md-checkbox(ng-model="selectedGallery.config.loop")
                             | Loop slide show
-                        md-radio-group(ng-model="selectedGallery.config.direction"  ng-required layout="row" class="md-block" flex-gt-sm)
-                          .button-wrapper(layout="row" layout-padding )
-                            md-radio-button.md-primary(flex="" value="horizontal")
-                              | Horizontal Display
-                            md-radio-button.md-primary(flex="" value="vertical")
-                              | Vertical Display
+                        //- md-radio-group(ng-model="selectedGallery.config.direction"  ng-required layout="row" class="md-block" flex-gt-sm)
+                        //-   .button-wrapper(layout="row" layout-padding )
+                        //-     md-radio-button.md-primary(flex="" value="horizontal")
+                        //-       | Horizontal Display
+                        //-     md-radio-button.md-primary(flex="" value="vertical")
+                        //-       | Vertical Display
                       pre(style="text-align:left") {{selectedGallery | json}}
                       md-divider
                 md-tab(id="tab2" md-tab-class="selector-tab2")
@@ -80,23 +80,42 @@ html
                           .image-card-top(layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill)
                             .image-card-text(class="md-list-item-text" flex="100" layout="column")
                               h2 Position {{$index}}
-                              choose-file(layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}")
+                              choose-file(ng-if="slide.image === ''" layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}")
                                 md-button.md-fab.md-mini(id="uploadButton" class="")
                                   md-icon(class="material-icons") image
                                 //- md-input-container(flex class="md-block")
                                   //- input(type="text" ng-model="fileName" disabled)
                                 input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
                                 span Upload Background Image
+                              md-input-container(ng-if="slide.image !== ''")
+                                md-button.md-fab.md-mini(ng-click="removeImageFromSlide(selectedGallery, $index)")
+                                  md-icon(class="material-icons") remove
+                                span Remove Image
                               md-input-container(class="md-block" flex-gt-sm)
                                 label Slide Delay
                                 input(ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
+                              div(md-color-picker="colorPicker.options" label="Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor")
+                              div(md-color-picker="colorPicker.options" label="Text Color"  md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor")
+                              md-input-container
+                                label Overlay Position
+                                md-select(ng-model="selectedGallery.slides[$index].overlayPosition" )
+                                  md-option(value="left-top") Left Top
+                                  md-option(value="left-center") Left Center
+                                  md-option(value="left-bottom") Left Bottom
+                                  md-option(value="center-top") Center Top
+                                  md-option(value="center-center") Center Center
+                                  md-option(value="center-bottom") Center Bottom
+                                  md-option(value="right-top") Right Top
+                                  md-option(value="right-center") Right Center
+                                  md-option(value="right-bottom") Right Bottom
                               md-input-container(class="md-block" flex="100")
                                 label Overlay Title
                                 input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
                               md-input-container(class="md-block" flex="100")
                                 label Overlay Text
                                 textarea(name="", cols="60", rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
-                            .image-wrapper(class="{{selectedGallery.config.direction}}")
+                              
+                            .image-wrapper(class="{{selectedGallery.config.direction}}" ng-style="{'background-color':selectedGallery.slides[$index].backgroundColor}")
                               div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")
                           .image-card-actions(layout="row" layout-align="space-between center")
                             md-input-container
@@ -115,7 +134,11 @@ html
                       md-card.preview-container
                         .swiper-container
                           .swiper-wrapper
-                            .swiper-slide(ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})")      
+                            .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
+                              .overlay-container(class="{{selectedGallery.slides[$index].overlayPosition}}")
+                                .text-wrapper(ng-style="{'color':slide.textColor}")
+                                  h2.overlay-title {{slide.title}}
+                                  div.overlay-text {{slide.overlay}}    
                           .swiper-pagination
                           .swiper-button-prev
                           .swiper-button-next
