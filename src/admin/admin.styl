@@ -166,7 +166,30 @@ md-toast
       width 50%
       overflow hidden
       padding: 15px
-    
+      .overlay-title 
+        font-size 3vh
+      .overlay-text
+        font-size 2vh
+      @media only screen and (min-width: 1024px) and (max-width: 1199px)
+        .overlay-title 
+          font-size 2.5vh
+        .overlay-text
+          font-size 1.5vh
+      @media only screen and (min-width: 768px) and (max-width: 1023px)
+        .overlay-title 
+          font-size 2.5vh
+        .overlay-text
+          font-size 1.5vh
+      @media only screen and (min-width: 480px) and (max-width: 767px)
+        .overlay-title 
+          font-size 2vh
+        .overlay-text
+          font-size 1vh
+      @media only screen and (min-width: 0px) and (max-width: 479px)
+        .overlay-title 
+          font-size 1.5vh
+        .overlay-text
+          font-size 1vh
 
 md-card
   padding 24px 16px 16px
