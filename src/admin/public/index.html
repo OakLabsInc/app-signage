@@ -116,7 +116,7 @@
                               <label>Slide Delay</label>
                               <input ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
                             </md-input-container>
-                            <div md-color-picker="colorPicker.options" label="Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor"></div>
+                            <div md-color-picker="colorPicker.options" label="Slide Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor"></div>
                             <div md-color-picker="colorPicker.options" label="Text Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor"></div>
                             <md-input-container>
                               <label>Overlay Position</label>
@@ -140,6 +140,7 @@
                               <label>Overlay Text</label>
                               <textarea name="" cols="60" rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text"></textarea>
                             </md-input-container>
+                            <div md-color-picker="colorPicker.options" label="Overlay Background" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor"></div>
                           </div>
                           <div class="image-wrapper {{selectedGallery.config.direction}}" ng-style="{'background-color':selectedGallery.slides[$index].backgroundColor}">
                             <div class="image-thumbnail" style="background-image:url({{slide.image}})" alt="{{slide.title}}"></div>
@@ -172,8 +173,8 @@
                       <div class="swiper-container">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
-                            <div class="overlay-container {{selectedGallery.slides[$index].overlayPosition}}">
-                              <div class="text-wrapper" ng-style="{'color':slide.textColor}">
+                            <div class="overlay-container {{slide.overlayPosition}}">
+                              <div class="text-wrapper" ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}">
                                 <h2 class="overlay-title">{{slide.title}}</h2>
                                 <div class="overlay-text">{{slide.overlay}}    </div>
                               </div>

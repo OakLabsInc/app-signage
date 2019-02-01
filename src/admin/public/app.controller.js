@@ -376,7 +376,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-        },
+        }
     
       }
       let newConfig = { ...baseConfig, ...gallery.config }

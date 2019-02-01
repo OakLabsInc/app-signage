@@ -190,6 +190,7 @@ md-toast.success-toast .md-toast-content {
   height: 50%;
   width: 50%;
   overflow: hidden;
+  padding: 15px;
 }
 md-card {
   padding: 24px 16px 16px;
