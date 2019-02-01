@@ -245,7 +245,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   }
   $scope.addSlideToGallery = function (gallery) {
     
-      gallery.slides.push({
+      gallery.slides.unshift({
         'image': '',
         'title': '',
         'overlay': ''
