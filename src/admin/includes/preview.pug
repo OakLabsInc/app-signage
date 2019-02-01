@@ -1,0 +1,14 @@
+md-tab-label Preview
+md-tab-body
+  md-content(layout-padding) 
+    md-card.preview-container
+      .swiper-container
+        .swiper-wrapper
+          .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
+            .overlay-container(class="{{slide.overlayPosition}}")
+              .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
+                h2.overlay-title {{slide.title}}
+                div.overlay-text {{slide.overlay}}    
+        .swiper-pagination(ng-if="selectedGallery.slides.length > 1")
+        .swiper-button-prev(ng-if="selectedGallery.slides.length > 1")
+        .swiper-button-next(ng-if="selectedGallery.slides.length > 1")

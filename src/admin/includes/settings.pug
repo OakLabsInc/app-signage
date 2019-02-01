@@ -1,0 +1,28 @@
+md-tab-label Settings
+md-tab-body
+  div(layout-padding layout="column" flex="") 
+    md-card(layout="column" layout-fill=""  layout-wrap)
+      md-input-container(class="md-block" flex-gt-sm)
+        label Gallery Name
+        input(ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
+      md-input-container(class="md-block" flex-gt-sm)
+        label Sides per view
+        input(ng-model="selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/" )
+      md-input-container(class="md-block" flex-gt-sm)
+        label Sides per group
+        input(ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
+      md-input-container(class="md-block" flex-gt-sm)
+        label Delay between slides
+        input(ng-model="selectedGallery.config.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
+      div(md-color-picker="colorPicker.options" label="Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
+      md-input-container(class="md-block" flex-gt-sm)
+        md-checkbox(ng-model="selectedGallery.config.loop")
+          | Loop slide show
+      //- md-radio-group(ng-model="selectedGallery.config.direction"  ng-required layout="row" class="md-block" flex-gt-sm)
+      //-   .button-wrapper(layout="row" layout-padding )
+      //-     md-radio-button.md-primary(flex="" value="horizontal")
+      //-       | Horizontal Display
+      //-     md-radio-button.md-primary(flex="" value="vertical")
+      //-       | Vertical Display
+    pre(style="text-align:left") {{selectedGallery | json}}
+    md-divider
