@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, width=device-width">
     <title>Signage Admin Application</title>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="vendor/angular-material.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.1/firebaseui.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="admin.css">
@@ -191,7 +191,13 @@
               </md-tab>
             </md-tabs>
           </div>
-          <div layout="column" layout-fill="" ng-if="!selectedGallery">[intro and help]</div>
+          <div layout="column" layout-fill="" ng-if="!selectedGallery">
+            <md-content>
+              <h2>Introduction</h2>
+              <p>With this admin you can create galleries that will be stored and attached to your Login. </p>
+              <p>Your API Key is {{user.uid}}</p>
+            </md-content>
+          </div>
         </div>
       </div>
       <div id="firebaseui-auth-container"></div>
@@ -205,7 +211,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+    <script src="vendor/angular-material.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
