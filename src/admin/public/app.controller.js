@@ -95,6 +95,8 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       })
       
       console.log('galleries', $scope.galleries)
+
+      
     })
   }
   $scope.editGallery = function (i) {
@@ -394,6 +396,33 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       //$scope.swiper.update()
       $scope.swiper = new Swiper ('.swiper-container', newConfig)
     })
+  }
+  $scope.initPreviewPage = function() {
+    
+      
+      console.log('galleries', $scope.galleries)
+      var previewMode = false
+      var urlParams = new URLSearchParams(window.location.search);
+      var apikey = urlParams.get('apikey');
+      var galleryname = urlParams.get('galleryname');
+      if (!_.isNull(apikey) && !_.isNull(galleryname)) {
+        $log.info(apikey, galleryname)
+        db.collection('users').doc(apikey).collection('galleries').get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            $timeout(function () {
+              $log.info(doc.data())
+              if(doc.data().name == galleryname) {
+                $scope.previewGallery = doc.data()
+              }
+              $scope.initPreview($scope.previewGallery)
+              
+            })
+            $log.info(querySnapshot)
+          })
+        })
+
+      }
+    
   }
 
 

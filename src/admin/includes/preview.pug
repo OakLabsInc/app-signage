@@ -12,7 +12,9 @@ md-tab-body
         .swiper-pagination(ng-if="selectedGallery.slides.length > 1")
         .swiper-button-prev(ng-if="selectedGallery.slides.length > 1")
         .swiper-button-next(ng-if="selectedGallery.slides.length > 1")
-    p 
     p
+    p Your gallery can be viewed at:
+    p 
+      a(href="https://signage.zivelo.com/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Url
     p
     p

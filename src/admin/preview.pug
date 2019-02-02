@@ -1,0 +1,17 @@
+doctype html
+html
+  include includes/head.pug
+  body(ng-app="signageApp" ng-controller="appController" ng-cloak="" )
+    .preview-container(ng-init="initPreviewPage()")
+      .swiper-container
+        .swiper-wrapper
+          .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in previewGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:previewGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
+            .overlay-container(class="{{slide.overlayPosition}}")
+              .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
+                h2.overlay-title {{slide.title}}
+                div.overlay-text {{slide.overlay}}    
+        .swiper-pagination
+        .swiper-button-prev
+        .swiper-button-next
+   
+    include includes/foot.pug
