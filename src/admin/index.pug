@@ -12,7 +12,7 @@ html
           md-button(ng-click="logout()" ng-if="isLoggedIn" ng-cloak="")
             | Logout
       div(ng-if="isLoggedIn" style="height:100%;overflow:hidden" layout="row")
-       
+    
           md-sidenav.md-sidenav-left(md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4")
             md-toolbar(md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between")
               .md-toolbar-tools
@@ -28,7 +28,7 @@ html
                   div(flex="" layout="row" layout-padding layout-align="space-between center")
                     md-radio-button.md-primary(flex="" ng-value="gallery" ng-click="checkSideBar();")
                       | {{formatGalleryName(gallery.name)}}
-
+                      
                     md-button#clearGalleryButton.md-fab.md-mini(ng-click="showGalleryConfirm($event, gallery.name)")
                       md-icon.material-icons clear
                   md-divider 

@@ -407,19 +407,17 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       var galleryname = urlParams.get('galleryname');
       if (!_.isNull(apikey) && !_.isNull(galleryname)) {
         $log.info(apikey, galleryname)
-        db.collection('users').doc(apikey).collection('galleries').get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            $timeout(function () {
-              $log.info(doc.data())
-              if(doc.data().name == galleryname) {
-                $scope.previewGallery = doc.data()
-              }
-              $scope.initPreview($scope.previewGallery)
-              
-            })
-            $log.info(querySnapshot)
+
+        db.collection('users').doc(apikey).collection('galleries').doc(galleryname)
+        .onSnapshot(function(doc) {
+          $timeout(function () {
+            $log.info(doc.data())
+            $scope.previewGallery = doc.data()
+            $scope.initPreview($scope.previewGallery)
+            console.log("Current data: ", doc.data());
           })
-        })
+        });
+
 
       }
     
