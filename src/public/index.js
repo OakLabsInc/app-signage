@@ -80,6 +80,7 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
     let baseConfig = {
       observer: true,
       updateOnImagesReady: true,
+      disableOnInteraction: false,
       preloadImages: true,
       pagination: {
         el: '.swiper-pagination',
