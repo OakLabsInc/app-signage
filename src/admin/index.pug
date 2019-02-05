@@ -8,11 +8,11 @@ html
           md-button#galleryMenu.md-fab.md-mini(ng-click="toggleLeft()" hide-gt-md="")
             md-icon.material-icons menu
           h2(md-truncate="" flex="") 
-            a(href="/") Signage Application Admin
+            a(href="/") Signage Admin
           md-button(ng-click="logout()" ng-if="isLoggedIn" ng-cloak="")
             | Logout
       div(ng-if="isLoggedIn" style="height:100%;overflow:hidden" layout="row")
-    
+  
           md-sidenav.md-sidenav-left(md-component-id="left" layout="column" layout-align="top left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4")
             md-toolbar(md-colors="{background: 'default-primary-100'}" layout="row" layout-align="space-between")
               .md-toolbar-tools
