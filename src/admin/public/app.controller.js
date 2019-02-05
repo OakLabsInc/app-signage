@@ -392,6 +392,8 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         }
     
       }
+      gallery.config.autoplay.disableOnInteraction = false
+
       let newConfig = { ...baseConfig, ...gallery.config }
 
       //$scope.swiper.update()

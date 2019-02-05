@@ -80,7 +80,6 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
     let baseConfig = {
       observer: true,
       updateOnImagesReady: true,
-      disableOnInteraction: false,
       preloadImages: true,
       pagination: {
         el: '.swiper-pagination',
@@ -92,6 +91,9 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
       }
   
     }
+    
+    $scope.gallery.config.autoplay.disableOnInteraction = false
+
     let newConfig = { ...baseConfig, ...$scope.gallery.config }
     if (!$scope.swiper) {
       $timeout(function () {
