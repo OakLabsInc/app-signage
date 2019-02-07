@@ -73,5 +73,3 @@ async function loadWindow () {
       logger[this.event.replace('log.', '')](props)
     })
 }
-
-
