@@ -2,16 +2,16 @@ md-tab-label Preview
 md-tab-body
   md-content(layout-padding) 
     md-card.preview-container
-      .swiper-container
+      .swiper-container(ng-style="{'background-color': selectedGallery.backgroundColor}")
         .swiper-wrapper
           .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
             .overlay-container(class="{{slide.overlayPosition}}")
               .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
                 h2.overlay-title {{slide.title}}
                 div.overlay-text {{slide.overlay}}    
-        .swiper-pagination(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
-        .swiper-button-prev(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
-        .swiper-button-next(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
+        .swiper-pagination(ng-if="selectedGallery.config.showNavigation")
+        .swiper-button-prev(ng-if="selectedGallery.config.showNavigation")
+        .swiper-button-next(ng-if="selectedGallery.config.showNavigation")
     p
     p 
       a(href="https://signage.zivelo.com/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Url

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
   </head>
   <body ng-app="signageApp" ng-controller="appController" ng-cloak="">
-    <div class="preview-container" ng-init="initPreviewPage()">
+    <div class="preview-container" ng-init="initPreviewPage()" ng-style="{'background-color': previewGallery.backgroundColor}">
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in previewGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:previewGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
@@ -25,9 +25,9 @@
             </div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination" ng-if="previewGallery.config.showNavigation"></div>
+        <div class="swiper-button-prev" ng-if="previewGallery.config.showNavigation"></div>
+        <div class="swiper-button-next" ng-if="previewGallery.config.showNavigation"></div>
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>

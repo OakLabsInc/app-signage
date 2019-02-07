@@ -181,7 +181,7 @@
                 <md-tab-body>
                   <md-content layout-padding> 
                     <md-card class="preview-container">
-                      <div class="swiper-container">
+                      <div class="swiper-container" ng-style="{'background-color': selectedGallery.backgroundColor}">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in selectedGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:selectedGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
                             <div class="overlay-container {{slide.overlayPosition}}">
@@ -192,9 +192,9 @@
                             </div>
                           </div>
                         </div>
-                        <div class="swiper-pagination" ng-if="selectedGallery.slides.length &gt; 1 &amp;&amp; selectedGallery.config.showNavigation"></div>
-                        <div class="swiper-button-prev" ng-if="selectedGallery.slides.length &gt; 1 &amp;&amp; selectedGallery.config.showNavigation"></div>
-                        <div class="swiper-button-next" ng-if="selectedGallery.slides.length &gt; 1 &amp;&amp; selectedGallery.config.showNavigation"></div>
+                        <div class="swiper-pagination" ng-if="selectedGallery.config.showNavigation"></div>
+                        <div class="swiper-button-prev" ng-if="selectedGallery.config.showNavigation"></div>
+                        <div class="swiper-button-next" ng-if="selectedGallery.config.showNavigation"></div>
                       </div>
                     </md-card>
                     <p></p>
