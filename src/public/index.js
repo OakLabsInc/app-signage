@@ -56,56 +56,16 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
       $scope.shouldReload = true
     }
     $scope.gallery = data
-    // let config = {
-    //   autoplay: {
-    //     delay: parseInt($scope.gallery.interval)
-    //   },
-    //   slidesPerView: parseInt($scope.gallery.show),
-    //   spaceBetween: 10,
-    //   slidesPerGroup: parseInt($scope.gallery.show),
-    //   observer: true,
-    //   loop: true
-    //   // effect: "coverflow",
-    //   // coverflowEffect: {
-    //   //   rotate: 30,
-    //   //   slideShadows: false,
-    //   // },
-
-    //   // effect: "fade",
-    //   // fadeEffect: {
-    //   //   crossFade: true
-    //   // },
-
-    // }
-    let baseConfig = {
-      observer: true,
-      updateOnImagesReady: true,
-      preloadImages: true,
-      pagination: {
-        el: '.swiper-pagination',
-        color: '#ffffff'
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }
-  
-    }
-    
-    $scope.gallery.config.autoplay.disableOnInteraction = false
-
-    let newConfig = { ...baseConfig, ...$scope.gallery.config }
     if (!$scope.swiper) {
       $timeout(function () {
-        $scope.swiper = new Swiper('.swiper-container', newConfig)
+        $scope.swiper = new Swiper('.swiper-container', $scope.gallery.config)
       })
     } else {
       if ($scope.shouldReload) oak.reload()
 
       $timeout(function () {
+        $scope.swiper.slideTo(0)
         $scope.swiper.update()
-        // $scope.swiper.destroy(true, true)
-        // $scope.swiper = new Swiper('.swiper-container', config);
       })
     }
   }

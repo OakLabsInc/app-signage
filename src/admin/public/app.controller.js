@@ -113,13 +113,31 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         let newGallery = {
           'name': _.snakeCase(name),
           'config': {
+            observer: true,
+            updateOnImagesReady: true,
+            preloadImages: true,
             direction: 'horizontal',
             loop: true,
             slidesPerView: 1,
-            slidesPerGroup: 1
+            slidesPerGroup: 1,
+            showNavigation: true,
+            autoplay: {
+              disableOnInteraction: true,
+              delay: 4000
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              color: '#ffffff'
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }
           },
           'slides': []
         }
+
+        
         $scope.galleries.push(newGallery)
         $scope.saveGallery(newGallery)
       } else {
@@ -376,28 +394,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         $scope.swiper.slideTo(0)
         $scope.swiper.update()
       }
-
-      let baseConfig = {
-        observer: true,
-        updateOnImagesReady: true,
-        disableOnInteraction: false,
-        preloadImages: true,
-        pagination: {
-          el: '.swiper-pagination',
-          color: '#ffffff'
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-    
-      }
-      gallery.config.autoplay.disableOnInteraction = false
-
-      let newConfig = { ...baseConfig, ...gallery.config }
-
-      //$scope.swiper.update()
-      $scope.swiper = new Swiper ('.swiper-container', newConfig)
+      $scope.swiper = new Swiper ('.swiper-container', gallery.config)
     })
   }
   $scope.initPreviewPage = function() {

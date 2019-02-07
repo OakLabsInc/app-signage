@@ -9,11 +9,11 @@ md-tab-body
               .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
                 h2.overlay-title {{slide.title}}
                 div.overlay-text {{slide.overlay}}    
-        .swiper-pagination(ng-if="selectedGallery.slides.length > 1")
-        .swiper-button-prev(ng-if="selectedGallery.slides.length > 1")
-        .swiper-button-next(ng-if="selectedGallery.slides.length > 1")
+        .swiper-pagination(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
+        .swiper-button-prev(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
+        .swiper-button-next(ng-if="selectedGallery.slides.length > 1 && selectedGallery.config.showNavigation")
     p
     p 
       a(href="https://signage.zivelo.com/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Url
-    p
+    pre(style="text-align:left") {{selectedGallery | json}}
     p

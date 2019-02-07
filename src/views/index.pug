@@ -44,9 +44,9 @@ html(ng-app='signageApp')
             .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
               h2.overlay-title {{slide.title}}
               div.overlay-text {{slide.overlay}}    
-      .swiper-pagination(ng-if="gallery.slides.length > 1")
-      .swiper-button-prev(ng-if="gallery.slides.length > 1")
-      .swiper-button-next(ng-if="gallery.slides.length > 1")
+      .swiper-pagination(ng-if="gallery.slides.length > 1 && selectedGallery.config.showNavigation")
+      .swiper-button-prev(ng-if="gallery.slides.length > 1 && selectedGallery.config.showNavigation")
+      .swiper-button-next(ng-if="gallery.slides.length > 1 && selectedGallery.config.showNavigation")
           
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js")
