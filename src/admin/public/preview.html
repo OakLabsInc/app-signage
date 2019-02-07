@@ -25,9 +25,9 @@
             </div>
           </div>
         </div>
-        <div class="swiper-pagination" ng-if="previewGallery.config.showNavigation"></div>
-        <div class="swiper-button-prev" ng-if="previewGallery.config.showNavigation"></div>
-        <div class="swiper-button-next" ng-if="previewGallery.config.showNavigation"></div>
+        <div class="swiper-pagination" ng-class="{ 'swiper-pagination-hidden': !previewGallery.config.showNavigation }"></div>
+        <div class="swiper-button-prev" ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }"></div>
+        <div class="swiper-button-next" ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }"></div>
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>

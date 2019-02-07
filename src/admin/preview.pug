@@ -10,8 +10,8 @@ html
               .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
                 h2.overlay-title {{slide.title}}
                 div.overlay-text {{slide.overlay}}    
-        .swiper-pagination(ng-if="previewGallery.config.showNavigation")
-        .swiper-button-prev(ng-if="previewGallery.config.showNavigation")
-        .swiper-button-next(ng-if="previewGallery.config.showNavigation")
+        .swiper-pagination(ng-class="{ 'swiper-pagination-hidden': !previewGallery.config.showNavigation }")
+        .swiper-button-prev(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")
+        .swiper-button-next(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")
   
     include includes/foot.pug

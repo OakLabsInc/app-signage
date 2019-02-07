@@ -59,7 +59,7 @@ body {
   overflow: hidden;
 }
 .swiper-container .swiper-slide .overlay-container {
-  padding: 2.5em;
+  padding: 1.618em;
   width: 100%;
   height: 100%;
   display: flex;
@@ -108,6 +108,12 @@ body {
   justify-content: flex-end;
   align-items: flex-end;
   text-align: right;
+}
+.swiper-container .swiper-slide .overlay-container .text-wrapper {
+  height: 50%;
+  width: 50%;
+  overflow: hidden;
+  padding: 15px;
 }
 .swiper-button-prev {
   background-image: url("dataimage/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;

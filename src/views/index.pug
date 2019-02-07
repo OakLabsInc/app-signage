@@ -30,7 +30,7 @@ html(ng-app='signageApp')
   body(ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
     ripples
       .ripple(ng-repeat="r in ripples" ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
-    .swiper-container
+    .swiper-container(ng-style="{'background-color': gallery.backgroundColor}")
       .swiper-wrapper
         .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in gallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}" style="background: url({{slide.image}})")  
           .overlay-container(class="{{slide.overlayPosition}}")
@@ -42,7 +42,7 @@ html(ng-app='signageApp')
       .swiper-button-next(ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }")
     script(src="/vendor/angular.min.js")
     script(src="/vendor/swiper.min.js")
-    script(src='/index.js')
+    script(src='/index.js') 
 
       
 
