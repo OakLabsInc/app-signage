@@ -192,9 +192,9 @@
                             </div>
                           </div>
                         </div>
-                        <div class="swiper-pagination" ng-if="selectedGallery.config.showNavigation"></div>
-                        <div class="swiper-button-prev" ng-if="selectedGallery.config.showNavigation"></div>
-                        <div class="swiper-button-next" ng-if="selectedGallery.config.showNavigation"></div>
+                        <div class="swiper-pagination" ng-class="{ 'swiper-pagination-hidden': !selectedGallery.config.showNavigation }"></div>
+                        <div class="swiper-button-prev" ng-class="{ 'swiper-button-disabled': !selectedGallery.config.showNavigation }"></div>
+                        <div class="swiper-button-next" ng-class="{ 'swiper-button-disabled': !selectedGallery.config.showNavigation }"></div>
                       </div>
                     </md-card>
                     <p></p>

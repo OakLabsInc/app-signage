@@ -1,8 +1,26 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
 style {
   display: none;
 }
 script {
   display: none;
+}
+html {
+  font-size: 1em;
 }
 html,
 body {
@@ -11,28 +29,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'IBM Plex Sans';
-}
-html {
-  font-size: 1em;
+  position: relative;
 }
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #000;
-  color: #424242;
+  color: #fff;
 }
 .swiper-container {
-  color: #fff !important;
   position: absolute;
   top: 0;
-  right: 0;
   left: 0;
-  bottom: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 .swiper-container .swiper-slide {
-  font-size: 20px;
-  background: #000;
+  font-size: 2em;
   align-items: center;
   background-repeat: no-repeat !important;
   background-size: cover !important;
@@ -41,10 +56,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .swiper-container .swiper-slide .overlay-container {
-  width: 85%;
-  height: 85%;
+  padding: 2.5em;
+  width: 100%;
+  height: 100%;
   display: flex;
 }
 .swiper-container .swiper-slide .overlay-container.left-top {
@@ -92,20 +109,14 @@ body {
   align-items: flex-end;
   text-align: right;
 }
-.swiper-container .swiper-slide .overlay-container .text-wrapper {
-  height: 50%;
-  width: 50%;
-  overflow: hidden;
-  padding: 15px;
-}
 .swiper-button-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;
+  background-image: url("dataimage/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;
 }
 .swiper-pagination-bullet-active {
   background: #dedede !important;
 }
 .swiper-button-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;
+  background-image: url("dataimage/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23dedede'%2F%3E%3C%2Fsvg%3E") !important;
 }
 .hidden {
   position: absolute;
