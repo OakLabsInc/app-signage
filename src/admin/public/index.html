@@ -66,23 +66,23 @@
                         <input ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/">
                       </md-input-container>
                       <md-input-container class="md-block" flex-gt-sm>
-                        <label>Sides per view</label>
+                        <label>Sides Per View</label>
                         <input ng-model="selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/">
                       </md-input-container>
                       <md-input-container class="md-block" flex-gt-sm>
-                        <label>Sides per group</label>
+                        <label>Sides Per Group</label>
                         <input ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/">
                       </md-input-container>
-                      <md-input-container class="md-block" flex-gt-sm>
-                        <label>Delay between slides</label>
-                        <input ng-model="selectedGallery.config.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
+                      <md-input-container class="md-block" ng-show="selectedGallery.enableAutoplay" flex-gt-sm>
+                        <label>Delay Between Slides</label>
+                        <input ng-model="selectedGallery.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
                       </md-input-container>
                       <div md-color-picker="colorPicker.options" label="Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor"></div>
                       <md-input-container class="md-block" flex-gt-sm>
-                        <md-checkbox ng-model="selectedGallery.config.loop">Loop slide show</md-checkbox>
+                        <md-checkbox ng-model="selectedGallery.enableAutoplay">Enable Autoplay</md-checkbox>
                       </md-input-container>
                       <md-input-container class="md-block" flex-gt-sm>
-                        <md-checkbox ng-model="selectedGallery.config.showNavigation">Show navigation</md-checkbox>
+                        <md-checkbox ng-model="selectedGallery.config.showNavigation">Show Navigation</md-checkbox>
                       </md-input-container>
                     </md-card>
                     <p> </p>

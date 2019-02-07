@@ -57,6 +57,11 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
     }
     $scope.gallery = data
     if (!$scope.swiper) {
+      if(!$scope.gallery.enableAutoplay){
+        $scope.gallery.config.autoplay = false
+      } else {
+        $scope.gallery.config.autoplay = $scope.gallery.autoplay
+      }
       $timeout(function () {
         $scope.swiper = new Swiper('.swiper-container', $scope.gallery.config)
       })

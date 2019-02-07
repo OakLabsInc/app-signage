@@ -112,6 +112,11 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       if (!results) {
         let newGallery = {
           'name': _.snakeCase(name),
+          'autoplay': {
+            disableOnInteraction: false,
+            delay: 4000
+          },          
+          'enableAutoplay': true,
           'config': {
             observer: true,
             updateOnImagesReady: true,
@@ -121,10 +126,6 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
             slidesPerView: 1,
             slidesPerGroup: 1,
             showNavigation: true,
-            autoplay: {
-              disableOnInteraction: true,
-              delay: 4000
-            },
             pagination: {
               el: '.swiper-pagination',
               color: '#ffffff'
@@ -156,9 +157,16 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     return _.startCase(name)
   }
   $scope.saveGallery = function (gallery) {
+    if(!gallery.enableAutoplay){
+      gallery.config.autoplay = false
+    } else {
+      gallery.config.autoplay = gallery.autoplay
+    }
     $scope.imageIsUploading = false
     $scope.fileName = ""
     let newGallery = JSON.parse(angular.toJson( gallery ))
+
+    
     db.collection('users').doc($scope.user.uid).collection('galleries').doc(newGallery.name).set(newGallery)
       .then(function () {
         console.log('Gallery written ')
@@ -389,6 +397,11 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
 
   $scope.initPreview = function(gallery) {
     
+    if(!gallery.enableAutoplay){
+      gallery.config.autoplay = false
+    } else {
+      gallery.config.autoplay = gallery.autoplay
+    }
     $timeout(function(){
       if($scope.swiper) {
         $scope.swiper.slideTo(0)
