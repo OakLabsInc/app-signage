@@ -11,7 +11,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.colorPicker = {}
 
   $scope.isLoggedIn = false
-  $scope.selectedGallery = {}
+
   $scope.selectedTabIndex = {
     tabIndex: 1
   }
