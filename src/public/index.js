@@ -52,8 +52,8 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
   })
 
   $scope.initApp = function (data) {
+    $scope.shouldReload = true
     if (typeof $scope.previewGallery !== 'undefined' && data.enableAutoplay !== $scope.previewGallery.enableAutoplay) {
-      $scope.shouldReload = true
     }
     $scope.previewGallery = data
     if (!$scope.swiper) {
