@@ -52,18 +52,18 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
   })
 
   $scope.initApp = function (data) {
-    if (typeof $scope.gallery !== 'undefined' && data.show !== $scope.gallery.show) {
+    if (typeof $scope.previewGallery !== 'undefined' && data.enableAutoplay !== $scope.previewGallery.enableAutoplay) {
       $scope.shouldReload = true
     }
-    $scope.gallery = data
+    $scope.previewGallery = data
     if (!$scope.swiper) {
-      if(!$scope.gallery.enableAutoplay){
-        $scope.gallery.config.autoplay = false
+      if(!$scope.previewGallery.enableAutoplay){
+        $scope.previewGallery.config.autoplay = false
       } else {
-        $scope.gallery.config.autoplay = $scope.gallery.autoplay
+        $scope.previewGallery.config.autoplay = $scope.previewGallery.autoplay
       }
       $timeout(function () {
-        $scope.swiper = new Swiper('.swiper-container', $scope.gallery.config)
+        $scope.swiper = new Swiper('.swiper-container', $scope.previewGallery.config)
       })
     } else {
       if ($scope.shouldReload) oak.reload()

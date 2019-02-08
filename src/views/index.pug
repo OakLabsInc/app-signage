@@ -1,7 +1,10 @@
 doctype html
-html(ng-app='signageApp')
+html
   include head.pug
-  include body.pug
+  body(ng-app='signageApp' ng-controller='appController' ,  ng-click="tapped($event)", ng-mousemove="mouseMoved($event)", ng-cloak)
+    ripples
+      .ripple(ng-repeat="r in ripples" ng-style="{ top: r.y + 'px', left: r.x + 'px' }")
+    include ../admin/includes/swiper.pug
     include footer.pug
       
 

@@ -1,5 +1,7 @@
 doctype html
 html
   include includes/head.pug
-  include ../views/body.pug
+  body(ng-app="signageApp" ng-controller="appController" ng-cloak="")
+    .preview-container(ng-init="initPreviewPage()" ng-style="{'background-color': previewGallery.backgroundColor}")
+      include includes/swiper.pug
     include includes/foot.pug

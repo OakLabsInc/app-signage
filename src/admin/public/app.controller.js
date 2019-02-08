@@ -411,9 +411,6 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     })
   }
   $scope.initPreviewPage = function() {
-    
-      
-      console.log('galleries', $scope.galleries)
       var previewMode = false
       var urlParams = new URLSearchParams(window.location.search);
       var apikey = urlParams.get('apikey');
