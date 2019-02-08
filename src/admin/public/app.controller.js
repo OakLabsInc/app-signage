@@ -11,6 +11,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.colorPicker = {}
 
   $scope.isLoggedIn = false
+  $scope.selectedGallery = {}
   $scope.selectedTabIndex = {
     tabIndex: 1
   }
@@ -99,13 +100,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       
     })
   }
-  $scope.editGallery = function (i) {
-    if (i > -1) {
-      $scope.gallery = $scope.galleries[i]
-    }
-
-    $scope.galleryFormOpen = true
-  }
+  
   $scope.addGallery = function (name) {
 
       var results = _.find($scope.galleries, ['name', name])
@@ -396,7 +391,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   };
 
   $scope.initPreview = function(gallery) {
-    
+    $scope.previewGallery = gallery
     if(!gallery.enableAutoplay){
       gallery.config.autoplay = false
     } else {
