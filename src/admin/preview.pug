@@ -1,17 +1,5 @@
 doctype html
 html
   include includes/head.pug
-  body(ng-app="signageApp" ng-controller="appController" ng-cloak="" )
-    .preview-container(ng-init="initPreviewPage()" ng-style="{'background-color': previewGallery.backgroundColor}")
-      .swiper-container
-        .swiper-wrapper
-          .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in previewGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:previewGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
-            .overlay-container(class="{{slide.overlayPosition}}")
-              .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
-                h2.overlay-title {{slide.title}}
-                div.overlay-text {{slide.overlay}}    
-        .swiper-pagination(ng-class="{ 'swiper-pagination-hidden': !previewGallery.config.showNavigation }")
-        .swiper-button-prev(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")
-        .swiper-button-next(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")
-  
+  include ../views/body.pug
     include includes/foot.pug
