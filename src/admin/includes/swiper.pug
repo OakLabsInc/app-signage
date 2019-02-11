@@ -4,7 +4,7 @@
       .overlay-container(class="{{slide.overlayPosition}}")
         .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
           h2.overlay-title {{slide.title}}
-          div.overlay-text {{slide.overlay}}    
+          div.overlay-text(ng-bind-html="mdToHtml(slide.overlay)") {{slide.overlay}}    
   .swiper-pagination(ng-class="{ 'swiper-pagination-hidden': !previewGallery.config.showNavigation }")
   .swiper-button-prev(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")
   .swiper-button-next(ng-class="{ 'swiper-button-disabled': !previewGallery.config.showNavigation }")

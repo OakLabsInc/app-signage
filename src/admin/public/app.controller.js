@@ -1,4 +1,4 @@
-app.controller('appController', function AppController ($log, $scope, $rootScope, $timeout, $mdToast, $firebaseObject, User, $mdSidenav, $mdPanel, $mdDialog) {
+app.controller('appController', function AppController ($log, $scope, $rootScope, $timeout, $mdToast, $firebaseObject, User, $mdSidenav, $mdPanel, $mdDialog, $sce) {
   var db = firebase.firestore()
 
   db.settings({
@@ -426,6 +426,10 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
 
       }
     
+  }
+
+  $scope.mdToHtml = function (text) {
+    return $sce.trustAsHtml(markdown.toHTML(text));
   }
 
 
