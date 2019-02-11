@@ -16,7 +16,7 @@ var app = window.angular
     $sceDelegateProvider.resourceUrlWhitelist(['self'])
   })
 
-app.controller('appController', function ($log, $timeout, $scope, $http, $window, oak, _) {
+app.controller('appController', function ($log, $sce, $timeout, $scope, $http, $window, oak, _) {
   // ripples
   $scope.untapped = true
   $scope.swiper = false
@@ -114,6 +114,10 @@ app.controller('appController', function ($log, $timeout, $scope, $http, $window
     if ($scope.untapped) {
       $scope.untapped = false
     }
+  }
+
+  $scope.mdToHtml = function (text) {
+    return $sce.trustAsHtml(markdown.toHTML(text));
   }
 
   oak.ready()
