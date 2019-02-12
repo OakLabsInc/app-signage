@@ -180,7 +180,7 @@
                 <md-tab-label>Preview</md-tab-label>
                 <md-tab-body>
                   <md-content layout-padding> 
-                    <md-card class="preview-container">
+                    <div class="preview-container">
                       <div class="swiper-container" ng-style="{'background-color': theGallery.backgroundColor}">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in theGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:theGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
@@ -196,7 +196,7 @@
                         <div class="swiper-button-prev" ng-class="{ 'swiper-button-hidden': !theGallery.config.showNavigation }"></div>
                         <div class="swiper-button-next" ng-class="{ 'swiper-button-hidden': !theGallery.config.showNavigation }"></div>
                       </div>
-                    </md-card>
+                    </div>
                     <p></p>
                     <p> <a href="/preview.html?apikey={{user.uid}}&amp;galleryname={{selectedGallery.name}}" target="_blank">Preview Url</a></p>
                     <pre style="text-align:left">{{selectedGallery | json}}</pre>
