@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
   </head>
   <body ng-app="signageApp" ng-controller="appController" ng-cloak="">
-    <div class="preview-container" ng-init="initPreviewPage()" ng-style="{'background-color': previewGallery.backgroundColor}">
+    <div class="preview-container" ng-init="initPreviewPage()" ng-style="{'background-color': theGallery.backgroundColor}">
       <div class="swiper-container" ng-style="{'background-color': theGallery.backgroundColor}">
         <div class="swiper-wrapper">
           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in theGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:theGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
