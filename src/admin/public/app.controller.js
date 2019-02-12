@@ -392,7 +392,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   };
 
   $scope.initPreview = function(gallery) {
-    $scope.previewGallery = gallery
+    $scope.theGallery = gallery
     if(!gallery.enableAutoplay){
       gallery.config.autoplay = false
     } else {
@@ -418,8 +418,8 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
         .onSnapshot(function(doc) {
           $timeout(function () {
             $log.info(doc.data())
-            $scope.previewGallery = doc.data()
-            $scope.initPreview($scope.previewGallery)
+            $scope.theGallery = doc.data()
+            $scope.initPreview($scope.theGallery)
             console.log("Current data: ", doc.data());
           })
         });
