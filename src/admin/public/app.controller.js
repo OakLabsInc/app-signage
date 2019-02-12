@@ -106,6 +106,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       var results = _.find($scope.galleries, ['name', name])
       if (!results) {
         let newGallery = {
+          'now': Date.now(),
           'name': _.snakeCase(name),
           'autoplay': {
             disableOnInteraction: false,
