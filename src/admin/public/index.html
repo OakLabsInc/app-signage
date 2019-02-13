@@ -180,7 +180,7 @@
                 <md-tab-label>Preview</md-tab-label>
                 <md-tab-body>
                   <md-content layout-padding> 
-                    <md-card class="preview-container">
+                    <div class="preview-container">
                       <div class="swiper-container" ng-style="{'background-color': gallery.backgroundColor}">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in gallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
