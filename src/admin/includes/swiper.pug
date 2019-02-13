@@ -1,11 +1,16 @@
-.swiper-container(ng-style="{'background-color': theGallery.backgroundColor}")
+.swiper-container(ng-style="{'background-color': gallery.backgroundColor}")
   .swiper-wrapper
-    .swiper-slide(ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in theGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:theGallery.autoplay.delay}}" style="background: url({{slide.image}})")  
+    .swiper-slide(
+        ng-style="{'background-color': slide.backgroundColor}",
+        ng-repeat="slide in gallery.slides track by $index",
+        data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}",
+        style="background: url({{slide.image}})"
+      )  
       .overlay-container(class="{{slide.overlayPosition}}")
         .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
           h2.overlay-title {{slide.title}}
           div.overlay-text(ng-bind-html="mdToHtml(slide.overlay)") {{slide.overlay}}    
-  .swiper-pagination(ng-class="{ 'swiper-pagination-hidden': !theGallery.config.showNavigation }")
-  .swiper-button-prev(ng-class="{ 'swiper-button-hidden': !theGallery.config.showNavigation }")
-  .swiper-button-next(ng-class="{ 'swiper-button-hidden': !theGallery.config.showNavigation }")
+  .swiper-pagination(ng-class="{ 'swiper-pagination-hidden': !gallery.config.showNavigation }")
+  .swiper-button-prev(ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }")
+  .swiper-button-next(ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }")
     

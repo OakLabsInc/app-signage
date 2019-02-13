@@ -7,6 +7,17 @@
   overflow hidden
   height 100%
   width 100%
+  & *
+    box-sizing border-box
+    -webkit-font-smoothing subpixel-antialiased
+    -webkit-user-select none
+    -webkit-user-drag none
+    -webkit-backface-visibility hidden
+    transform translate3d(0,0,0)
+
+  .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled
+    opacity 0
+  
   .swiper-slide 
     font-size 2em
     background-repeat no-repeat!important

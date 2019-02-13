@@ -1,5 +1,5 @@
 window.oak.disableZoom()
-  
+
 window.reload = function () {
   window.oak.reload()
 }
@@ -53,17 +53,17 @@ app.controller('appController', function ($log, $sce, $timeout, $scope, $http, $
 
   $scope.initApp = function (data) {
     $scope.shouldReload = true
-    if (typeof $scope.theGallery !== 'undefined' && data.enableAutoplay !== $scope.theGallery.enableAutoplay) {
+    if (typeof $scope.gallery !== 'undefined' && data.enableAutoplay !== $scope.gallery.enableAutoplay) {
     }
-    $scope.theGallery = data
+    $scope.gallery = data
     if (!$scope.swiper) {
-      if(!$scope.theGallery.enableAutoplay){
-        $scope.theGallery.config.autoplay = false
+      if (!$scope.gallery.enableAutoplay) {
+        $scope.gallery.config.autoplay = false
       } else {
-        $scope.theGallery.config.autoplay = $scope.theGallery.autoplay
+        $scope.gallery.config.autoplay = $scope.gallery.autoplay
       }
       $timeout(function () {
-        $scope.swiper = new Swiper('.swiper-container', $scope.theGallery.config)
+        $scope.swiper = new Swiper('.swiper-container', $scope.gallery.config)
       })
     } else {
       if ($scope.shouldReload) oak.reload()
@@ -75,49 +75,8 @@ app.controller('appController', function ($log, $sce, $timeout, $scope, $http, $
     }
   }
 
-  $scope.mouseMoved = function ({ pageX: x, pageY: y }) {
-    // dont show cursor if the settings has `false` or 0 as the cursorTimeout
-    if ($scope.cursorTimeout) {
-      resetCursorTimer()
-      $scope.cursor = { x, y }
-    }
-  }
-  var clearCursorPromises = function () {
-    cursorPromises.forEach(function (timeout) {
-      $timeout.cancel(timeout)
-    })
-    cursorPromises = []
-  }
-  var resetCursorTimer = function () {
-    clearCursorPromises()
-    $scope.showCursor = true
-    timer = $timeout(function () {
-      $scope.showCursor = false
-    }, $scope.cursorTimeout)
-    cursorPromises.push(timer)
-  }
-
-  $scope.$on('$destroy', function () {
-    clearCursorPromises()
-  })
-
-  $scope.tapped = function ({ pageX, pageY }) {
-    let id = $window.uuid.v4()
-    $scope.showCursor = false
-    $scope.ripples.push({
-      x: pageX, y: pageY, id
-    })
-    $timeout(function () {
-      _.remove($scope.ripples, { id })
-    }, 500)
-
-    if ($scope.untapped) {
-      $scope.untapped = false
-    }
-  }
-
   $scope.mdToHtml = function (text) {
-    return $sce.trustAsHtml(markdown.toHTML(text));
+    return $sce.trustAsHtml(markdown.toHTML(text))
   }
 
   oak.ready()
