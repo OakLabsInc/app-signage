@@ -392,12 +392,12 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   };
 
   $scope.initPreview = function(gallery) {
-    $scope.theGallery = gallery
     if(!gallery.enableAutoplay){
       gallery.config.autoplay = false
     } else {
       gallery.config.autoplay = gallery.autoplay
     }
+    $scope.gallery = gallery
     $timeout(function(){
       if($scope.swiper) {
         $scope.swiper.slideTo(0)
@@ -414,12 +414,12 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
       if (!_.isNull(apikey) && !_.isNull(galleryname)) {
         $log.info(apikey, galleryname)
 
-        db.collection('users').doc(apikey).collection('galleries').doc(galleryname)
+      db.collection('users').doc(apikey).collection('galleries').doc(galleryname)
         .onSnapshot(function(doc) {
           $timeout(function () {
             $log.info(doc.data())
-            $scope.theGallery = doc.data()
-            $scope.initPreview($scope.theGallery)
+            $scope.gallery = doc.data()
+            $scope.initPreview($scope.gallery)
             console.log("Current data: ", doc.data());
           })
         });

@@ -1,10 +1,14 @@
-FROM oaklabs/oak:5.0.0
+FROM oaklabs/oak:5.0.4
 
 WORKDIR /app
+
+COPY package.json package-lock.json /app/
+
+RUN npm install --production && npm cache clean --force
+
 COPY . /app
 
+CMD ["/app"]
 
-RUN npm i --progress=false --loglevel="error" \
-    && npm cache clean --force
-
-CMD ["/app/src/server.js"]
+ENV API_KEY=K6z0KH8UeYgSgeRVuVWlnzFBfD32 \
+    GALLERY_NAME=coffee_shop

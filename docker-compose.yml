@@ -3,7 +3,7 @@ version: '3'
 services:
   server:
     build: .
-    image: index.docker.io/oaklabs/app-signage:latest
+    image: oaklabs/app-signage:latest
     network_mode: host
     devices:
       - /dev/dri
@@ -13,4 +13,3 @@ services:
       - ./src:/app/src
     environment:
       - NODE_ENV=development
-      - PLATFORM_HOST=192.168.0.66:443

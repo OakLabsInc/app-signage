@@ -1,12 +1,10 @@
 
-const debug = process.env.NODE_ENV !== 'production'
 const apiKey = process.env.API_KEY
 const galleryName = process.env.GALLERY_NAME
 
 const oak = require('oak')
 const { join } = require('path')
 const _ = require('lodash')
-const tools = require('oak-tools')
 
 oak.catchErrors()
 
@@ -16,15 +14,8 @@ const app = express()
 
 const port = process.env.PORT ? _.toNumber(process.env.PORT) : 9000
 
-const logger = tools.logger({
-  level: debug ? 'debug' : 'info',
-  pretty: debug
-})
-
 let publicPath = join(__dirname, 'public')
 let viewsPath = join(__dirname, 'views')
-
-let window = null
 
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
@@ -42,34 +33,14 @@ app.get('/', function (req, res) {
   res.render('index')
 })
 app.get('/env', function (req, res) {
-  res.json({
-    apiKey: apiKey || 'not available',
-    galleryName: galleryName || 'not available'
-  })
+  res.json({ apiKey, galleryName })
 })
-async function loadWindow () {
-  logger.info({
-    message: `Started on port ${port}`
-  })
-  window = oak.load({
+function loadWindow () {
+  oak.load({
     url: `http://localhost:${port}/`,
     ontop: false,
-    insecure: true,
     flags: ['enable-vp8-alpha-playback'],
     sslExceptions: ['localhost'],
-    background: '#ffffff',
-    scripts: [
-      {
-        name: 'lodash',
-        path: 'lodash'
-      },
-      {
-        name: 'uuid',
-        path: 'uuid'
-      }
-    ]
+    background: '#ffffff'
   })
-    .on('log.*', function (props) {
-      logger[this.event.replace('log.', '')](props)
-    })
 }

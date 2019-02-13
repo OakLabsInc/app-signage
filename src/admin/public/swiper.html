@@ -1,7 +1,7 @@
 
-<div class="swiper-container" ng-style="{'background-color': theGallery.backgroundColor}">
+<div class="swiper-container" ng-style="{'background-color': gallery.backgroundColor}">
   <div class="swiper-wrapper">
-    <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in theGallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:theGallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
+    <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in gallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
       <div class="overlay-container {{slide.overlayPosition}}">
         <div class="text-wrapper" ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}">
           <h2 class="overlay-title">{{slide.title}}</h2>
@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <div class="swiper-pagination" ng-class="{ 'swiper-pagination-hidden': !theGallery.config.showNavigation }"></div>
-  <div class="swiper-button-prev" ng-class="{ 'swiper-button-disabled': !theGallery.config.showNavigation }"></div>
-  <div class="swiper-button-next" ng-class="{ 'swiper-button-disabled': !theGallery.config.showNavigation }"></div>
+  <div class="swiper-pagination" ng-class="{ 'swiper-pagination-hidden': !gallery.config.showNavigation }"></div>
+  <div class="swiper-button-prev" ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }"></div>
+  <div class="swiper-button-next" ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }"></div>
 </div>
