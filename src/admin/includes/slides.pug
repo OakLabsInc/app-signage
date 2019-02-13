@@ -24,8 +24,8 @@ md-tab-body
             md-input-container(class="md-block" flex-gt-sm)
               label Slide Delay
               input(ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
-            div(md-color-picker="colorPicker.options" label="Slide Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor")
-            div(md-color-picker="colorPicker.options" label="Text Color"  md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor")
+            div(md-color-picker="colorPicker.options" label="Slide Background Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor")
+            div(md-color-picker="colorPicker.options" label="Text Color"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor")
             md-input-container
               label Overlay Position
               md-select(ng-model="selectedGallery.slides[$index].overlayPosition" )
@@ -44,7 +44,7 @@ md-tab-body
             md-input-container(class="md-block" flex="100")
               label Overlay Text
               textarea(name="", cols="60", rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
-            div(md-color-picker="colorPicker.options" label="Overlay Background"  md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor")
+            div(md-color-picker="colorPicker.options" label="Overlay Background"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor")
             
           .image-wrapper(class="{{selectedGallery.config.direction}}" ng-style="{'background-color':selectedGallery.slides[$index].backgroundColor}")
             div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")

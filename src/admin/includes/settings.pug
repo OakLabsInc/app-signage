@@ -14,7 +14,7 @@ md-tab-body
       md-input-container(ng-show="selectedGallery.enableAutoplay" class="md-block" flex-gt-sm)
         label Delay Between Slides
         input(ng-model="selectedGallery.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
-      div(md-color-picker="colorPicker.options" label="Background Color" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
+      div(md-color-picker="colorPicker.options" label="Background Color"  md-color-clear-button="false"  md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
       md-input-container(class="md-block" flex-gt-sm)
         md-checkbox(ng-model="selectedGallery.enableAutoplay")
           | Enable Autoplay
