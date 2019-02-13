@@ -1,3 +1,5 @@
+*
+  box-sizing border-box
 p
   margin 0
 a
@@ -102,11 +104,14 @@ md-toast
     background-position center center
     background-size: contain
     background-repeat: no-repeat
+.no-overflow
+  overflow hidden
 .preview-container
   width: 100%!important
   padding-bottom 56%!important
   position relative
   color #fff
+  overflow hidden
   @import "../views/gallery.styl"
 
 md-card

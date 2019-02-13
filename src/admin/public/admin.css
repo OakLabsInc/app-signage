@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 p {
   margin: 0;
 }
@@ -119,11 +122,15 @@ md-toast.success-toast .md-toast-content {
   background-size: contain;
   background-repeat: no-repeat;
 }
+.no-overflow {
+  overflow: hidden;
+}
 .preview-container {
   width: 100% !important;
   padding-bottom: 56% !important;
   position: relative;
   color: #fff;
+  overflow: hidden;
 }
 .preview-container .swiper-wrapper {
   position: absolute;

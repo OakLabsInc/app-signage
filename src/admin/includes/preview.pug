@@ -1,10 +1,10 @@
 md-tab-label Preview
 md-tab-body
-  md-content(layout-padding) 
+  md-content.no-overflow
     .preview-container
       include swiper.pug
-    p
-    p 
-      a(href="/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Url
-    pre(style="text-align:left") {{selectedGallery | json}}
-    p
+      //- p
+      //- p 
+      //-   a(href="/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Url
+      //- pre(style="text-align:left") {{selectedGallery | json}}
+      //- p
