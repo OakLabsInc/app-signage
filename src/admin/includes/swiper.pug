@@ -6,7 +6,7 @@
         data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}",
         style="background: url({{slide.image}})"
       )  
-      .overlay-container(class="{{slide.overlayPosition}}")
+      .overlay-container(class="{{slide.overlayPosition}}" ng-style="{'padding':slide.padding}")
         .text-wrapper(ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}")
           h2.overlay-title {{slide.title}}
           div.overlay-text(ng-bind-html="mdToHtml(slide.overlay)") {{slide.overlay}}    

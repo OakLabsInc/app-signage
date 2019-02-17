@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
   </head>
   <body ng-app="signageApp" ng-controller="appController" ng-cloak="">
-    <div class="preview-container" ng-init="initPreviewPage()" ng-style="{'background-color': gallery.backgroundColor}">
+    <div class="preview-container page" ng-init="initPreviewPage()" ng-style="{'background-color': gallery.backgroundColor}">
       <div class="swiper-container" ng-style="{'background-color': gallery.backgroundColor}">
         <div class="swiper-wrapper">
           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in gallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
-            <div class="overlay-container {{slide.overlayPosition}}">
+            <div class="overlay-container {{slide.overlayPosition}}" ng-style="{'padding':slide.padding}">
               <div class="text-wrapper" ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}">
                 <h2 class="overlay-title">{{slide.title}}</h2>
                 <div class="overlay-text" ng-bind-html="mdToHtml(slide.overlay)">{{slide.overlay}}    </div>
@@ -47,6 +47,7 @@
     <script src="vendor/mdColorPicker.js"></script>
     <script src="init.js" defer></script>
     <script src="directives/chooseFile.directive.js" defer></script>
+    <script src="directives/markdown.directive.js" defer></script>
     <script src="factories/firestore.user.directive.js" defer></script>
     <script src="app.controller.js" type="text/javascript" defer></script>
   </body>

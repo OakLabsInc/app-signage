@@ -15,12 +15,15 @@
   <body ng-app="signageApp" ng-controller="appController" ng-cloak="">
     <div layout="column" layout-fill="">
       <md-toolbar>
-        <div class="md-toolbar-tools">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
           <md-button class="md-fab md-mini" id="galleryMenu" ng-click="toggleLeft()" hide-gt-md="">
             <md-icon class="material-icons">menu</md-icon>
           </md-button>
           <h2 md-truncate="" flex=""> <a href="/">Signage Admin</a></h2>
-          <md-button ng-click="logout()" ng-if="isLoggedIn" ng-cloak="">Logout</md-button>
+          <div class="md-input-container" layout="row" layout-align="end center"><a style="color:#ffffff;cursor:pointer" href="/" ng-if="isLoggedIn" ng-cloak="">
+              <md-icon class="material-icons">help</md-icon></a>
+            <md-button ng-click="logout()" ng-if="isLoggedIn" ng-cloak="">Logout</md-button>
+          </div>
         </div>
       </md-toolbar>
       <div ng-if="isLoggedIn" style="height:100%;overflow:hidden" layout="row">
@@ -60,8 +63,8 @@
               <md-tab layout="column" layout-fill="" id="tab1" md-tab-class="selector-tab1">
                 <md-tab-label>Settings</md-tab-label>
                 <md-tab-body>
-                  <div layout-padding layout="column" flex=""> 
-                    <md-card layout="column" layout-fill="" layout-wrap>
+                  <div layout-padding layout="column" flex-gt-sm="50"> 
+                    <md-card layout="column" layout-wrap>
                       <md-input-container class="md-block" flex-gt-sm>
                         <label>Gallery Name</label>
                         <input ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/">
@@ -78,12 +81,15 @@
                         <label>Delay Between Slides</label>
                         <input ng-model="selectedGallery.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
                       </md-input-container>
-                      <div md-color-picker="colorPicker.options" label="Background Color" md-color-clear-button="false"  md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor"></div>
+                      <div md-color-picker="colorPicker.options" label="Background Color" md-color-clear-button="false" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor"></div>
                       <md-input-container class="md-block" flex-gt-sm>
                         <md-checkbox ng-model="selectedGallery.enableAutoplay">Enable Autoplay</md-checkbox>
                       </md-input-container>
                       <md-input-container class="md-block" flex-gt-sm>
                         <md-checkbox ng-model="selectedGallery.config.showNavigation">Show Navigation</md-checkbox>
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <md-checkbox ng-model="selectedGallery.portrait">Portrait Preview </md-checkbox>
                       </md-input-container>
                     </md-card>
                     <p> </p>
@@ -94,7 +100,7 @@
                   </div>
                 </md-tab-body>
               </md-tab>
-              <md-tab id="tab2" md-tab-class="selector-tab2">
+              <md-tab id="tab2" md-tab-class="selector-tab2" ng-click="resetSelectedDetail(selectedGallery)">
                 <md-tab-label>Slides</md-tab-label>
                 <md-tab-body> 
                   <md-content layout-padding> 
@@ -103,7 +109,7 @@
                         <md-icon class="material-icons">add</md-icon><span>Add Slide</span>
                       </md-button>
                     </div>
-                    <div class="image-list" flex layout="column" layout-fill>
+                    <div class="image-list" flex-gt-sm="50" layout="column" layout-wrap>
                       <md-card class="image-list-item" ng-repeat="slide in selectedGallery.slides" ng-click="null">
                         <div class="image-card-top" layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill>
                           <div class="image-card-text md-list-item-text" flex="100" layout="column">
@@ -119,35 +125,43 @@
                                 <md-icon class="material-icons">remove</md-icon>
                               </md-button><span>Remove Image</span>
                             </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                              <label>Slide Delay</label>
-                              <input ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
-                            </md-input-container>
-                            <div md-color-picker="colorPicker.options" label="Slide Background Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor"></div>
-                            <div md-color-picker="colorPicker.options" label="Text Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor"></div>
-                            <md-input-container>
-                              <label>Overlay Position</label>
-                              <md-select ng-model="selectedGallery.slides[$index].overlayPosition">
-                                <md-option value="left-top">Left Top</md-option>
-                                <md-option value="left-center">Left Center</md-option>
-                                <md-option value="left-bottom">Left Bottom</md-option>
-                                <md-option value="center-top">Center Top</md-option>
-                                <md-option value="center-center">Center Center</md-option>
-                                <md-option value="center-bottom">Center Bottom</md-option>
-                                <md-option value="right-top">Right Top</md-option>
-                                <md-option value="right-center">Right Center</md-option>
-                                <md-option value="right-bottom">Right Bottom</md-option>
-                              </md-select>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex="100">
-                              <label>Overlay Title</label>
-                              <input ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text">
-                            </md-input-container>
-                            <md-input-container class="md-block" flex="100">
-                              <label>Overlay Text</label>
-                              <textarea name="" cols="60" rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text"></textarea>
-                            </md-input-container>
-                            <div md-color-picker="colorPicker.options" label="Overlay Background" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor"></div>
+                            <div class="slide-detail">
+                              <div class="slide-detail-inputs" ng-show="selectedGallery.lastSlideDetail == $index">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                  <label>Slide Delay</label>
+                                  <input ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/">
+                                </md-input-container>
+                                <div md-color-picker="colorPicker.options" label="Slide Background Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor"></div>
+                                <div md-color-picker="colorPicker.options" label="Text Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor"></div>
+                                <md-input-container>
+                                  <label>Overlay Position</label>
+                                  <md-select ng-model="selectedGallery.slides[$index].overlayPosition">
+                                    <md-option value="left-top">Left Top</md-option>
+                                    <md-option value="left-center">Left Center</md-option>
+                                    <md-option value="left-bottom">Left Bottom</md-option>
+                                    <md-option value="center-top">Center Top</md-option>
+                                    <md-option value="center-center">Center Center</md-option>
+                                    <md-option value="center-bottom">Center Bottom</md-option>
+                                    <md-option value="right-top">Right Top</md-option>
+                                    <md-option value="right-center">Right Center</md-option>
+                                    <md-option value="right-bottom">Right Bottom</md-option>
+                                  </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="100">
+                                  <label>Overlay Title</label>
+                                  <input ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="100">
+                                  <label>Overlay Text</label>
+                                  <textarea name="" cols="60" rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text"></textarea>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex="100">
+                                  <label>Overlay Padding</label>
+                                  <input ng-model="selectedGallery.slides[$index].padding" style="width: 100%" type="text">
+                                </md-input-container>
+                                <div md-color-picker="colorPicker.options" label="Overlay Background" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor"></div>
+                              </div>
+                            </div>
                           </div>
                           <div class="image-wrapper {{selectedGallery.config.direction}}" ng-style="{'background-color':selectedGallery.slides[$index].backgroundColor}">
                             <div class="image-thumbnail" style="background-image:url({{slide.image}})" alt="{{slide.title}}"></div>
@@ -160,6 +174,9 @@
                               <md-option ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index">{{order}}</md-option>
                             </md-select>
                           </md-input-container>
+                          <md-button class="md-fab md-mini" ng-click="selectedGallery.lastSlideDetail == $index?selectedGallery.lastSlideDetail = -1:selectedGallery.lastSlideDetail = $index">
+                            <md-icon class="material-icons">edit</md-icon>
+                          </md-button>
                           <md-button class="md-fab md-mini" id="uploadButton" ng-click="saveGallery(selectedGallery)">
                             <md-icon class="material-icons">save</md-icon>
                           </md-button>
@@ -180,11 +197,11 @@
                 <md-tab-label>Preview</md-tab-label>
                 <md-tab-body>
                   <md-content class="no-overflow">
-                    <div class="preview-container">
+                    <div class="preview-container" ng-class="{'portrait':selectedGallery.portrait}">
                       <div class="swiper-container" ng-style="{'background-color': gallery.backgroundColor}">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide" ng-style="{'background-color': slide.backgroundColor}" ng-repeat="slide in gallery.slides track by $index" data-swiper-autoplay="{{slide.delay!=null?slide.delay:gallery.autoplay.delay}}" style="background: url({{slide.image}})"> 
-                            <div class="overlay-container {{slide.overlayPosition}}">
+                            <div class="overlay-container {{slide.overlayPosition}}" ng-style="{'padding':slide.padding}">
                               <div class="text-wrapper" ng-style="{'color':slide.textColor,'background-color': slide.textBackgroundColor}">
                                 <h2 class="overlay-title">{{slide.title}}</h2>
                                 <div class="overlay-text" ng-bind-html="mdToHtml(slide.overlay)">{{slide.overlay}}    </div>
@@ -197,6 +214,11 @@
                         <div class="swiper-button-next" ng-class="{ 'swiper-button-disabled': !gallery.config.showNavigation }"></div>
                       </div>
                     </div>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p><a href="/preview.html?apikey={{user.uid}}&amp;galleryname={{selectedGallery.name}}" target="_blank">Preview Page (opens new tab)</a>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
                   </md-content>
                 </md-tab-body>
               </md-tab>
@@ -204,9 +226,7 @@
           </div>
           <div layout="column" layout-fill="" ng-if="!selectedGallery">
             <md-content>
-              <h2>Introduction</h2>
-              <p>With this admin you can create galleries that will be stored and attached to your Login. </p>
-              <p>Your API Key is {{user.uid}}</p>
+              <div class="markdown" data-markdown="" link="intro.md"></div>
             </md-content>
           </div>
         </div>
@@ -235,6 +255,7 @@
     <script src="vendor/mdColorPicker.js"></script>
     <script src="init.js" defer></script>
     <script src="directives/chooseFile.directive.js" defer></script>
+    <script src="directives/markdown.directive.js" defer></script>
     <script src="factories/firestore.user.directive.js" defer></script>
     <script src="app.controller.js" type="text/javascript" defer></script>
   </body>

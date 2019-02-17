@@ -1,7 +1,7 @@
 md-tab-label Settings
 md-tab-body
-  div(layout-padding layout="column" flex="") 
-    md-card(layout="column" layout-fill=""  layout-wrap)
+  div(layout-padding layout="column" flex-gt-sm="50") 
+    md-card(layout="column"  layout-wrap )
       md-input-container(class="md-block" flex-gt-sm)
         label Gallery Name
         input(ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
@@ -22,6 +22,10 @@ md-tab-body
       md-input-container(class="md-block" flex-gt-sm)
         md-checkbox(ng-model="selectedGallery.config.showNavigation")
           | Show Navigation
+      
+      md-input-container(class="md-block" flex-gt-sm)
+        md-checkbox(ng-model="selectedGallery.portrait")
+          | Portrait Preview 
     p 
     p
     p
