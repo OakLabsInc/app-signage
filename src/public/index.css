@@ -115,10 +115,7 @@ body {
   text-align: right;
 }
 .swiper-container .swiper-slide .overlay-container .text-wrapper {
-  height: 50%;
-  width: 50%;
   overflow: hidden;
-  padding: 15px;
 }
 .swiper-button-hidden {
   opacity: 0;

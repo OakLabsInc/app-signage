@@ -15,8 +15,6 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   $scope.selectedTabIndex = {
     tabIndex: 1
   }
-
-  // sidebar toggle functions
   
   $scope.toggleLeft = buildDelayedToggler('left')
   function debounce (func, wait, context) {
@@ -56,11 +54,14 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
   }
   $scope.checkSideBar = function(){
     $scope.selectedTabIndex.tabIndex = 0
-   
     $log.info("selectedTabIndex: ", $scope.selectedTabIndex)
     if ($mdSidenav('left') && $mdSidenav('left').isOpen()) {
       $scope.toggleLeft()
     }
+  }
+  $scope.resetSelectedDetail = function(gallery) {
+    gallery.lastSlideDetail = -1
+
   }
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -113,6 +114,7 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
             delay: 4000
           },          
           'enableAutoplay': true,
+          'portrait': false,
           'config': {
             observer: true,
             updateOnImagesReady: true,

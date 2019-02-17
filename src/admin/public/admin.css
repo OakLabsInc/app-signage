@@ -47,6 +47,11 @@ div.mdl-progress::after {
 .mdl-progress {
   height: 5px;
 }
+code {
+  background-color: #dedede;
+  font-family: IBM Plex Sans Condensed, Roboto, Helvetica Neue, sans-serif;
+  padding: 0 2px;
+}
 .hint {
   position: absolute;
   left: 5px;
@@ -131,6 +136,16 @@ md-toast.success-toast .md-toast-content {
   position: relative;
   color: #fff;
   overflow: hidden;
+}
+.preview-container.page {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0;
+  color: #000;
+}
+.preview-container.portrait {
+  width: 50% !important;
+  padding-bottom: 89% !important;
 }
 .preview-container .swiper-wrapper {
   position: absolute;
@@ -220,10 +235,7 @@ md-toast.success-toast .md-toast-content {
   text-align: right;
 }
 .preview-container .swiper-container .swiper-slide .overlay-container .text-wrapper {
-  height: 50%;
-  width: 50%;
   overflow: hidden;
-  padding: 15px;
 }
 .preview-container .swiper-button-hidden {
   opacity: 0;
