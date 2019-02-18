@@ -46,7 +46,7 @@ md-tab-body
                   input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
                 md-input-container(class="md-block" flex="100")
                   label Overlay Text
-                  textarea(name="", cols="60", rows="3" style="width: 100%" ng-model="selectedGallery.slides[$index].overlay" type="text" )
+                  textarea(rows="5" md-select-on-focus  md-detect-hidden ng-model="selectedGallery.slides[$index].overlay")
                 md-input-container(class="md-block" flex="100")
                   label Overlay Padding
                   input(ng-model="selectedGallery.slides[$index].padding" style="width: 100%" type="text" )
