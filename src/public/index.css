@@ -116,6 +116,7 @@ body {
 }
 .swiper-container .swiper-slide .overlay-container .text-wrapper {
   overflow: hidden;
+  padding: 1em;
 }
 .swiper-button-hidden {
   opacity: 0;

@@ -236,7 +236,7 @@ md-toast.success-toast .md-toast-content {
 }
 .preview-container .swiper-container .swiper-slide .overlay-container .text-wrapper {
   overflow: hidden;
-  padding: 15px;
+  padding: 1em;
 }
 .preview-container .swiper-button-hidden {
   opacity: 0;
