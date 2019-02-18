@@ -141,7 +141,7 @@ md-toast.success-toast .md-toast-content {
   width: 100% !important;
   height: 100% !important;
   padding: 0;
-  color: #000;
+  color: #fff;
 }
 .preview-container.portrait {
   width: 50% !important;
@@ -236,6 +236,7 @@ md-toast.success-toast .md-toast-content {
 }
 .preview-container .swiper-container .swiper-slide .overlay-container .text-wrapper {
   overflow: hidden;
+  padding: 15px;
 }
 .preview-container .swiper-button-hidden {
   opacity: 0;
