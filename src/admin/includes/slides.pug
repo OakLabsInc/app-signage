@@ -2,36 +2,36 @@ md-tab-label Slides
 md-tab-body 
   md-content(layout-padding) 
     div 
-      md-button(id="uploadButton" class="" ng-click="addSlideToGallery(selectedGallery)")
+      md-button(id="uploadButton" class="" ng-click="addSlideToGallery(settings.selectedGallery)")
         md-icon(class="material-icons") add
         span Add Slide
     .image-list(flex-gt-sm="50" layout="column" layout-wrap)
-      md-card.image-list-item(ng-repeat="slide in selectedGallery.slides" ng-click="null")
+      md-card.image-list-item(ng-repeat="slide in settings.selectedGallery.slides" ng-click="null")
         .image-card-top(layout-xs="column" layout-gt-sm="row" layout-align="space-between top" layout-fill)
           .image-card-text(class="md-list-item-text" flex="100" layout="column")
             h2 Position {{$index}}
-            choose-file(ng-if="slide.image === ''" layout="row" layout-align="left center" flex="100" id="{{selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{selectedGallery.name + '-' + $index}}")
+            choose-file(ng-if="slide.image === ''" layout="row" layout-align="left center" flex="100" id="{{settings.selectedGallery.name + '-directive-' + $index" index="{{$index}}" file-input-id="{{settings.selectedGallery.name + '-' + $index}}")
               md-button.md-fab.md-mini(id="uploadButton" class="")
                 md-icon(class="material-icons") image
               //- md-input-container(flex class="md-block")
                 //- input(type="text" ng-model="fileName" disabled)
-              input(ng-attr-id="{{selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
+              input(ng-attr-id="{{settings.selectedGallery.name + '-' + $index}}" type="file" accept="image/*" class="ng-hide")
               span Upload Background Image
             md-input-container(ng-if="slide.image !== ''")
-              md-button.md-fab.md-mini(ng-click="removeImageFromSlide(selectedGallery, $index)")
+              md-button.md-fab.md-mini(ng-click="removeImageFromSlide(settings.selectedGallery, $index)")
                 md-icon(class="material-icons") remove
               span Remove Image
             .slide-detail
               
-              .slide-detail-inputs(ng-show="selectedGallery.lastSlideDetail == $index")
+              .slide-detail-inputs(ng-show="settings.selectedGallery.lastSlideDetail == $index")
                 md-input-container(class="md-block" flex-gt-sm)
                   label Slide Delay
-                  input(ng-model="selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
-                div(md-color-picker="colorPicker.options" label="Slide Background Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].backgroundColor")
-                div(md-color-picker="colorPicker.options" label="Text Color"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textColor")
+                  input(ng-model="settings.selectedGallery.slides[$index].delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
+                div(md-color-picker="colorPicker.options" label="Slide Background Color" md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="settings.selectedGallery.slides[$index].backgroundColor")
+                div(md-color-picker="colorPicker.options" label="Text Color"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="settings.selectedGallery.slides[$index].textColor")
                 md-input-container
                   label Overlay Position
-                  md-select(ng-model="selectedGallery.slides[$index].overlayPosition" )
+                  md-select(ng-model="settings.selectedGallery.slides[$index].overlayPosition" )
                     md-option(value="left-top") Left Top
                     md-option(value="left-center") Left Center
                     md-option(value="left-bottom") Left Bottom
@@ -43,27 +43,27 @@ md-tab-body
                     md-option(value="right-bottom") Right Bottom
                 md-input-container(class="md-block" flex="100")
                   label Overlay Title
-                  input(ng-model="selectedGallery.slides[$index].title" style="width: 100%" type="text" )
+                  input(ng-model="settings.selectedGallery.slides[$index].title" style="width: 100%" type="text" )
                 md-input-container(class="md-block" flex="100")
                   label Overlay Text
-                  textarea(rows="5" md-select-on-focus  md-detect-hidden ng-model="selectedGallery.slides[$index].overlay")
+                  textarea(rows="5" md-select-on-focus  md-detect-hidden ng-model="settings.selectedGallery.slides[$index].overlay")
                 md-input-container(class="md-block" flex="100")
                   label Overlay Padding
-                  input(ng-model="selectedGallery.slides[$index].padding" style="width: 100%" type="text" )
-                div(md-color-picker="colorPicker.options" label="Overlay Background"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.slides[$index].textBackgroundColor")
+                  input(ng-model="settings.selectedGallery.slides[$index].padding" style="width: 100%" type="text" )
+                div(md-color-picker="colorPicker.options" label="Overlay Background"  md-color-clear-button="false" md-color-default="#fff" md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="settings.selectedGallery.slides[$index].textBackgroundColor")
             
-          .image-wrapper(class="{{selectedGallery.config.direction}}" ng-style="{'background-color':selectedGallery.slides[$index].backgroundColor}")
+          .image-wrapper(class="{{settings.selectedGallery.config.direction}}" ng-style="{'background-color':settings.selectedGallery.slides[$index].backgroundColor}")
             div(style="background-image:url({{slide.image}})" class="image-thumbnail"  alt="{{slide.title}}")
         .image-card-actions(layout="row" layout-align="space-between center")
           md-input-container
             label Position
-            md-select(ng-model="$index" ng-change="reorderSlides(slide, $index, selectedGallery)")
-              md-option(ng-repeat="order in returnImageArray(selectedGallery)" ng-value="$index") {{order}}
-          md-button.md-fab.md-mini( ng-click="selectedGallery.lastSlideDetail == $index?selectedGallery.lastSlideDetail = -1:selectedGallery.lastSlideDetail = $index" )
+            md-select(ng-model="$index" ng-change="reorderSlides(slide, $index, settings.selectedGallery)")
+              md-option(ng-repeat="order in returnImageArray(settings.selectedGallery)" ng-value="$index") {{order}}
+          md-button.md-fab.md-mini( ng-click="settings.selectedGallery.lastSlideDetail == $index?settings.selectedGallery.lastSlideDetail = -1:settings.selectedGallery.lastSlideDetail = $index" )
               md-icon(class="material-icons") edit
-          md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(selectedGallery)")
+          md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(settings.selectedGallery)")
             md-icon.material-icons save
-          md-button(class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(selectedGallery, slide, $index)")
+          md-button(class="margined-button md-fab md-mini" ng-click="deleteGallerySlide(settings.selectedGallery, slide, $index)")
             md-icon(class="material-icons") clear
     p 
     p

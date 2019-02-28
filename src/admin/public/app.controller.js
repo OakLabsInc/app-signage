@@ -16,6 +16,8 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     tabIndex: 1
   }
   
+  $scope.settings = {}
+
   $scope.toggleLeft = buildDelayedToggler('left')
   function debounce (func, wait, context) {
     var timer
@@ -435,6 +437,15 @@ app.controller('appController', function AppController ($log, $scope, $rootScope
     return $sce.trustAsHtml(markdown.toHTML(text));
   }
 
+  // $scope.$watch('settings.selectedGallery', function(newVal, oldVal) {
+  //   if (newVal !== oldVal) {
+  //     $scope.saveGallery(newVal)
+  //   }
+  //   // $timeout(function(){
+  //   //   $log.info('settings.selectedGallery: ', newVal)
+  //   // }, 2000); 
+
+  // }, true)
 
 
 })
