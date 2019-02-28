@@ -1,12 +1,12 @@
 md-tab-label Preview
 md-tab-body
   md-content.no-overflow
-    .preview-container(ng-class="{'portrait':selectedGallery.portrait}")
+    .preview-container(ng-class="{'portrait':settings.selectedGallery.portrait}")
       include swiper.pug
     p &nbsp;
     p &nbsp;
-    a(href="/preview.html?apikey={{user.uid}}&galleryname={{selectedGallery.name}}" target="_blank") Preview Page (opens new tab)
-    //- pre(style="text-align:left") {{selectedGallery | json}}
+    a(href="/preview.html?apikey={{user.uid}}&galleryname={{settings.selectedGallery.name}}" target="_blank") Preview Page (opens new tab)
+    //- pre(style="text-align:left") {{settings.selectedGallery | json}}
     p &nbsp;
     p &nbsp;
     p &nbsp;

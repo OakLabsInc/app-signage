@@ -4,27 +4,27 @@ md-tab-body
     md-card(layout="column"  layout-wrap )
       md-input-container(class="md-block" flex-gt-sm)
         label Gallery Name
-        input(ng-model="selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
+        input(ng-model="settings.selectedGallery.name" placeholder="Enter gallery name without spaces" required ng-pattern="/^[a-zA-Z0-9_]*$/")
       md-input-container(class="md-block" flex-gt-sm)
         label Sides Per View
-        input(ng-model="selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/" )
+        input(ng-model="settings.selectedGallery.config.slidesPerView" type="number" ng-pattern="/^[1-4]{1}/" )
       md-input-container(class="md-block" flex-gt-sm)
         label Sides Per Group
-        input(ng-model="selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
-      md-input-container(ng-show="selectedGallery.enableAutoplay" class="md-block" flex-gt-sm)
+        input(ng-model="settings.selectedGallery.config.slidesPerGroup" type="number" ng-pattern="/^[1-4]{1}/")
+      md-input-container(ng-show="settings.selectedGallery.enableAutoplay" class="md-block" flex-gt-sm)
         label Delay Between Slides
-        input(ng-model="selectedGallery.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
-      div(md-color-picker="colorPicker.options" label="Background Color"  md-color-clear-button="false"  md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="selectedGallery.backgroundColor")
+        input(ng-model="settings.selectedGallery.autoplay.delay" type="number" ng-pattern="/^[1-9][0]{2,4}|[1-9]{1}[05]{1}[0]{2}/")
+      div(md-color-picker="colorPicker.options" label="Background Color"  md-color-clear-button="false"  md-color-generic-palette="false" md-color-material-palette="false" md-color-sliders="false" md-color-history="false" md-color-hex="true" md-color-rgb="true" md-color-hsl="false" ng-model="settings.selectedGallery.backgroundColor")
       md-input-container(class="md-block" flex-gt-sm)
-        md-checkbox(ng-model="selectedGallery.enableAutoplay")
+        md-checkbox(ng-model="settings.selectedGallery.enableAutoplay")
           | Enable Autoplay
       
       md-input-container(class="md-block" flex-gt-sm)
-        md-checkbox(ng-model="selectedGallery.config.showNavigation")
+        md-checkbox(ng-model="settings.selectedGallery.config.showNavigation")
           | Show Navigation
       
       md-input-container(class="md-block" flex-gt-sm)
-        md-checkbox(ng-model="selectedGallery.portrait")
+        md-checkbox(ng-model="settings.selectedGallery.portrait")
           | Portrait Preview 
     p 
     p

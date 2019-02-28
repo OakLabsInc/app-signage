@@ -26,7 +26,7 @@ html
             
             md-content(layout-padding="" ng-show="!galleryFormOpen")
 
-              md-radio-group.galleryList(ng-model="selectedGallery")
+              md-radio-group.galleryList(ng-model="settings.selectedGallery")
                 .row(ng-repeat="gallery in galleries | orderBy: 'name'")
                   div(flex="" layout="row" layout-padding layout-align="space-between center")
                     md-radio-button.md-primary(flex="" ng-value="gallery" ng-click="checkSideBar();")
@@ -36,19 +36,19 @@ html
                       md-icon.material-icons clear
                   md-divider 
           div(layout="column" layout-fill="" flex="" layout-padding="")
-            div(layout="column" layout-fill="" ng-if="selectedGallery")
+            div(layout="column" layout-fill="" ng-if="settings.selectedGallery")
               div(layout="row" layout-align="space-between center" style="min-height: 50px")
-                  h1 {{formatGalleryName(selectedGallery.name)}}
-                  md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(selectedGallery)")
+                  h1 {{formatGalleryName(settings.selectedGallery.name)}}
+                  md-button#uploadButton.md-fab.md-mini(ng-click="saveGallery(settings.selectedGallery)")
                     md-icon.material-icons save
               md-tabs(layout="column" layout-fill=""  md-selected="selectedTabIndex.tabIndex" md-align-tabs="top" )
                 md-tab(layout="column" layout-fill=""  id="tab1" md-tab-class="selector-tab1")
                   include includes/settings.pug  
-                md-tab(id="tab2" md-tab-class="selector-tab2" ng-click="resetSelectedDetail(selectedGallery)")
+                md-tab(id="tab2" md-tab-class="selector-tab2" ng-click="resetSelectedDetail(settings.selectedGallery)")
                   include includes/slides.pug
-                md-tab(id="tab3" md-tab-class="selector-tab3" ng-click="initPreview(selectedGallery)")
+                md-tab(id="tab3" md-tab-class="selector-tab3" ng-click="initPreview(settings.selectedGallery)")
                   include includes/preview.pug
-            div(layout="column" layout-fill="" ng-if="!selectedGallery")
+            div(layout="column" layout-fill="" ng-if="!settings.selectedGallery")
               include includes/intro.pug
       #firebaseui-auth-container
     #loadingPanel(ng-show="imageIsUploading")

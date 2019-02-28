@@ -20,7 +20,7 @@
             if (files[0]) {
                 //$scope.fileName = files[0].name
                 //$log.info(files[0].name)
-                scope.addImageToSlide(scope.selectedGallery, index, files[0].name, files)
+                scope.addImageToSlide(scope.settings.selectedGallery, index, files[0].name, files)
             } else {
                 scope.fileName = null
             }
