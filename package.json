@@ -1,6 +1,6 @@
 {
   "name": "signage-application",
-  "version": "0.0.1",
+  "version": "1.1.1",
   "description": "Signage app for OakOS v5.0.x",
   "main": "src/server.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "test": "exit 0;"
   },
   "engines": {
-    "node": "10.15.1"
+    "node": "10.15.3"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "gulp-pug": "~3.3.0",
     "gulp-stylus": "~2.6.0",
     "gulp-watch": "~4.3.11",
-    "oak": "~5.0.4",
+    "oak": "~5.0.9",
     "standard": "^11.0.1"
   },
   "dependencies": {

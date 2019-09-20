@@ -1,4 +1,4 @@
-FROM oaklabs/oak:5.0.4
+FROM oaklabs/oak:5.0.9
 
 WORKDIR /app
 
@@ -10,5 +10,5 @@ COPY . /app
 
 CMD ["/app"]
 
-ENV API_KEY=K6z0KH8UeYgSgeRVuVWlnzFBfD32 \
-    GALLERY_NAME=coffee_shop
+ENV API_KEY=r7eJvn9HIvMh25CWknMUFoNuW2d2 \
+    GALLERY_NAME=showroom7
