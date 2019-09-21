@@ -25,19 +25,18 @@
   },
   "homepage": "https://github.com/OakLabsInc/app-signage#readme",
   "devDependencies": {
-    "firebase-functions": "^2.2.0",
-    "firebase-tools": "^6.3.1",
-    "gulp": "~3.9.1",
+    "gulp": "~4.0.2",
     "gulp-pug": "~3.3.0",
     "gulp-stylus": "~2.6.0",
-    "gulp-watch": "~4.3.11",
+    "gulp-watch": "~5.0.1",
+    "lodash.template": "~4.5.0",
     "oak": "~5.0.9",
-    "standard": "^11.0.1"
+    "standard": "~11.0.1"
   },
   "dependencies": {
     "express": "~4.16.3",
-    "lodash": "^4.17.4",
-    "md-color-picker": "^0.2.6",
+    "lodash": "~4.17.4",
+    "md-color-picker": "~0.2.6",
     "nib": "~1.1.2",
     "pug-cli": "~1.0.0-alpha6",
     "stylus": "~0.54.5"
