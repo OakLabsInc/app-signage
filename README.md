@@ -67,7 +67,7 @@ In order to install this application onto an OakOS enabled device , you must sen
 {
   "services": [
     {
-      "image": "index.docker.io/oaklabs/app-signage:release-1.0.9",
+      "image": "index.docker.io/oaklabs/app-signage:release-1.1.1",
       "username": "{{dockerUsername}}",
       "password": "{{dockerPassword}}",
       "environment": {
