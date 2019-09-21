@@ -2,6 +2,7 @@ doctype html
 html
   include includes/head.pug
   body(ng-app="signageApp" ng-controller="appController" ng-cloak="")
+    #firebaseui-auth-container(ng-hide="true")
     .preview-container.page(ng-init="initPreviewPage()" ng-style="{'background-color': gallery.backgroundColor}")
       include includes/swiper.pug
     include includes/foot.pug
