@@ -39,4 +39,4 @@ gulp.task('pug', function () {
     .pipe(gulp.dest(DIST_PATH))
 })
 
-gulp.task('default', ['stylus', 'pug'])
+gulp.task('default',  gulp.parallel('stylus', 'pug'))
